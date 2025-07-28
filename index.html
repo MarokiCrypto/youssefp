@@ -7,198 +7,162 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: #000;
+      background: radial-gradient(ellipse at center, #0d0d0d 0%, #000 100%);
       overflow: hidden;
-      font-family: 'Arial', sans-serif;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
     }
 
     canvas {
       position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    .drawn-heart {
-      position: absolute;
-      top: 15%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 160px;
-      height: 140px;
-      animation: pulse 2s infinite;
-      z-index: 2;
-    }
-
-    .drawn-heart::before,
-    .drawn-heart::after {
-      content: "";
-      position: absolute;
-      width: 80px;
-      height: 120px;
-      background: red;
-      border-radius: 50px 50px 0 0;
-      transform: rotate(-45deg);
-      transform-origin: bottom right;
-      box-shadow: 0 0 20px red, 0 0 40px red;
-    }
-
-    .drawn-heart::after {
-      left: 80px;
-      transform: rotate(45deg);
-      transform-origin: bottom left;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
-    }
-
-    .knbghik-text {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2.2rem;
-      color: white;
-      font-weight: bold;
-      text-shadow: 0 0 10px red, 0 0 30px crimson;
-      z-index: 3;
-    }
-
-    .name {
-      position: absolute;
-      top: 60%;
       width: 100%;
-      text-align: center;
-      color: #fff;
-      font-size: 1.5rem;
-      font-weight: bold;
-      opacity: 0;
-      animation: showName 3s ease-in-out 3s forwards;
-      text-shadow: 0 0 10px #fff, 0 0 20px red;
-      z-index: 3;
-    }
-
-    @keyframes showName {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .instagram {
-      position: absolute;
-      top: 70%;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      animation: showName 3s ease-in-out 4s forwards;
-      z-index: 3;
-    }
-
-    .instagram img {
-      width: 40px;
-      height: 40px;
-      filter: drop-shadow(0 0 8px #ff007f);
-      cursor: pointer;
-    }
-
-    .particle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: pink;
-      border-radius: 50%;
-      animation: explode 3s ease-out forwards;
-      opacity: 0.9;
+      height: 100%;
       z-index: 1;
     }
 
-    @keyframes explode {
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4;
+      opacity: 0;
+      animation: fadeIn 3s ease-in-out forwards;
+      animation-delay: 1s;
+      z-index: 2;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2em;
+      opacity: 0;
+      animation: fadeIn 3s ease-in-out forwards;
+      animation-delay: 3s;
+      z-index: 2;
+    }
+
+    .footer img {
+      width: 24px;
+      height: 24px;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .heart {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 8s linear infinite;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -7px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -7px;
+      top: 0;
+    }
+
+    @keyframes float {
       0% {
-        transform: scale(1);
+        transform: translateY(0) rotate(45deg);
         opacity: 1;
       }
       100% {
-        transform: translate(var(--x), var(--y)) scale(0.2);
+        transform: translateY(-100vh) rotate(45deg);
         opacity: 0;
       }
     }
   </style>
 </head>
 <body>
+  <canvas id="canvas"></canvas>
 
-<canvas id="canvas"></canvas>
+  <div class="center-text">I love You</div>
 
-<div class="drawn-heart"></div>
-<div class="knbghik-text">I love You</div>
-<div class="name">❤️ Created with Love by youssef.p999</div>
-<div class="instagram">
-  <a href="https://www.instagram.com/youssef.p999" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram">
-  </a>
-</div>
+  <div class="footer">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="IG">
+    <span>youssef.p999</span>
+  </div>
 
-<script>
-  // Particles
-  setTimeout(() => {
-    for (let i = 0; i < 100; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
+  <!-- ❤️ Background Music -->
+  <audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+  </audio>
 
-      const angle = Math.random() * 2 * Math.PI;
-      const radius = 150 + Math.random() * 150;
-      const x = Math.cos(angle) * radius + 'px';
-      const y = Math.sin(angle) * radius + 'px';
+  <script>
+    // Canvas arcs
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-      particle.style.setProperty('--x', x);
-      particle.style.setProperty('--y', y);
-      particle.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
-      particle.style.left = '50%';
-      particle.style.top = '30%';
-      document.body.appendChild(particle);
+    function drawArc(x, y, radius, startAngle, endAngle, color, glow) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, startAngle, endAngle);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 5;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = glow;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let cx = canvas.width / 2;
+      let cy = canvas.height / 2;
+      drawArc(cx - 100, cy - 100, 100, Math.PI, 2 * Math.PI, '#ff00cc', 30); // pink arc
+      drawArc(cx + 100, cy + 100, 100, 0, Math.PI, '#00e0ff', 30); // blue arc
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+      heart.style.background = Math.random() > 0.5 ? "pink" : "red";
+      document.body.appendChild(heart);
 
       setTimeout(() => {
-        particle.remove();
-      }, 3000);
+        heart.remove();
+      }, 8000);
     }
-  }, 1000);
 
-  // Glow Arcs on Canvas
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  function drawGlowArc(x, y, radius, startAngle, endAngle, color, lineWidth) {
-    ctx.beginPath();
-    ctx.arc(x, y, radius, startAngle, endAngle);
-    ctx.strokeStyle = color;
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 25;
-    ctx.lineWidth = lineWidth;
-    ctx.stroke();
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-
-    drawGlowArc(centerX - 100, centerY - 100, 80, Math.PI, 2 * Math.PI, "#00f0ff", 6); // Blue Arc
-    drawGlowArc(centerX + 100, centerY + 60, 80, Math.PI, 2 * Math.PI, "#ff00aa", 6); // Pink Arc
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-</script>
-
+    setInterval(createHeart, 300);
+  </script>
 </body>
 </html>
