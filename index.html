@@ -17,6 +17,49 @@
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 0;
+    }
+
+    .heart-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 110px;
+      background: red;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      animation: pulse 1.2s infinite;
+      box-shadow: 0 0 30px red, 0 0 60px crimson, 0 0 90px red;
+      z-index: 1;
+    }
+
+    .heart-center::before,
+    .heart-center::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 110px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart-center::before {
+      top: -60px;
+      left: 0;
+    }
+
+    .heart-center::after {
+      left: -60px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+      }
+      50% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1.1);
+      }
     }
 
     .center-text {
@@ -48,74 +91,24 @@
       width: 22px;
       height: 22px;
     }
-
-    .bg-code {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .bg-code span {
-      position: absolute;
-      font-family: 'Fira Code', monospace;
-      font-size: 12px;
-      color: hsl(var(--hue), 100%, 75%);
-      opacity: 0.3;
-      animation: floatCode 10s linear infinite;
-    }
-
-    @keyframes floatCode {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0.1; }
-      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0.3; }
-    }
-
-    .rotating-heart {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 250px;
-      height: 250px;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      animation: rotate 6s linear infinite;
-    }
-
-    .rotating-heart::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 3px dashed #00ffe5;
-      border-radius: 50% 50% 0 0;
-      border-bottom: none;
-      transform: rotate(-45deg);
-      box-shadow: 0 0 20px #00ffe5;
-    }
-
-    @keyframes rotate {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
   </style>
 </head>
 <body>
   <canvas id="canvas"></canvas>
 
-  <div class="bg-code" id="bg-code"></div>
+  <!-- ❤️ قلب خلف العبارة -->
+  <div class="heart-center"></div>
 
+  <!-- 💬 النص الرئيسي -->
   <div class="center-text">I love You</div>
 
-  <div class="rotating-heart"></div>
-
+  <!-- 📸 حساب إنستغرام -->
   <div class="footer">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="IG">
     <span>youssef.p999</span>
   </div>
 
   <script>
-    // Neon Arc Drawing
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -144,20 +137,6 @@
     }
 
     animate();
-
-    // Floating Code Words
-    const keywords = ["function", "let", "const", "love()", "if (you)", "return ❤️", "console.log('You')", "while(true)", "❤", "=>", "I Love You"];
-    const container = document.getElementById("bg-code");
-
-    for (let i = 0; i < 60; i++) {
-      const span = document.createElement("span");
-      span.innerText = keywords[Math.floor(Math.random() * keywords.length)];
-      span.style.left = Math.random() * 100 + "%";
-      span.style.top = Math.random() * 100 + "%";
-      span.style.setProperty("--hue", Math.floor(Math.random() * 360));
-      span.style.animationDuration = (5 + Math.random() * 5) + "s";
-      container.appendChild(span);
-    }
   </script>
 </body>
 </html>
