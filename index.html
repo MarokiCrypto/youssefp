@@ -26,49 +26,45 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      color: #00ff00;
-      font-family: monospace;
-      font-size: 14px;
-      opacity: 0.05;
       pointer-events: none;
     }
 
-    .heart-center {
+    .heart {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 140px;
-      height: 130px;
+      width: 120px;
+      height: 110px;
       background: red;
-      transform: translate(-50%, -50%) rotate(-45deg);
+      transform: translate(-50%, -50%) rotate(135deg);
       animation: pulse 1.5s ease-in-out infinite;
-      box-shadow: 0 0 30px red, 0 0 50px crimson;
+      box-shadow: 0 0 30px red, 0 0 60px crimson;
       z-index: 2;
     }
 
-    .heart-center::before,
-    .heart-center::after {
+    .heart::before,
+    .heart::after {
       content: "";
       position: absolute;
-      width: 140px;
-      height: 130px;
+      width: 120px;
+      height: 110px;
       background: red;
       border-radius: 50%;
     }
 
-    .heart-center::before {
-      top: -70px;
+    .heart::before {
+      top: -60px;
       left: 0;
     }
 
-    .heart-center::after {
-      left: -70px;
+    .heart::after {
+      left: -60px;
       top: 0;
     }
 
     @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
-      50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.1); }
+      0%, 100% { transform: translate(-50%, -50%) rotate(135deg) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(135deg) scale(1.1); }
     }
 
     .center-text {
@@ -76,10 +72,36 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 3em;
-      color: #fff;
-      text-shadow: 0 0 10px #ff69b4, 0 0 30px #ff69b4;
+      font-size: 2.8em;
+      color: white;
       z-index: 3;
+      text-shadow: 0 0 10px #ff69b4, 0 0 25px #ff69b4;
+      pointer-events: none;
+    }
+
+    .typing-text {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.3em;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00ff00;
+      animation: typing 6s steps(40, end), blink .7s step-end infinite;
+      z-index: 3;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #00ff00; }
     }
 
     .footer {
@@ -90,7 +112,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 1.1em;
+      font-size: 1.2em;
       font-family: Arial, sans-serif;
       color: #fff;
       z-index: 4;
@@ -100,6 +122,23 @@
       width: 22px;
       height: 22px;
     }
+
+    .insta-button {
+      background: #e1306c;
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .insta-button:hover {
+      background: #c82361;
+    }
   </style>
 </head>
 <body>
@@ -108,83 +147,54 @@
   <canvas class="matrix-bg" id="matrix"></canvas>
 
   <!-- Glowing Heart -->
-  <div class="heart-center"></div>
+  <div class="heart"></div>
 
   <!-- Main Text -->
   <div class="center-text">I love You</div>
 
-  <!-- Instagram Tag -->
+  <!-- Typing Effect -->
+  <div class="typing-text">System status: Hacked by youssef.p999 💚</div>
+
+  <!-- Instagram Footer -->
   <div class="footer">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="IG">
     <span>youssef.p999</span>
+    <a class="insta-button" href="https://www.instagram.com/youssef.p999" target="_blank">Visit Instagram</a>
   </div>
 
-  <!-- Glowing Arcs -->
-  <canvas id="canvas"></canvas>
-
+  <!-- Matrix JS -->
   <script>
-    // Arc Canvas
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    function drawArc(x, y, radius, startAngle, endAngle, color, glow) {
-      ctx.beginPath();
-      ctx.arc(x, y, radius, startAngle, endAngle);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 5;
-      ctx.shadowColor = color;
-      ctx.shadowBlur = glow;
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-    }
-
-    function animateArcs() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-
-      drawArc(cx - 100, cy - 100, 100, Math.PI, 2 * Math.PI, '#ff00cc', 30);
-      drawArc(cx + 100, cy + 100, 100, 0, Math.PI, '#00e0ff', 30);
-
-      requestAnimationFrame(animateArcs);
-    }
-
-    animateArcs();
-
-    // Matrix Background
-    const matrixCanvas = document.getElementById("matrix");
-    const mtx = matrixCanvas.getContext("2d");
-    matrixCanvas.width = window.innerWidth;
-    matrixCanvas.height = window.innerHeight;
-
-    const letters = "010101 javascript love function const let if else true false ❤️".split("");
-    const fontSize = 14;
-    const columns = matrixCanvas.width / fontSize;
+    const letters = "01 💚 YOU ❤️ HACK 💀 LOVE 💘 💻 💌 youssef.p999".split("");
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
 
-    function drawMatrix() {
-      mtx.fillStyle = "rgba(0, 0, 0, 0.1)";
-      mtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.07)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      mtx.fillStyle = "#00ff00";
-      mtx.font = fontSize + "px monospace";
+      ctx.fillStyle = "#00FF00";
+      ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
         const text = letters[Math.floor(Math.random() * letters.length)];
-        mtx.fillText(text, i * fontSize, drops[i] * fontSize);
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
 
-      requestAnimationFrame(drawMatrix);
+      requestAnimationFrame(draw);
     }
 
-    drawMatrix();
+    draw();
   </script>
 </body>
 </html>
