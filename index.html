@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>I Love You - by youssef.p999</title>
   <style>
     html, body {
@@ -12,43 +12,58 @@
       font-family: 'Arial', sans-serif;
     }
 
-    .glow-heart {
+    canvas {
       position: absolute;
-      top: 30%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .drawn-heart {
+      position: absolute;
+      top: 15%;
       left: 50%;
-      width: 300px;
-      height: 300px;
-      transform: translate(-50%, -50%) rotate(45deg);
-      border-radius: 50% 50% 0 0;
-      border: 5px solid transparent;
-      border-top: 5px solid #00f0ff;
-      animation: rotateHeart 4s linear infinite;
-      box-shadow: 0 0 20px #00f0ff, 0 0 60px #00f0ff;
+      transform: translate(-50%, -50%);
+      width: 160px;
+      height: 140px;
+      animation: pulse 2s infinite;
+      z-index: 2;
     }
 
-    .glow-heart::before, .glow-heart::after {
-      content: '';
+    .drawn-heart::before,
+    .drawn-heart::after {
+      content: "";
       position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50% 50% 0 0;
-      border: 5px solid transparent;
-      border-top: 5px solid #ff00aa;
-      animation: rotateHeart 4s linear infinite reverse;
-      box-shadow: 0 0 20px #ff00aa, 0 0 60px #ff00aa;
+      width: 80px;
+      height: 120px;
+      background: red;
+      border-radius: 50px 50px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: bottom right;
+      box-shadow: 0 0 20px red, 0 0 40px red;
     }
 
-    .glow-heart::before {
-      transform: translate(-150px, 0) rotate(-90deg);
+    .drawn-heart::after {
+      left: 80px;
+      transform: rotate(45deg);
+      transform-origin: bottom left;
     }
 
-    .glow-heart::after {
-      transform: translate(150px, 0) rotate(90deg);
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
     }
 
-    @keyframes rotateHeart {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .knbghik-text {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.2rem;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 0 10px red, 0 0 30px crimson;
+      z-index: 3;
     }
 
     .name {
@@ -57,11 +72,12 @@
       width: 100%;
       text-align: center;
       color: #fff;
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: bold;
       opacity: 0;
       animation: showName 3s ease-in-out 3s forwards;
-      text-shadow: 0 0 10px #fff, 0 0 20px red, 0 0 40px crimson;
+      text-shadow: 0 0 10px #fff, 0 0 20px red;
+      z-index: 3;
     }
 
     @keyframes showName {
@@ -82,6 +98,7 @@
       transform: translateX(-50%);
       opacity: 0;
       animation: showName 3s ease-in-out 4s forwards;
+      z-index: 3;
     }
 
     .instagram img {
@@ -116,38 +133,72 @@
 </head>
 <body>
 
-  <div class="glow-heart" id="glowHeart"></div>
-  <div class="name">❤️ Created with Love by youssef.p999</div>
-  <div class="instagram">
-    <a href="https://www.instagram.com/youssef.p999" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram">
-    </a>
-  </div>
+<canvas id="canvas"></canvas>
 
-  <script>
-    setTimeout(() => {
-      for (let i = 0; i < 100; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
+<div class="drawn-heart"></div>
+<div class="knbghik-text">I love You</div>
+<div class="name">❤️ Created with Love by youssef.p999</div>
+<div class="instagram">
+  <a href="https://www.instagram.com/youssef.p999" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram">
+  </a>
+</div>
 
-        const angle = Math.random() * 2 * Math.PI;
-        const radius = 150 + Math.random() * 150;
-        const x = Math.cos(angle) * radius + 'px';
-        const y = Math.sin(angle) * radius + 'px';
+<script>
+  // Particles
+  setTimeout(() => {
+    for (let i = 0; i < 100; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
 
-        particle.style.setProperty('--x', x);
-        particle.style.setProperty('--y', y);
-        particle.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
-        particle.style.left = '50%';
-        particle.style.top = '30%';
-        document.body.appendChild(particle);
+      const angle = Math.random() * 2 * Math.PI;
+      const radius = 150 + Math.random() * 150;
+      const x = Math.cos(angle) * radius + 'px';
+      const y = Math.sin(angle) * radius + 'px';
 
-        setTimeout(() => {
-          particle.remove();
-        }, 3000);
-      }
-    }, 1000);
-  </script>
+      particle.style.setProperty('--x', x);
+      particle.style.setProperty('--y', y);
+      particle.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      particle.style.left = '50%';
+      particle.style.top = '30%';
+      document.body.appendChild(particle);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 3000);
+    }
+  }, 1000);
+
+  // Glow Arcs on Canvas
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  function drawGlowArc(x, y, radius, startAngle, endAngle, color, lineWidth) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, startAngle, endAngle);
+    ctx.strokeStyle = color;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 25;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+
+    drawGlowArc(centerX - 100, centerY - 100, 80, Math.PI, 2 * Math.PI, "#00f0ff", 6); // Blue Arc
+    drawGlowArc(centerX + 100, centerY + 60, 80, Math.PI, 2 * Math.PI, "#ff00aa", 6); // Pink Arc
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
 
 </body>
 </html>
