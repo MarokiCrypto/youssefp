@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>I Love You - by youssef.p999</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fira+Code&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
       padding: 0;
       background: black;
       overflow: hidden;
+      height: 100vh;
       font-family: 'Pacifico', cursive;
     }
 
@@ -20,46 +21,54 @@
       z-index: 0;
     }
 
+    .matrix-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      color: #00ff00;
+      font-family: monospace;
+      font-size: 14px;
+      opacity: 0.05;
+      pointer-events: none;
+    }
+
     .heart-center {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 120px;
-      height: 110px;
+      width: 140px;
+      height: 130px;
       background: red;
       transform: translate(-50%, -50%) rotate(-45deg);
-      animation: pulse 1.2s infinite;
-      box-shadow: 0 0 30px red, 0 0 60px crimson, 0 0 90px red;
-      z-index: 1;
+      animation: pulse 1.5s ease-in-out infinite;
+      box-shadow: 0 0 30px red, 0 0 50px crimson;
+      z-index: 2;
     }
 
     .heart-center::before,
     .heart-center::after {
       content: "";
       position: absolute;
-      width: 120px;
-      height: 110px;
+      width: 140px;
+      height: 130px;
       background: red;
       border-radius: 50%;
     }
 
     .heart-center::before {
-      top: -60px;
+      top: -70px;
       left: 0;
     }
 
     .heart-center::after {
-      left: -60px;
+      left: -70px;
       top: 0;
     }
 
     @keyframes pulse {
-      0%, 100% {
-        transform: translate(-50%, -50%) rotate(-45deg) scale(1);
-      }
-      50% {
-        transform: translate(-50%, -50%) rotate(-45deg) scale(1.1);
-      }
+      0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.1); }
     }
 
     .center-text {
@@ -70,7 +79,7 @@
       font-size: 3em;
       color: #fff;
       text-shadow: 0 0 10px #ff69b4, 0 0 30px #ff69b4;
-      z-index: 2;
+      z-index: 3;
     }
 
     .footer {
@@ -82,9 +91,9 @@
       align-items: center;
       gap: 10px;
       font-size: 1.1em;
-      font-family: 'Fira Code', monospace;
+      font-family: Arial, sans-serif;
       color: #fff;
-      z-index: 2;
+      z-index: 4;
     }
 
     .footer img {
@@ -94,21 +103,27 @@
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
 
-  <!-- ❤️ قلب خلف العبارة -->
+  <!-- Matrix Hacker Code Background -->
+  <canvas class="matrix-bg" id="matrix"></canvas>
+
+  <!-- Glowing Heart -->
   <div class="heart-center"></div>
 
-  <!-- 💬 النص الرئيسي -->
+  <!-- Main Text -->
   <div class="center-text">I love You</div>
 
-  <!-- 📸 حساب إنستغرام -->
+  <!-- Instagram Tag -->
   <div class="footer">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="IG">
     <span>youssef.p999</span>
   </div>
 
+  <!-- Glowing Arcs -->
+  <canvas id="canvas"></canvas>
+
   <script>
+    // Arc Canvas
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -125,7 +140,7 @@
       ctx.shadowBlur = 0;
     }
 
-    function animate() {
+    function animateArcs() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
@@ -133,10 +148,43 @@
       drawArc(cx - 100, cy - 100, 100, Math.PI, 2 * Math.PI, '#ff00cc', 30);
       drawArc(cx + 100, cy + 100, 100, 0, Math.PI, '#00e0ff', 30);
 
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animateArcs);
     }
 
-    animate();
+    animateArcs();
+
+    // Matrix Background
+    const matrixCanvas = document.getElementById("matrix");
+    const mtx = matrixCanvas.getContext("2d");
+    matrixCanvas.width = window.innerWidth;
+    matrixCanvas.height = window.innerHeight;
+
+    const letters = "010101 javascript love function const let if else true false ❤️".split("");
+    const fontSize = 14;
+    const columns = matrixCanvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      mtx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      mtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+      mtx.fillStyle = "#00ff00";
+      mtx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        mtx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+
+      requestAnimationFrame(drawMatrix);
+    }
+
+    drawMatrix();
   </script>
 </body>
 </html>
