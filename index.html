@@ -1,101 +1,362 @@
-    window.addEventListener("pageshow", (e) => {
-      if (e.persisted) resetForm();
-    });
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>شحن منصّات المراهنات</title>
+<meta name="theme-color" content="#DD2A7B">
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e5e7eb; --card:#ffffff; --bg:#fafafa;
+    --grad1:#f58529; --grad2:#dd2a7b; --grad3:#8134af; --grad4:#515bd4;
+    --blue:#2563eb; --ok:#16a34a; --warn:#f59e0b; --danger:#ef4444;
+    --radius:18px; --shadow:0 8px 24px rgba(16,24,40,.08);
+  }
+  *{box-sizing:border-box}html,body{height:100%}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:980px;margin:0 auto;padding:16px 14px 80px}
+  .brand{
+    display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;
+    background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
+    -webkit-background-clip:text;background-clip:text;color:transparent
+  }
+  .nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:12px 14px}
+  .cta{
+    padding:10px 16px;border:none;border-radius:999px;color:#fff;font-weight:700;cursor:pointer;
+    background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
+    transition:transform .15s ease,opacity .15s ease
+  }
+  .cta:active{transform:scale(.98)}
+  .hero{
+    margin:18px auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden
+  }
+  .hero-top{
+    padding:28px;background:
+      radial-gradient(1200px 500px at 80% -100px, rgba(221,42,123,.18), transparent 60%),
+      radial-gradient(900px 500px at -40% -120px, rgba(81,91,212,.15), transparent 60%),
+      linear-gradient(135deg,#fff,#fff);
+  }
+  .title{font-size:22px;line-height:1.35;margin:0 0 10px}
+  .subtitle{color:var(--muted);font-size:14px}
+  .hero-actions{display:flex;gap:10px;margin-top:16px}
+  .ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .badge{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#fff}
+  .hero-bottom{padding:10px;background:
+    linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
+    height:6px}
+  .section{margin:22px 0}
+  .section h3{margin:0 0 12px;font-size:18px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(min-width:640px){.grid{grid-template-columns:repeat(4,1fr)}}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 2px 10px rgba(16,24,40,.03);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;cursor:pointer
+  }
+  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#d1d5db}
+  .icon{width:28px;height:28px;border-radius:10px;display:inline-grid;place-items:center;
+    background:linear-gradient(120deg,var(--grad2),var(--grad3));color:#fff}
+  .label{margin-top:8px;font-weight:700;font-size:13px}
+  .muted{font-size:12px;color:var(--muted)}
+  .steps{display:grid;gap:10px}
+  @media(min-width:640px){.steps{grid-template-columns:repeat(4,1fr)}}
+  .step{background:#fff;border:1px dashed #e2e8f0;border-radius:14px;padding:12px}
+  .trust{display:grid;gap:10px}
+  @media(min-width:640px){.trust{grid-template-columns:repeat(3,1fr)}}
+  .trust-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+  .trust-line{height:4px;border-radius:999px;background:
+    linear-gradient(90deg,rgba(22,163,74,.25),rgba(37,99,235,.25));margin-top:10px;overflow:hidden;position:relative}
+  .trust-line::after{
+    content:"";position:absolute;inset:0;width:40%;background:linear-gradient(90deg,rgba(22,163,74,.7),rgba(37,99,235,.7));
+    animation:shimmer 3.2s ease infinite
+  }
+  @keyframes shimmer{0%{transform:translateX(-120%)}100%{transform:translateX(260%)}}
+  .faq{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}
+  details{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0;background:#fff}
+  summary{cursor:pointer;font-weight:700}
+  .footer{margin-top:18px;padding:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+  /* Modal */
+  .overlay{position:fixed;inset:0;background:rgba(15,23,42,.4);backdrop-filter:saturate(120%) blur(6px);display:none;align-items:center;justify-content:center;z-index:50}
+  .overlay.show{display:flex}
+  .sheet{width:min(620px,92vw);background:#fff;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+  .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .sheet-body{padding:14px 16px}
+  .x{appearance:none;border:none;background:transparent;font-size:20px;cursor:pointer}
+  .field{display:grid;gap:6px;margin:10px 0}
+  .field input,.field select,.field textarea{
+    width:100%;padding:12px 12px;border:1px solid var(--line);border-radius:12px;font:inherit;background:#fff
+  }
+  .btn{
+    position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 16px;border:none;border-radius:12px;color:#fff;font-weight:800;background:#111;cursor:pointer;overflow:hidden
+  }
+  .btn .waves{position:absolute;inset:0;display:grid;grid-auto-flow:column;gap:8px;align-items:end;justify-content:center;opacity:0;pointer-events:none}
+  .waves span{width:6px;border-radius:999px;background:linear-gradient(180deg,var(--grad2),var(--grad4));height:6px;animation:none}
+  .btn.loading .waves{opacity:1}
+  .btn.loading .waves span{animation:wave 1.3s ease-in-out infinite}
+  .btn.loading .waves span:nth-child(2){animation-delay:.1s}
+  .btn.loading .waves span:nth-child(3){animation-delay:.2s}
+  .btn.loading .waves span:nth-child(4){animation-delay:.3s}
+  .btn.loading .waves span:nth-child(5){animation-delay:.4s}
+  @keyframes wave{0%{height:6px}50%{height:22px}100%{height:6px}}
+  .confirm{display:none;padding:12px;border:1px solid #d1fae5;background:#ecfdf5;border-radius:12px;color:#065f46;margin-top:10px}
+  .logo-dot{
+    width:26px;height:26px;border-radius:8px;background:
+    linear-gradient(120deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)
+  }
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        شحن<span>+</span> Insta-Style
+      </div>
+      <button class="cta" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">ابدأ الآن</button>
+    </div>
+  </header>
 
-    function login() {
-      const platform = document.getElementById("platform").value;
-      const userId = document.getElementById("userId").value.trim();
-      const btn = document.getElementById("submitBtn");
-      const loader = document.getElementById("loader");
-      const label = btn.querySelector(".label");
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-top">
+        <h1 class="title">شحن منصّاتك بسرعة وأمان – تصميم حديث يُوحي بالثقة</h1>
+        <p class="subtitle">اختر منصّتك، أدخل الـ ID، ادفع محليًا، ويتم التنفيذ خلال دقائق مع متابعة فورية.</p>
+        <div class="hero-actions">
+          <button class="cta" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">اختَر المنصّة</button>
+          <button class="cta ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">من نحن</button>
+        </div>
+        <div class="badges">
+          <span class="badge">دعم فوري</span>
+          <span class="badge">تأكيد آلي</span>
+          <span class="badge">طرق دفع محلية</span>
+          <span class="badge">حماية بيانات</span>
+        </div>
+      </div>
+      <div class="hero-bottom"></div>
+    </section>
 
-      if (!platform) {
-        showMessage("اختر المنصة.");
-        return;
+    <section id="platforms" class="section">
+      <h3>اختيار المنصّة</h3>
+      <div id="platformGrid" class="grid"></div>
+    </section>
+
+    <section class="section">
+      <h3>كيف تتم العملية؟</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="icon" aria-hidden="true">①</div>
+          <div class="label">اختيار المنصّة</div>
+          <div class="muted">اختر من القائمة المعتمدة.</div>
+        </div>
+        <div class="step">
+          <div class="icon">②</div>
+          <div class="label">إدخال الـ ID</div>
+          <div class="muted">اكتب معرف حسابك بدقة.</div>
+        </div>
+        <div class="step">
+          <div class="icon">③</div>
+          <div class="label">الدفع</div>
+          <div class="muted">حوّل المبلغ بالطريقة المناسبة.</div>
+        </div>
+        <div class="step">
+          <div class="icon">④</div>
+          <div class="label">تنفيذ وتأكيد</div>
+          <div class="muted">نتتبّع الطلب ونرسل لك تأكيدًا.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>عناصر الثقة</h3>
+      <div class="trust">
+        <div class="trust-item">
+          <strong>حماية وأمان</strong>
+          <div class="muted">تشفير على مستوى الاتصال وحماية بيانات الدفع.</div>
+          <div class="trust-line"></div>
+        </div>
+        <div class="trust-item">
+          <strong>شفافية في الحالة</strong>
+          <div class="muted">لوحة تتبّع فورية لحالة طلبك خطوة بخطوة.</div>
+          <div class="trust-line"></div>
+        </div>
+        <div class="trust-item">
+          <strong>دعم حقيقي</strong>
+          <div class="muted">فريق دعم متاح للرد السريع والاستفسارات.</div>
+          <div class="trust-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h3>من نحن</h3>
+      <div class="faq">
+        <p>نقدّم خدمة شحن منصّات المراهنة الرقمية مع التزام تام بالوضوح والسرعة والأمان. نركّز على تجربة مستخدم سلسة، ودفع محلي، وتأكيد فوري.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>الأسئلة الشائعة</h3>
+      <div class="faq">
+        <details>
+          <summary>كم يستغرق تنفيذ الطلب؟</summary>
+          <p>عادةً دقائق معدودة بعد تأكيد الدفع. في حالات نادرة قد يتأخر الطلب بسبب صيانة المنصّة.</p>
+        </details>
+        <details>
+          <summary>ما طرق الدفع المتاحة؟</summary>
+          <p>تحويلات محلية (مثلاً: وكالات، بطاقات بنك محلية، محافظ رقمية) وفق المتاح لديك.</p>
+        </details>
+        <details>
+          <summary>هل يمكن إلغاء الطلب؟</summary>
+          <p>قبل التنفيذ نعم؛ بعد التنفيذ لا يمكن، لكن نساعدك بحلول بديلة عند الحاجة.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© 2025 — خدمة شحن منصّات رقمية. جميع العلامات المذكورة ملك لأصحابها.</div>
+      <div style="margin-top:6px">تنبيه: الشحن يخضع لشروط المنصّات والقوانين المحلية الخاصة ببلدك. الرجاء الاستخدام المسؤول.</div>
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div class="overlay" id="modal">
+    <div class="sheet">
+      <div class="sheet-head">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="logo-dot" aria-hidden="true"></span>
+          <strong id="sheetTitle">طلب شحن</strong>
+        </div>
+        <button class="x" onclick="closeModal()" aria-label="إغلاق">×</button>
+      </div>
+      <div class="sheet-body">
+        <form id="chargeForm">
+          <input type="hidden" name="platform" id="platformInput">
+          <div class="field">
+            <label for="userId">معرّف الحساب (ID) أو البريد داخل المنصّة</label>
+            <input id="userId" name="userId" required placeholder="اكتب الـ ID بدقة">
+          </div>
+          <div class="field">
+            <label for="amount">المبلغ المطلوب شحنه</label>
+            <input id="amount" name="amount" type="number" min="10" step="10" required placeholder="مثال: 200">
+          </div>
+          <div class="field">
+            <label for="paymethod">طريقة الدفع</label>
+            <select id="paymethod" name="paymethod" required>
+              <option value="" selected disabled>اختر طريقة الدفع</option>
+              <option>بطاقة بنكية</option>
+              <option>تحويل عبر وكالة</option>
+              <option>محفظة رقمية</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="note">ملاحظة (اختياري)</label>
+            <textarea id="note" name="note" rows="3" placeholder="تفاصيل إضافية إن وجدت"></textarea>
+          </div>
+          <button id="submitBtn" class="btn" type="submit">
+            <span>تنفيذ الطلب</span>
+            <div class="waves" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </button>
+          <div id="confirmBox" class="confirm">تم استلام طلبك! جارٍ المعالجة وسيصلك التأكيد.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ——— قائمة المنصّات (عدّلها بأسماءك النهائية) ———
+  const platforms = [
+    {key:'1xbet', name:'1xBet'},
+    {key:'linebet', name:'Linebet'},
+    {key:'melbet', name:'Melbet'},
+    {key:'22bet', name:'22Bet'},
+    {key:'paripesa', name:'Paripesa'},
+    {key:'betwinner', name:'Betwinner'},
+    {key:'mostbet', name:'Mostbet'},
+    {key:'megapari', name:'MegaPari'},
+    {key:'888starz', name:'888Starz'},
+    {key:'mystake', name:'MyStake'},
+    {key:'stake', name:'Stake (Crypto)'},
+    {key:'xparibet', name:'Xparibet'}
+  ];
+
+  // أيقونة عامة (بدون شعارات رسمية)
+  function iconSVG(){
+    return `
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 7.5C4 6.12 5.12 5 6.5 5h11c1.38 0 2.5 1.12 2.5 2.5v9c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 19 4 17.88 4 16.5v-9Z" stroke="url(#g1)" stroke-width="1.6" />
+      <path d="M4 9.5h16" stroke="url(#g2)" stroke-width="1.6"/>
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="24" y2="24">
+          <stop stop-color="#dd2a7b"/><stop offset="1" stop-color="#8134af"/>
+        </linearGradient>
+        <linearGradient id="g2" x1="0" y1="0" x2="24" y2="24">
+          <stop stop-color="#f58529"/><stop offset="1" stop-color="#515bd4"/>
+        </linearGradient>
+      </defs>
+    </svg>`;
+  }
+
+  // رسم الشبكة
+  const grid = document.getElementById('platformGrid');
+  platforms.forEach(p=>{
+    const card = document.createElement('button');
+    card.className='card';
+    card.innerHTML = `
+      <div class="icon">${iconSVG()}</div>
+      <div class="label">${p.name}</div>
+      <div class="muted">شحن سريع</div>
+    `;
+    card.addEventListener('click', ()=>openModal(p.name, p.key));
+    grid.appendChild(card);
+  });
+
+  // فتح/غلق النافذة
+  const modal = document.getElementById('modal');
+  function openModal(name, key){
+    document.getElementById('sheetTitle').textContent = `طلب شحن — ${name}`;
+    document.getElementById('platformInput').value = key;
+    modal.classList.add('show');
+  }
+  function closeModal(){ modal.classList.remove('show'); }
+  modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+
+  // إرسال النموذج مع تحريك موجات داخل الزر
+  const form = document.getElementById('chargeForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const confirmBox = document.getElementById('confirmBox');
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    submitBtn.classList.add('loading');
+    submitBtn.setAttribute('disabled','disabled');
+    confirmBox.style.display='none';
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    try{
+      // بدّل هذا الرابط إلى نهايتك (Apps Script أو سيرفر)
+      const endpoint = 'YOUR_FORM_ENDPOINT_HERE';
+      // إن لم يكن لديك باك-إند بعد، نفّذ محاكاة:
+      if(endpoint==='YOUR_FORM_ENDPOINT_HERE'){
+        await new Promise(r=>setTimeout(r, 1300)); // محاكاة معالجة
+      }else{
+        await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
       }
-
-      if (!userId) {
-        showMessage("أدخل المعرّف.");
-        return;
-      }
-
-      if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId)) {
-        showMessage("المعرف غير معتمد. الرجاء التحقق.");
-        return;
-      }
-
-      if (isRepeatedDigits(userId)) {
-        showMessage("المعرف غير معتمد. الرجاء التحقق.");
-        return;
-      }
-
-      btn.disabled = true;
-      btn.classList.add("opacity-50", "cursor-not-allowed");
-      loader.classList.remove("hidden");
-      label.classList.add("hidden");
-      document.getElementById("platform").disabled = true;
-      document.getElementById("userId").disabled = true;
-
-      localStorage.setItem("platform", platform);
-      localStorage.setItem("userId", userId);
-
-      fetch("https://script.google.com/macros/s/AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ platform, userId })
-      }).finally(() => {
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 800);
-      });
+      confirmBox.style.display='block';
+      form.reset();
+    }catch(err){
+      alert('تعذّر الإرسال، حاول لاحقًا.');
+      console.error(err);
+    }finally{
+      submitBtn.classList.remove('loading');
+      submitBtn.removeAttribute('disabled');
     }
-
-    document.getElementById("oneClickTab").addEventListener("click", () => {
-      document.getElementById("platform").value = "";
-      document.getElementById("selectedText").textContent = "اختر المنصة";
-      document.getElementById("userId").value = "";
-      document.getElementById("message").className = "fade";
-      document.getElementById("message").textContent = "";
-      resetForm();
-    });
-
-    const dropdownBtn = document.getElementById("dropdownBtn");
-    const dropdownList = document.getElementById("dropdownList");
-    const selectedText = document.getElementById("selectedText");
-    const platformInput = document.getElementById("platform");
-
-    dropdownBtn.addEventListener("click", () => {
-      dropdownList.classList.toggle("hidden");
-    });
-
-    document.querySelectorAll(".dropdown-item").forEach(item => {
-      item.addEventListener("click", () => {
-        const value = item.getAttribute("data-value");
-        platformInput.value = value;
-        dropdownList.classList.add("hidden");
-
-        if (value === "Mega pari") {
-          selectedText.innerHTML = `<span>Mega pari</span><img src="https://i.postimg.cc/rpcLHHcP/recharge.png" alt="Mega pari" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Linbet") {
-          selectedText.innerHTML = `<span>Linbet</span><img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Gooobet") {
-          selectedText.innerHTML = `<span>Gooobet</span><img src="https://i.postimg.cc/kXwF06xF/recharge.webp" alt="Gooobet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "1xbet") {
-          selectedText.innerHTML = `<span>1xbet</span><img src="https://i.postimg.cc/yx8Wcdks/recharge.jpg" alt="1xbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Melbet") {
-          selectedText.innerHTML = `<span>Melbet</span><img src="https://i.postimg.cc/JzVMW0M0/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else {
-          selectedText.textContent = value;
-        }
-      });
-    });
-
-    window.addEventListener("click", function(e) {
-      if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
-        dropdownList.classList.add("hidden");
-      }
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
