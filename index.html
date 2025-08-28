@@ -3,88 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>WinCash – شحن منصّاتك بسرعة وأمان</title>
+<title>شحن منصّات المراهنات</title>
 <meta name="theme-color" content="#DD2A7B">
 <style>
   :root{
-    --ink:#0f172a; --muted:#64748b; --line:#e5e7eb; --card:#ffffff; --bg:#f8fafc;
+    --ink:#0f172a; --muted:#64748b; --line:#e5e7eb; --card:#ffffff; --bg:#fafafa;
     --grad1:#f58529; --grad2:#dd2a7b; --grad3:#8134af; --grad4:#515bd4;
-    --radius:18px; --shadow:0 10px 28px rgba(16,24,40,.08);
+    --blue:#2563eb; --ok:#16a34a; --warn:#f59e0b; --danger:#ef4444;
+    --radius:18px; --shadow:0 8px 24px rgba(16,24,40,.08);
   }
-  *{box-sizing:border-box}
-  html,body{height:100%}
+  *{box-sizing:border-box}html,body{height:100%}
   body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink)}
   a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-  .wrap{max-width:1024px;margin:0 auto;padding:16px 14px 90px}
-  /* NAV */
-  .nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line)}
-  .nav-inner{max-width:1024px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:12px 14px}
+  .wrap{max-width:980px;margin:0 auto;padding:16px 14px 80px}
   .brand{
-    display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px;
+    display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;
     background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
     -webkit-background-clip:text;background-clip:text;color:transparent
   }
-  .logo-dot{width:26px;height:26px;border-radius:8px;background:linear-gradient(120deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+  .nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:12px 14px}
   .cta{
-    padding:10px 16px;border:none;border-radius:999px;color:#fff;font-weight:800;cursor:pointer;
+    padding:10px 16px;border:none;border-radius:999px;color:#fff;font-weight:700;cursor:pointer;
     background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
     transition:transform .15s ease,opacity .15s ease
   }
   .cta:active{transform:scale(.98)}
-  /* HERO */
-  .hero{margin:18px auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .hero{
+    margin:18px auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden
+  }
   .hero-top{
-    padding:28px;
-    background:
-      radial-gradient(1200px 500px at 80% -100px, rgba(221,42,123,.07), transparent 60%),
-      radial-gradient(900px 500px at -40% -120px, rgba(81,91,212,.06), transparent 60%),
+    padding:28px;background:
+      radial-gradient(1200px 500px at 80% -100px, rgba(221,42,123,.18), transparent 60%),
+      radial-gradient(900px 500px at -40% -120px, rgba(81,91,212,.15), transparent 60%),
       linear-gradient(135deg,#fff,#fff);
   }
   .title{font-size:22px;line-height:1.35;margin:0 0 10px}
   .subtitle{color:var(--muted);font-size:14px}
-  .hero-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-  .hero-bottom{height:6px;background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4))}
+  .hero-actions{display:flex;gap:10px;margin-top:16px}
+  .ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
   .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   .badge{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#fff}
-  /* SECTIONS */
+  .hero-bottom{padding:10px;background:
+    linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
+    height:6px}
   .section{margin:22px 0}
   .section h3{margin:0 0 12px;font-size:18px}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   @media(min-width:640px){.grid{grid-template-columns:repeat(4,1fr)}}
   .card{
     background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 2px 10px rgba(16,24,40,.03);
-    transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;cursor:pointer
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;cursor:pointer
   }
   .card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#d1d5db}
-  .icon{width:28px;height:28px;border-radius:10px;display:inline-grid;place-items:center;background:linear-gradient(120deg,var(--grad2),var(--grad3));color:#fff}
-  .label{margin-top:8px;font-weight:800;font-size:13px}
+  .icon{width:28px;height:28px;border-radius:10px;display:inline-grid;place-items:center;
+    background:linear-gradient(120deg,var(--grad2),var(--grad3));color:#fff}
+  .label{margin-top:8px;font-weight:700;font-size:13px}
   .muted{font-size:12px;color:var(--muted)}
   .steps{display:grid;gap:10px}
   @media(min-width:640px){.steps{grid-template-columns:repeat(4,1fr)}}
   .step{background:#fff;border:1px dashed #e2e8f0;border-radius:14px;padding:12px}
-  /* TRUST */
   .trust{display:grid;gap:10px}
   @media(min-width:640px){.trust{grid-template-columns:repeat(3,1fr)}}
   .trust-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
-  .trust-line{height:4px;border-radius:999px;background:linear-gradient(90deg,rgba(22,163,74,.25),rgba(37,99,235,.25));margin-top:10px;overflow:hidden;position:relative}
-  .trust-line::after{content:"";position:absolute;inset:0;width:40%;background:linear-gradient(90deg,rgba(22,163,74,.7),rgba(37,99,235,.7));animation:shimmer 3.2s ease infinite}
+  .trust-line{height:4px;border-radius:999px;background:
+    linear-gradient(90deg,rgba(22,163,74,.25),rgba(37,99,235,.25));margin-top:10px;overflow:hidden;position:relative}
+  .trust-line::after{
+    content:"";position:absolute;inset:0;width:40%;background:linear-gradient(90deg,rgba(22,163,74,.7),rgba(37,99,235,.7));
+    animation:shimmer 3.2s ease infinite
+  }
   @keyframes shimmer{0%{transform:translateX(-120%)}100%{transform:translateX(260%)}}
-  /* FAQ */
   .faq{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}
   details{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0;background:#fff}
-  summary{cursor:pointer;font-weight:800}
-  /* FOOTER */
+  summary{cursor:pointer;font-weight:700}
   .footer{margin-top:18px;padding:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
-  /* MODAL */
+  /* Modal */
   .overlay{position:fixed;inset:0;background:rgba(15,23,42,.4);backdrop-filter:saturate(120%) blur(6px);display:none;align-items:center;justify-content:center;z-index:50}
   .overlay.show{display:flex}
-  .sheet{width:min(640px,92vw);background:#fff;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+  .sheet{width:min(620px,92vw);background:#fff;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
   .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
   .sheet-body{padding:14px 16px}
   .x{appearance:none;border:none;background:transparent;font-size:20px;cursor:pointer}
   .field{display:grid;gap:6px;margin:10px 0}
-  .field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font:inherit;background:#fff}
+  .field input,.field select,.field textarea{
+    width:100%;padding:12px 12px;border:1px solid var(--line);border-radius:12px;font:inherit;background:#fff
+  }
   .btn{
     position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
     padding:12px 16px;border:none;border-radius:12px;color:#fff;font-weight:800;background:#111;cursor:pointer;overflow:hidden
@@ -99,41 +102,32 @@
   .btn.loading .waves span:nth-child(5){animation-delay:.4s}
   @keyframes wave{0%{height:6px}50%{height:22px}100%{height:6px}}
   .confirm{display:none;padding:12px;border:1px solid #d1fae5;background:#ecfdf5;border-radius:12px;color:#065f46;margin-top:10px}
-  /* GALLERY */
-  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-  @media(min-width:640px){.gallery{grid-template-columns:repeat(4,1fr)}}
-  .g-item{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;cursor:zoom-in}
-  .g-item img{aspect-ratio:1/1;object-fit:cover;loading:lazy;transition:transform .25s ease}
-  .g-item:hover img{transform:scale(1.02)}
-  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:60}
-  .lightbox.show{display:flex}
-  .lightbox img{max-width:92vw;max-height:92vh;border-radius:12px}
-  .lb-nav{position:absolute;inset-inline:0;top:50%;display:flex;justify-content:space-between;pointer-events:none}
-  .lb-btn{pointer-events:auto;user-select:none;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;padding:10px 14px;margin:0 8px;font-weight:800;cursor:pointer}
-  .lb-close{position:absolute;top:14px;inset-inline-start:14px;background:#fff;border:none;border-radius:8px;padding:8px 10px;font-weight:900;cursor:pointer}
+  .logo-dot{
+    width:26px;height:26px;border-radius:8px;background:
+    linear-gradient(120deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)
+  }
 </style>
 </head>
 <body>
-  <!-- NAV -->
   <header class="nav">
     <div class="nav-inner">
       <div class="brand">
         <span class="logo-dot"></span>
-        WinCash
+        شحن<span>+</span> Insta-Style
       </div>
       <button class="cta" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">ابدأ الآن</button>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-top">
-        <h1 class="title">شحن منصّاتك بسرعة وأمان — تصميم حديث يُوحي بالثقة</h1>
+        <h1 class="title">شحن منصّاتك بسرعة وأمان – تصميم حديث يُوحي بالثقة</h1>
         <p class="subtitle">اختر منصّتك، أدخل الـ ID، ادفع محليًا، ويتم التنفيذ خلال دقائق مع متابعة فورية.</p>
         <div class="hero-actions">
           <button class="cta" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">اختَر المنصّة</button>
-          <button class="cta" style="background:#111" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">معرض الصور</button>
+          <button class="cta ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">من نحن</button>
         </div>
         <div class="badges">
           <span class="badge">دعم فوري</span>
@@ -145,72 +139,90 @@
       <div class="hero-bottom"></div>
     </section>
 
-    <!-- PLATFORMS -->
     <section id="platforms" class="section">
       <h3>اختيار المنصّة</h3>
       <div id="platformGrid" class="grid"></div>
     </section>
 
-    <!-- STEPS -->
     <section class="section">
       <h3>كيف تتم العملية؟</h3>
       <div class="steps">
-        <div class="step"><div class="icon">①</div><div class="label">اختيار المنصّة</div><div class="muted">اختر من القائمة المعتمدة.</div></div>
-        <div class="step"><div class="icon">②</div><div class="label">إدخال الـ ID</div><div class="muted">اكتب معرف حسابك بدقة.</div></div>
-        <div class="step"><div class="icon">③</div><div class="label">الدفع</div><div class="muted">حوّل المبلغ بالطريقة المناسبة.</div></div>
-        <div class="step"><div class="icon">④</div><div class="label">تنفيذ وتأكيد</div><div class="muted">نتتبّع الطلب ونرسل لك تأكيدًا.</div></div>
+        <div class="step">
+          <div class="icon" aria-hidden="true">①</div>
+          <div class="label">اختيار المنصّة</div>
+          <div class="muted">اختر من القائمة المعتمدة.</div>
+        </div>
+        <div class="step">
+          <div class="icon">②</div>
+          <div class="label">إدخال الـ ID</div>
+          <div class="muted">اكتب معرف حسابك بدقة.</div>
+        </div>
+        <div class="step">
+          <div class="icon">③</div>
+          <div class="label">الدفع</div>
+          <div class="muted">حوّل المبلغ بالطريقة المناسبة.</div>
+        </div>
+        <div class="step">
+          <div class="icon">④</div>
+          <div class="label">تنفيذ وتأكيد</div>
+          <div class="muted">نتتبّع الطلب ونرسل لك تأكيدًا.</div>
+        </div>
       </div>
     </section>
 
-    <!-- TRUST -->
     <section class="section">
       <h3>عناصر الثقة</h3>
       <div class="trust">
-        <div class="trust-item"><strong>حماية وأمان</strong><div class="muted">تشفير على مستوى الاتصال وحماية بيانات الدفع.</div><div class="trust-line"></div></div>
-        <div class="trust-item"><strong>شفافية في الحالة</strong><div class="muted">لوحة تتبّع فورية لحالة طلبك خطوة بخطوة.</div><div class="trust-line"></div></div>
-        <div class="trust-item"><strong>دعم حقيقي</strong><div class="muted">فريق دعم متاح للرد السريع والاستفسارات.</div><div class="trust-line"></div></div>
+        <div class="trust-item">
+          <strong>حماية وأمان</strong>
+          <div class="muted">تشفير على مستوى الاتصال وحماية بيانات الدفع.</div>
+          <div class="trust-line"></div>
+        </div>
+        <div class="trust-item">
+          <strong>شفافية في الحالة</strong>
+          <div class="muted">لوحة تتبّع فورية لحالة طلبك خطوة بخطوة.</div>
+          <div class="trust-line"></div>
+        </div>
+        <div class="trust-item">
+          <strong>دعم حقيقي</strong>
+          <div class="muted">فريق دعم متاح للرد السريع والاستفسارات.</div>
+          <div class="trust-line"></div>
+        </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="section">
       <h3>من نحن</h3>
       <div class="faq">
-        <p>WinCash منصة شحن رقمية تركّز على السرعة، الأمان، وتجربة مستخدم سلسة، مع دعم طرق الدفع المحلية وتأكيد فوري للحالة.</p>
+        <p>نقدّم خدمة شحن منصّات المراهنة الرقمية مع التزام تام بالوضوح والسرعة والأمان. نركّز على تجربة مستخدم سلسة، ودفع محلي، وتأكيد فوري.</p>
       </div>
     </section>
 
-    <!-- GALLERY -->
-    <section id="gallery" class="section">
-      <h3>معرض الصور</h3>
-      <div id="galleryGrid" class="gallery"></div>
-    </section>
-
-    <!-- FAQ -->
     <section class="section">
       <h3>الأسئلة الشائعة</h3>
       <div class="faq">
-        <details><summary>كم يستغرق تنفيذ الطلب؟</summary><p>عادةً دقائق معدودة بعد تأكيد الدفع. في حالات نادرة قد يتأخر الطلب بسبب صيانة المنصّة.</p></details>
-        <details><summary>ما طرق الدفع المتاحة؟</summary><p>تحويلات محلية (وكالات، بطاقات، محافظ رقمية) وفق المتاح.</p></details>
-        <details><summary>هل يمكن إلغاء الطلب؟</summary><p>قبل التنفيذ نعم؛ بعد التنفيذ لا يمكن، لكن نساعدك بحلول بديلة عند الحاجة.</p></details>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="section">
-      <h3>تواصل معنا</h3>
-      <div class="faq">
-        <p>البريد: <a id="contactEmail" href="#" rel="noopener">—</a></p>
+        <details>
+          <summary>كم يستغرق تنفيذ الطلب؟</summary>
+          <p>عادةً دقائق معدودة بعد تأكيد الدفع. في حالات نادرة قد يتأخر الطلب بسبب صيانة المنصّة.</p>
+        </details>
+        <details>
+          <summary>ما طرق الدفع المتاحة؟</summary>
+          <p>تحويلات محلية (مثلاً: وكالات، بطاقات بنك محلية، محافظ رقمية) وفق المتاح لديك.</p>
+        </details>
+        <details>
+          <summary>هل يمكن إلغاء الطلب؟</summary>
+          <p>قبل التنفيذ نعم؛ بعد التنفيذ لا يمكن، لكن نساعدك بحلول بديلة عند الحاجة.</p>
+        </details>
       </div>
     </section>
 
     <footer class="footer">
-      <div>© 2025 WinCash — خدمة شحن منصّات رقمية. جميع العلامات المذكورة ملك لأصحابها.</div>
+      <div>© 2025 — خدمة شحن منصّات رقمية. جميع العلامات المذكورة ملك لأصحابها.</div>
       <div style="margin-top:6px">تنبيه: الشحن يخضع لشروط المنصّات والقوانين المحلية الخاصة ببلدك. الرجاء الاستخدام المسؤول.</div>
     </footer>
   </main>
 
-  <!-- ORDER MODAL -->
+  <!-- Modal -->
   <div class="overlay" id="modal">
     <div class="sheet">
       <div class="sheet-head">
@@ -244,10 +256,6 @@
             <label for="note">ملاحظة (اختياري)</label>
             <textarea id="note" name="note" rows="3" placeholder="تفاصيل إضافية إن وجدت"></textarea>
           </div>
-          <div class="field">
-            <label for="email">بريدك للتأكيد</label>
-            <input id="email" name="email" type="email" placeholder="example@email.com">
-          </div>
           <button id="submitBtn" class="btn" type="submit">
             <span>تنفيذ الطلب</span>
             <div class="waves" aria-hidden="true">
@@ -260,21 +268,8 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lb-close" onclick="closeLightbox()">إغلاق</button>
-    <img id="lbImage" alt="">
-    <div class="lb-nav">
-      <button class="lb-btn" onclick="prevImg()">‹</button>
-      <button class="lb-btn" onclick="nextImg()">›</button>
-    </div>
-  </div>
-
 <script>
-  // ——— إعداد البريد (عدّل هنا) ———
-  const CONTACT_EMAIL = 'support@wincash.ma';
-
-  // ——— قائمة المنصّات ———
+  // ——— قائمة المنصّات (عدّلها بأسماءك النهائية) ———
   const platforms = [
     {key:'1xbet', name:'1xBet'},
     {key:'linebet', name:'Linebet'},
@@ -290,23 +285,7 @@
     {key:'xparibet', name:'Xparibet'}
   ];
 
-  // ——— صور المعرض (روابط مباشرة) ———
-  const galleryImages = [
-    'https://i.postimg.cc/Y0f8fCGj/IMG-1714.png',
-    // IMG-1713 لا يوجد رابط مباشر
-    'https://i.postimg.cc/2ym76NcY/IMG-1712.jpg',
-    'https://i.postimg.cc/h4b0Yhvt/IMG-1711.jpg',
-    'https://i.postimg.cc/7ZbMbVV5/IMG-1710.png',
-    'https://i.postimg.cc/qvYcK3bj/IMG-1709.png',
-    'https://i.postimg.cc/SsbWTpp9/IMG-1708.png',
-    'https://i.postimg.cc/gjN82XLy/IMG-1707.png',
-    'https://i.postimg.cc/zG9Wv1vQ/IMG-1706.jpg',
-    'https://i.postimg.cc/xdDJYyFD/IMG-1705.jpg',
-    'https://i.postimg.cc/nL4sLj6s/IMG-1704.jpg',
-    'https://i.postimg.cc/gjTj7v67/IMG-1703.png'
-  ];
-
-  // ——— أيقونة عامة ———
+  // أيقونة عامة (بدون شعارات رسمية)
   function iconSVG(){
     return `
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -323,7 +302,7 @@
     </svg>`;
   }
 
-  // ——— رسم المنصّات ———
+  // رسم الشبكة
   const grid = document.getElementById('platformGrid');
   platforms.forEach(p=>{
     const card = document.createElement('button');
@@ -337,24 +316,7 @@
     grid.appendChild(card);
   });
 
-  // ——— رسم المعرض ———
-  const galleryGrid = document.getElementById('galleryGrid');
-  galleryImages.forEach((src,idx)=>{
-    const item = document.createElement('div');
-    item.className = 'g-item';
-    const im = document.createElement('img');
-    im.src = src; im.alt = 'WinCash gallery image'; im.loading='lazy';
-    im.addEventListener('click', ()=>openLightbox(idx));
-    item.appendChild(im);
-    galleryGrid.appendChild(item);
-  });
-
-  // ——— تفعيل البريد في واجهة التواصل ———
-  const contactLink = document.getElementById('contactEmail');
-  contactLink.textContent = CONTACT_EMAIL;
-  contactLink.href = `mailto:${CONTACT_EMAIL}`;
-
-  // ——— فتح/غلق نافذة الطلب ———
+  // فتح/غلق النافذة
   const modal = document.getElementById('modal');
   function openModal(name, key){
     document.getElementById('sheetTitle').textContent = `طلب شحن — ${name}`;
@@ -364,7 +326,7 @@
   function closeModal(){ modal.classList.remove('show'); }
   modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
 
-  // ——— إرسال النموذج + موجات داخل الزر ———
+  // إرسال النموذج مع تحريك موجات داخل الزر
   const form = document.getElementById('chargeForm');
   const submitBtn = document.getElementById('submitBtn');
   const confirmBox = document.getElementById('confirmBox');
@@ -379,8 +341,9 @@
     try{
       // بدّل هذا الرابط إلى نهايتك (Apps Script أو سيرفر)
       const endpoint = 'YOUR_FORM_ENDPOINT_HERE';
+      // إن لم يكن لديك باك-إند بعد، نفّذ محاكاة:
       if(endpoint==='YOUR_FORM_ENDPOINT_HERE'){
-        await new Promise(r=>setTimeout(r, 1300)); // محاكاة
+        await new Promise(r=>setTimeout(r, 1300)); // محاكاة معالجة
       }else{
         await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
       }
@@ -394,17 +357,6 @@
       submitBtn.removeAttribute('disabled');
     }
   });
-
-  // ——— Lightbox ———
-  const lightbox = document.getElementById('lightbox');
-  const lbImage = document.getElementById('lbImage');
-  let currentIdx = 0;
-  function openLightbox(i){ currentIdx=i; lbImage.src = galleryImages[i]; lightbox.classList.add('show'); }
-  function closeLightbox(){ lightbox.classList.remove('show'); }
-  function prevImg(){ currentIdx = (currentIdx-1+galleryImages.length)%galleryImages.length; lbImage.src = galleryImages[currentIdx]; }
-  function nextImg(){ currentIdx = (currentIdx+1)%galleryImages.length; lbImage.src = galleryImages[currentIdx]; }
-  lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(); });
-  document.addEventListener('keydown', (e)=>{ if(!lightbox.classList.contains('show')) return; if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowLeft') prevImg(); if(e.key==='ArrowRight') nextImg(); });
 </script>
 </body>
 </html>
