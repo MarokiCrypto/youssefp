@@ -1,357 +1,279 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>WinCash — شحن منصّات المراهنات</title>
-<meta name="theme-color" content="#8A56F0">
-<style>
-  :root{
-    /* لوحة ألوان داكنة حديثة + لمسات إنستا هادئة */
-    --ink:#E5E7EB;            /* نص فاتح */
-    --muted:#9CA3AF;          /* نص ثانوي */
-    --line:#2a2f3a;           /* حدود خفيفة */
-    --card:#0f1320;           /* كروت */
-    --bg:#0b1020;             /* خلفية عامة */
-    --grad1:#f69c5e;          /* إنستا (مخفّف) */
-    --grad2:#dd2a7b;
-    --grad3:#8a56f0;
-    --grad4:#4f6af2;
-    --ok:#16a34a; --warn:#f59e0b; --danger:#ef4444;
-    --radius:18px; --shadow:0 10px 28px rgba(0,0,0,.35);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Tahoma,Arial,sans-serif;
-    background:
-      radial-gradient(1200px 600px at 10% -200px, rgba(221,42,123,.18), transparent 60%),
-      radial-gradient(1200px 600px at 110% -240px, rgba(79,106,242,.18), transparent 60%),
-      linear-gradient(180deg,#0b1020,#0a0f1d 30%, #0b1020);
-    color:var(--ink)
-  }
-  a{color:inherit;text-decoration:none}
-
-  /* ——— NAV ——— */
-  .nav{position:sticky;top:0;z-index:50;background:#0c1222cc;backdrop-filter:blur(8px);border-bottom:1px solid #151a25}
-  .nav-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
-  .brand{display:flex;align-items:center;gap:10px}
-  .logo-dot{
-    width:26px;height:26px;border-radius:8px;
-    background:conic-gradient(from 200deg, var(--grad1),var(--grad2),var(--grad3),var(--grad4),var(--grad1));
-    box-shadow:0 0 0 1px rgba(255,255,255,.22) inset, 0 6px 18px rgba(138,86,240,.35)
-  }
-  .brand-name{font-weight:900;letter-spacing:.2px}
-  .brand-name b{background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-
-  .cta{
-    padding:10px 16px;border:none;border-radius:999px;color:#0b1020;font-weight:800;cursor:pointer;
-    background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
-    box-shadow:0 8px 22px rgba(138,86,240,.25);transition:transform .15s ease,opacity .15s ease
-  }
-  .cta:active{transform:scale(.98)}
-
-  /* ——— WRAP ——— */
-  .wrap{max-width:980px;margin:0 auto;padding:18px 14px 90px}
-
-  /* ——— HERO ——— */
-  .hero{margin:14px 0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-  .hero-top{
-    padding:26px;
-    background:
-      radial-gradient(900px 430px at 90% -180px, rgba(221,42,123,.20), transparent 60%),
-      radial-gradient(900px 430px at -40% -180px, rgba(79,106,242,.18), transparent 60%),
-      linear-gradient(135deg,#0f1320,#0f1424);
-  }
-  .title{font-size:22px;line-height:1.35;margin:0 0 8px}
-  .subtitle{color:var(--muted);font-size:14px}
-  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-  .ghost{background:transparent;border:1px solid var(--line);color:#E5E7EB}
-  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-  .badge{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#10162a;color:#cbd5e1}
-  .hero-bottom{height:5px;background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4))}
-
-  /* ——— GRID ——— */
-  .section{margin:22px 0}
-  .section h3{margin:0 0 12px;font-size:18px}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-  @media(min-width:480px){.grid{grid-template-columns:repeat(3,1fr)}}
-  @media(min-width:760px){.grid{grid-template-columns:repeat(4,1fr)}}
-
-  .card{
-    background:#0f1426;border:1px solid var(--line);border-radius:16px;padding:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.25);
-    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-    cursor:pointer; text-align:center
-  }
-  .card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.35);border-color:#384055}
-  .icon{width:34px;height:34px;border-radius:12px;display:inline-grid;place-items:center;margin:2px auto 6px}
-  .icon span{font-weight:900;font-size:12px;color:#fff;letter-spacing:.3px}
-  .label{margin-top:4px;font-weight:800;font-size:13px}
-  .muted{font-size:12px;color:var(--muted)}
-
-  /* ——— STEPS / TRUST ——— */
-  .steps{display:grid;gap:10px}
-  @media(min-width:640px){.steps{grid-template-columns:repeat(4,1fr)}}
-  .step{background:#0f1426;border:1px dashed #2b3342;border-radius:14px;padding:12px}
-  .trust{display:grid;gap:10px}
-  @media(min-width:640px){.trust{grid-template-columns:repeat(3,1fr)}}
-  .trust-item{background:#0f1426;border:1px solid var(--line);border-radius:14px;padding:14px}
-  .trust-line{height:4px;border-radius:999px;background:linear-gradient(90deg,rgba(34,197,94,.25),rgba(79,106,242,.25));margin-top:10px;overflow:hidden;position:relative}
-  .trust-line::after{content:"";position:absolute;inset:0;width:38%;background:linear-gradient(90deg,rgba(34,197,94,.7),rgba(79,106,242,.7));animation:shimmer 3.2s ease infinite}
-  @keyframes shimmer{0%{transform:translateX(-120%)}100%{transform:translateX(260%)}}
-
-  /* ——— FAQ / FOOTER ——— */
-  .faq{background:#0f1426;border:1px solid var(--line);border-radius:16px;padding:12px}
-  details{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0;background:#10162a}
-  summary{cursor:pointer;font-weight:800}
-  .footer{margin-top:18px;padding:16px;border-top:1px solid #151a25;color:#9CA3AF;font-size:12px}
-
-  /* ——— Modal ——— */
-  .overlay{position:fixed;inset:0;background:rgba(4,6,12,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:80}
-  .overlay.show{display:flex}
-  .sheet{width:min(620px,92vw);background:#0f1426;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
-  .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
-  .sheet-body{padding:14px 16px}
-  .x{appearance:none;border:none;background:transparent;font-size:22px;cursor:pointer;color:#cbd5e1}
-  .field{display:grid;gap:6px;margin:10px 0}
-  .field input,.field select,.field textarea{
-    width:100%;padding:12px;border:1px solid #2b3342;border-radius:12px;font:inherit;background:#0c1222;color:#e5e7eb
-  }
-  .btn{
-    position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    width:100%;padding:12px 16px;border:none;border-radius:12px;color:#0b1020;font-weight:900;
-    background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3),var(--grad4));
-    cursor:pointer;overflow:hidden;box-shadow:0 10px 26px rgba(138,86,240,.28)
-  }
-  .btn .waves{position:absolute;inset:0;display:grid;grid-auto-flow:column;gap:8px;align-items:end;justify-content:center;opacity:0;pointer-events:none}
-  .waves span{width:6px;border-radius:999px;background:linear-gradient(180deg,var(--grad2),var(--grad4));height:6px;animation:none}
-  .btn.loading .waves{opacity:1}
-  .btn.loading .waves span{animation:wave 1.25s ease-in-out infinite}
-  .btn.loading .waves span:nth-child(2){animation-delay:.1s}
-  .btn.loading .waves span:nth-child(3){animation-delay:.2s}
-  .btn.loading .waves span:nth-child(4){animation-delay:.3s}
-  .btn.loading .waves span:nth-child(5){animation-delay:.4s}
-  @keyframes wave{0%{height:6px}50%{height:22px}100%{height:6px}}
-  .confirm{display:none;padding:12px;border:1px solid #14532d;background:#052e1b;border-radius:12px;color:#a7f3d0;margin-top:10px}
-</style>
+  <meta charset="UTF-8">
+  <title>InstaFly ✈️</title>
+  <style>
+    /* 🌈 Instagram Gradient Theme */
+    body {
+      margin: 0;
+      font-family: "Tajawal", sans-serif;
+      background: linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 18px;
+      width: 400px;
+      max-width: 95%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(20px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+    h1,h2,h3 {margin: 0 0 15px;}
+    input,button,select {
+      width: 100%;
+      margin: 6px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+    input,select {
+      background: rgba(255,255,255,0.9);
+      color: #333;
+    }
+    button {
+      cursor: pointer;
+      font-weight: bold;
+      background: white;
+      color: #6228d7;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ee2a7b;
+      color: white;
+    }
+    #game {display:none;}
+    #plane {
+      font-size: 80px;
+      margin-top: 20px;
+      transition: transform 0.2s linear;
+    }
+    #multiplier {
+      font-size: 36px;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+    .balance-box {
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .nav button {
+      flex: 1;
+      margin: 0 3px;
+      padding: 10px;
+      font-size: 14px;
+    }
+    .admin-panel {
+      margin-top: 20px;
+      display:none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.1);
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 13px;
+    }
+    th {background: rgba(0,0,0,0.4);}
+    td input {
+      width: 70px;
+      padding: 4px;
+      font-size: 12px;
+    }
+  </style>
 </head>
 <body>
-  <!-- NAV -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <span class="logo-dot" aria-hidden="true"></span>
-        <div class="brand-name">Win<b>Cash</b></div>
-      </div>
-      <button class="cta" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">ابدأ الآن</button>
-    </div>
-  </header>
 
-  <main class="wrap">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-top">
-        <h1 class="title">شحن منصّاتك بسرعة وأمان — تصميم حديث يُوحي بالثقة</h1>
-        <p class="subtitle">اختر منصّتك، أدخل الـ ID، ادفع محليًا، ويتم التنفيذ خلال دقائق مع متابعة فورية.</p>
-        <div class="hero-actions">
-          <button class="cta" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">اختَر المنصّة</button>
-          <button class="cta ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">من نحن</button>
-        </div>
-        <div class="badges">
-          <span class="badge">دعم فوري</span>
-          <span class="badge">تأكيد آلي</span>
-          <span class="badge">طرق دفع محلية</span>
-          <span class="badge">حماية بيانات</span>
-        </div>
-      </div>
-      <div class="hero-bottom"></div>
-    </section>
+<div id="auth" class="card">
+  <h1>InstaFly ✈️</h1>
+  <h3>تسجيل الدخول / إنشاء حساب</h3>
+  <input id="email" type="text" placeholder="الإيميل">
+  <input id="pass" type="password" placeholder="كلمة المرور">
+  <button onclick="register()">تسجيل جديد</button>
+  <button onclick="login()">دخول</button>
+</div>
 
-    <!-- PLATFORMS -->
-    <section id="platforms" class="section">
-      <h3>اختيار المنصّة</h3>
-      <div id="platformGrid" class="grid"></div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="section">
-      <h3>كيف تتم العملية؟</h3>
-      <div class="steps">
-        <div class="step"><div class="label">① اختيار المنصّة</div><div class="muted">اختر من القائمة المعتمدة.</div></div>
-        <div class="step"><div class="label">② إدخال الـ ID</div><div class="muted">اكتب معرف حسابك بدقة.</div></div>
-        <div class="step"><div class="label">③ الدفع</div><div class="muted">حوّل المبلغ بالطريقة المناسبة.</div></div>
-        <div class="step"><div class="label">④ تنفيذ وتأكيد</div><div class="muted">نتتبّع الطلب ونرسل لك تأكيدًا.</div></div>
-      </div>
-    </section>
-
-    <!-- TRUST -->
-    <section class="section">
-      <h3>عناصر الثقة</h3>
-      <div class="trust">
-        <div class="trust-item"><strong>حماية وأمان</strong><div class="muted">تشفير على مستوى الاتصال وحماية بيانات الدفع.</div><div class="trust-line"></div></div>
-        <div class="trust-item"><strong>شفافية في الحالة</strong><div class="muted">لوحة تتبّع فورية لحالة طلبك خطوة بخطوة.</div><div class="trust-line"></div></div>
-        <div class="trust-item"><strong>دعم حقيقي</strong><div class="muted">فريق دعم متاح للرد السريع والاستفسارات.</div><div class="trust-line"></div></div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="section">
-      <h3>من نحن</h3>
-      <div class="faq">
-        <p>WinCash خدمة شحن منصّات رقمية نركّز فيها على السرعة والوضوح والأمان، مع تجربة موبايل سلسة ودفع محلي وتأكيد فوري.</p>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section">
-      <h3>الأسئلة الشائعة</h3>
-      <div class="faq">
-        <details><summary>كم يستغرق تنفيذ الطلب؟</summary><p>عادةً دقائق معدودة بعد تأكيد الدفع. في حالات نادرة قد يتأخر الطلب بسبب صيانة المنصّة.</p></details>
-        <details><summary>ما طرق الدفع المتاحة؟</summary><p>تحويلات محلية (وكالات، بطاقات بنك محلية، محافظ رقمية) حسب المتاح.</p></details>
-        <details><summary>هل يمكن إلغاء الطلب؟</summary><p>قبل التنفيذ نعم؛ بعد التنفيذ لا يمكن، لكن نساعدك بحلول بديلة إن لزم.</p></details>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div>© 2025 — WinCash. جميع العلامات المذكورة ملك لأصحابها.</div>
-      <div style="margin-top:6px">تنبيه: الشحن يخضع لشروط المنصّات والقوانين المحلية. الرجاء الاستخدام المسؤول.</div>
-    </footer>
-  </main>
-
-  <!-- Modal -->
-  <div class="overlay" id="modal">
-    <div class="sheet">
-      <div class="sheet-head">
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="logo-dot" aria-hidden="true"></span>
-          <strong id="sheetTitle">طلب شحن</strong>
-        </div>
-        <button class="x" onclick="closeModal()" aria-label="إغلاق">×</button>
-      </div>
-      <div class="sheet-body">
-        <form id="chargeForm">
-          <input type="hidden" name="platform" id="platformInput">
-          <div class="field">
-            <label for="userId">معرّف الحساب (ID) أو البريد داخل المنصّة</label>
-            <input id="userId" name="userId" required placeholder="اكتب الـ ID بدقة">
-          </div>
-          <div class="field">
-            <label for="amount">المبلغ المطلوب شحنه</label>
-            <input id="amount" name="amount" type="number" min="10" step="10" required placeholder="مثال: 200">
-          </div>
-          <div class="field">
-            <label for="paymethod">طريقة الدفع</label>
-            <select id="paymethod" name="paymethod" required>
-              <option value="" selected disabled>اختر طريقة الدفع</option>
-              <option>بطاقة بنكية</option>
-              <option>تحويل عبر وكالة</option>
-              <option>محفظة رقمية</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="note">ملاحظة (اختياري)</label>
-            <textarea id="note" name="note" rows="3" placeholder="تفاصيل إضافية إن وجدت"></textarea>
-          </div>
-          <button id="submitBtn" class="btn" type="submit">
-            <span>تنفيذ الطلب</span>
-            <div class="waves" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </button>
-          <div id="confirmBox" class="confirm">تم استلام طلبك! جارٍ المعالجة وسيصلك التأكيد.</div>
-        </form>
-      </div>
-    </div>
+<div id="game" class="card">
+  <div class="nav">
+    <button onclick="showGame()">🎮 اللعبة</button>
+    <button onclick="showAdmin()">👑 الأدمن</button>
+    <button onclick="logout()">🚪 خروج</button>
   </div>
 
+  <h2>مرحبا <span id="userName"></span></h2>
+  <div class="balance-box">💰 الرصيد: <span id="balance"></span> MAD</div>
+
+  <div id="gameArea">
+    <input id="bet" type="number" min="150" placeholder="أدخل المبلغ (>=150)">
+    <button onclick="startGame()">ابدأ الرهان</button>
+    <button onclick="cashOut()">سحب</button>
+    <div id="plane">🛩️</div>
+    <div id="multiplier">x1.00</div>
+  </div>
+
+  <div id="adminPanel" class="admin-panel">
+    <h3>لوحة تحكم الأدمن</h3>
+    <table id="usersTable">
+      <thead>
+        <tr>
+          <th>الإيميل</th>
+          <th>الرصيد</th>
+          <th>تعديل</th>
+          <th>مسح</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
 <script>
-  /* ——— قائمة المنصّات + “لوغو” نصّي لكل خانة ———
-     ملاحظة: إذا عندك صورة شعار حقيقية، أضف خاصية img:"رابط.png"
-     وسيتم استخدامها تلقائيًا بدل الدائرة النصّية. */
-  const platforms = [
-    {key:'22bet',    name:'22Bet',     tag:'22', grad:['#4f6af2','#8a56f0']},
-    {key:'melbet',   name:'Melbet',    tag:'MB', grad:['#dd2a7b','#8a56f0']},
-    {key:'linebet',  name:'Linebet',   tag:'LB', grad:['#f69c5e','#dd2a7b']},
-    {key:'1xbet',    name:'1xBet',     tag:'1X', grad:['#4f6af2','#58a6ff']},
-    {key:'megapari', name:'MegaPari',  tag:'MP', grad:['#8a56f0','#4f6af2']},
-    {key:'mostbet',  name:'Mostbet',   tag:'MS', grad:['#dd2a7b','#f69c5e']},
-    {key:'betwinner',name:'Betwinner', tag:'BW', grad:['#34d399','#4f6af2']},
-    {key:'paripesa', name:'Paripesa',  tag:'PP', grad:['#8a56f0','#dd2a7b']},
-    {key:'888starz', name:'888Starz',  tag:'88', grad:['#f69c5e','#8a56f0']},
-    {key:'mystake',  name:'MyStake',   tag:'MS', grad:['#58a6ff','#4f6af2']},
-    {key:'stake',    name:'Stake (Crypto)', tag:'SK', grad:['#4f6af2','#2dd4bf']},
-    {key:'xparibet', name:'Xparibet',  tag:'XP', grad:['#dd2a7b','#4f6af2']}
-  ];
+let currentUser=null, balance=0, bet=0, multiplier=1.00, crashed=false, timer, crashPoint;
 
-  const grid = document.getElementById('platformGrid');
-
-  function badgeIcon(p){
-    if(p.img){
-      return `<div class="icon" style="background:#0e1222;border:1px solid #2b3342">
-                <img src="${p.img}" alt="" style="width:20px;height:20px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(0,0,0,.4))">
-              </div>`;
-    }
-    const [c1,c2] = p.grad || ['#dd2a7b','#8a56f0'];
-    return `<div class="icon" style="background:linear-gradient(120deg, ${c1}, ${c2});box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)">
-              <span>${p.tag || '★'}</span>
-            </div>`;
+// ------------------------- USER SYSTEM ---------------------------
+function saveUser(u){
+  localStorage.setItem("user_"+u.email, JSON.stringify(u));
+}
+function loadUser(email){
+  return JSON.parse(localStorage.getItem("user_"+email));
+}
+function allUsers(){
+  let arr=[];
+  for(let i=0;i<localStorage.length;i++){
+    let k=localStorage.key(i);
+    if(k.startsWith("user_")) arr.push(JSON.parse(localStorage.getItem(k)));
   }
-
-  platforms.forEach(p=>{
-    const card = document.createElement('button');
-    card.className='card';
-    card.innerHTML = `
-      ${badgeIcon(p)}
-      <div class="label">${p.name}</div>
-      <div class="muted">شحن سريع</div>
-    `;
-    card.addEventListener('click', ()=>openModal(p.name, p.key));
-    grid.appendChild(card);
-  });
-
-  // Modal
-  const modal = document.getElementById('modal');
-  function openModal(name, key){
-    document.getElementById('sheetTitle').textContent = `طلب شحن — ${name}`;
-    document.getElementById('platformInput').value = key;
-    modal.classList.add('show');
+  return arr;
+}
+function register(){
+  let email=document.getElementById("email").value.trim();
+  let pass=document.getElementById("pass").value.trim();
+  if(!email||!pass){alert("مطلوب إيميل وباسورد");return;}
+  if(loadUser(email)){alert("الحساب موجود!");return;}
+  let role = email==="admin@instafly.com" ? "admin" : "user";
+  let u={email,password:pass,balance:1000,role};
+  saveUser(u);
+  alert("تم التسجيل.");
+}
+function login(){
+  let email=document.getElementById("email").value.trim();
+  let pass=document.getElementById("pass").value.trim();
+  let u=loadUser(email);
+  if(!u||u.password!==pass){alert("بيانات خاطئة");return;}
+  currentUser=u; balance=u.balance;
+  document.getElementById("userName").innerText=email;
+  document.getElementById("balance").innerText=balance;
+  document.getElementById("auth").style.display="none";
+  document.getElementById("game").style.display="block";
+  showGame();
+}
+function logout(){
+  currentUser=null;
+  document.getElementById("auth").style.display="block";
+  document.getElementById("game").style.display="none";
+}
+function updateUserBalance(email,newBalance){
+  let u=loadUser(email);
+  if(u){u.balance=newBalance;saveUser(u);}
+  if(currentUser&&currentUser.email===email){
+    balance=newBalance;
+    document.getElementById("balance").innerText=balance;
   }
-  function closeModal(){ modal.classList.remove('show'); }
-  modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+}
 
-  // Form submission + موجات التحميل
-  const form = document.getElementById('chargeForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const confirmBox = document.getElementById('confirmBox');
-
-  form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    submitBtn.classList.add('loading');
-    submitBtn.setAttribute('disabled','disabled');
-    confirmBox.style.display='none';
-
-    const data = Object.fromEntries(new FormData(form).entries());
-    try{
-      const endpoint = 'YOUR_FORM_ENDPOINT_HERE'; // غيّرها بـ Apps Script أو API
-      if(endpoint==='YOUR_FORM_ENDPOINT_HERE'){
-        await new Promise(r=>setTimeout(r, 1300)); // محاكاة
-      }else{
-        await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-      }
-      confirmBox.style.display='block';
-      form.reset();
-    }catch(err){
-      alert('تعذّر الإرسال، حاول لاحقًا.');
-      console.error(err);
-    }finally{
-      submitBtn.classList.remove('loading');
-      submitBtn.removeAttribute('disabled');
+// ------------------------- GAME LOGIC ----------------------------
+function startGame(){
+  bet=parseInt(document.getElementById("bet").value);
+  if(isNaN(bet)||bet<150){alert("الحد الأدنى 150 MAD");return;}
+  if(bet>balance){alert("رصيد غير كافي");return;}
+  balance-=bet; updateUserBalance(currentUser.email,balance);
+  document.getElementById("balance").innerText=balance;
+  multiplier=1.00; crashed=false;
+  crashPoint=(Math.random()*30).toFixed(2);
+  document.getElementById("multiplier").innerText="x1.00";
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    if(multiplier>=crashPoint){
+      crashed=true; clearInterval(timer);
+      alert("💥 الطائرة تفركعت عند x"+multiplier.toFixed(2));
+      bet=0; updateUserBalance(currentUser.email,balance);
+    }else{
+      multiplier+=0.05;
+      document.getElementById("multiplier").innerText="x"+multiplier.toFixed(2);
+      document.getElementById("plane").style.transform=`translateY(-${multiplier*5}px)`;
     }
+  },200);
+}
+function cashOut(){
+  if(!crashed && bet>0){
+    let profit=(bet*multiplier).toFixed(2);
+    balance+=parseFloat(profit);
+    updateUserBalance(currentUser.email,balance);
+    document.getElementById("balance").innerText=balance;
+    alert("✅ سحبت "+profit+" MAD عند x"+multiplier.toFixed(2));
+    clearInterval(timer); bet=0;
+  }
+}
+
+// ------------------------- ADMIN PANEL ---------------------------
+function showAdmin(){
+  if(!currentUser||currentUser.role!=="admin"){
+    alert("ليست لك صلاحية الأدمن"); return;
+  }
+  document.getElementById("gameArea").style.display="none";
+  document.getElementById("adminPanel").style.display="block";
+  renderUsers();
+}
+function showGame(){
+  document.getElementById("gameArea").style.display="block";
+  document.getElementById("adminPanel").style.display="none";
+}
+function renderUsers(){
+  let tbody=document.querySelector("#usersTable tbody");
+  tbody.innerHTML="";
+  allUsers().forEach(u=>{
+    let tr=document.createElement("tr");
+    tr.innerHTML=`<td>${u.email}</td>
+      <td>${u.balance}</td>
+      <td>
+        <input type="number" value="${u.balance}" id="bal_${u.email}">
+        <button onclick="changeBal('${u.email}')">✔️</button>
+      </td>
+      <td><button onclick="delUser('${u.email}')">🗑️</button></td>`;
+    tbody.appendChild(tr);
   });
+}
+function changeBal(email){
+  let val=parseInt(document.getElementById("bal_"+email).value);
+  updateUserBalance(email,val);
+  renderUsers();
+}
+function delUser(email){
+  localStorage.removeItem("user_"+email);
+  renderUsers();
+}
 </script>
+
 </body>
 </html>
