@@ -10,7 +10,7 @@
       background-size:400% 400%;animation:gradientMove 12s ease infinite;
       color:white;min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:20px;}
     @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    .card{background:rgba(0,0,0,0.6);padding:20px;border-radius:18px;width:460px;max-width:95%;box-shadow:0 10px 30px rgba(0,0,0,0.5);margin:10px auto;}
+    .card{background:rgba(0,0,0,0.6);padding:20px;border-radius:18px;width:460px;max-width:95%;box-shadow:0 10px 30px rgba(0,0,0,0.5);margin:10px auto;animation:fadeIn .6s ease;}
     h1,h2,h3{margin:0 0 15px;text-align:center;}
     input,button,select{width:100%;margin:6px 0;padding:12px;border:none;border-radius:10px;font-size:15px;}
     input,select{background:#fff;color:#333}
@@ -18,16 +18,20 @@
     button:hover{background:#ee2a7b;color:white;transform:scale(1.05)}
     .hidden{display:none}
     .games-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
-    .game-btn{background:#fff;color:#6228d7;padding:14px;border-radius:10px;font-weight:bold;cursor:pointer}
-    .game-btn:hover{background:#f9ce34;color:#000}
+    .game-btn{background:#fff;color:#6228d7;padding:14px;border-radius:10px;font-weight:bold;cursor:pointer;transition:.3s}
+    .game-btn:hover{background:#f9ce34;color:#000;transform:scale(1.05)}
     table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
     th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;text-align:center}
     th{background:rgba(0,0,0,0.4)}
+    .winEffect{animation:glow 1s ease;}
+    @keyframes glow{0%{text-shadow:0 0 5px #0f0;}100%{text-shadow:0 0 20px #0f0;}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
     @media (max-width:600px){
-      .card{width:95%;padding:15px;}
+      .card{width:100%;padding:12px;margin:5px;}
       input,button,select{font-size:14px;padding:10px;}
-      h1,h2,h3{font-size:18px;}
+      h1,h2,h3{font-size:16px;}
       .games-grid{grid-template-columns:1fr;}
+      table{font-size:11px;}
     }
   </style>
 </head>
@@ -172,7 +176,7 @@ function updateUI(){
 }
 function getBet(){
   let v=parseInt(document.getElementById("betAmount").value);
-  if(currentUser.balance<v){alert("Not enough balance");return null;}
+  if(currentUser.balance<v){alert("💸 Not enough balance, recharge!");return null;}
   return v;
 }
 function forceResult(){return currentUser.mode||"normal";}
@@ -195,8 +199,20 @@ function renderUsers(){
     tbody.appendChild(tr);
   });
 }
-function updateBal(email){let u=loadUser(email);u.balance=parseInt(document.getElementById("bal_"+email).value);saveUser(u);renderUsers();}
-function changeMode(email){let u=loadUser(email);u.mode=document.getElementById("mode_"+email).value;saveUser(u);renderUsers();}
+function updateBal(email){
+  let u=loadUser(email);
+  u.balance=parseInt(document.getElementById("bal_"+email).value);
+  saveUser(u);
+  if(currentUser && currentUser.email===email){currentUser=u;updateUI();}
+  renderUsers();
+}
+function changeMode(email){
+  let u=loadUser(email);
+  u.mode=document.getElementById("mode_"+email).value;
+  saveUser(u);
+  if(currentUser && currentUser.email===email){currentUser=u;}
+  renderUsers();
+}
 
 /* Transactions */
 function addHistory(type,amount){
@@ -303,7 +319,7 @@ function clickMine(i,btn){
   if(!minesActive)return;soundClick();
   let bet=getBet();if(!bet)return;
   let mode=forceResult();
-  if(mode==="lose"||minesData[i]){
+  if(mode==="lose"|| (mode==="normal" && minesData[i])){
     btn.innerText="💣";btn.style.background="#ff4444";currentUser.balance-=bet;minesActive=false;
     document.getElementById("minesResult").innerText="❌ Boom! -"+bet;soundLose();addHistory("Lose",bet);
   }else{
