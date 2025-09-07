@@ -10,7 +10,7 @@
       background-size:400% 400%;animation:gradientMove 12s ease infinite;
       color:white;min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:20px;}
     @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    .card{background:rgba(0,0,0,0.6);padding:20px;border-radius:18px;width:480px;max-width:95%;box-shadow:0 10px 30px rgba(0,0,0,0.5);margin:10px auto;}
+    .card{background:rgba(0,0,0,0.6);padding:20px;border-radius:18px;width:460px;max-width:95%;box-shadow:0 10px 30px rgba(0,0,0,0.5);margin:10px auto;}
     h1,h2,h3{margin:0 0 15px;text-align:center;}
     input,button,select{width:100%;margin:6px 0;padding:12px;border:none;border-radius:10px;font-size:15px;}
     input{background:#fff;color:#333}
@@ -23,166 +23,171 @@
     table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
     th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;text-align:center}
     th{background:rgba(0,0,0,0.4)}
-    .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;}
-    .modal-content{background:#222;padding:20px;border-radius:12px;width:320px;text-align:center;}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
-    .cell{background:#fff;color:#000;padding:20px;border-radius:6px;cursor:pointer;font-weight:bold;}
+    @keyframes glowWin{0%{box-shadow:0 0 10px #ffd700;}50%{box-shadow:0 0 25px #ffd700;}100%{box-shadow:0 0 10px #ffd700;}}
+    @keyframes shakeLose{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}50%{transform:translateX(8px);}75%{transform:translateX(-8px);}}
+    .win-effect{animation:glowWin 1s ease;}
+    .lose-effect{animation:shakeLose 0.5s ease;}
   </style>
 </head>
 <body>
 
-<!-- 🎮 Dashboard -->
-<div id="dashboard" class="card">
-  <h2>مرحبا بك في InstaPlay 🎮</h2>
-  <p>💰 رصيدك: <span id="balance">20</span> $</p>
-
-  <div class="games-grid">
-    <div class="game-btn" onclick="openGame('Coin')">🪙 Coin</div>
-    <div class="game-btn" onclick="openGame('Dice')">🎲 Dice</div>
-    <div class="game-btn" onclick="openGame('Mines')">💣 Mines</div>
-    <div class="game-btn" onclick="openGame('Wheel')">🎡 Wheel</div>
-    <div class="game-btn" onclick="openGame('RPS')">✊✋✌️ RPS</div>
-    <div class="game-btn" onclick="openGame('Slot')">🎰 Slot</div>
-  </div>
-
-  <h3>📜 سجلي</h3>
-  <table><thead><tr><th>🎮 اللعبة</th><th>📊 النتيجة</th><th>🕒 الوقت</th></tr></thead><tbody id="userTx"></tbody></table>
+<!-- 🔐 تسجيل -->
+<div id="auth" class="card">
+  <h1>🎮 InstaPlay</h1>
+  <h3>تسجيل الدخول / إنشاء حساب</h3>
+  <input id="name" type="text" placeholder="الاسم الكامل">
+  <input id="email" type="text" placeholder="الإيميل">
+  <input id="pass" type="password" placeholder="كلمة المرور">
+  <button onclick="register()">تسجيل جديد</button>
+  <button onclick="login()">دخول</button>
 </div>
 
-<!-- 👑 الأدمن -->
-<div class="card">
+<!-- 🎮 Dashboard -->
+<div id="dashboard" class="card hidden">
+  <h2>مرحبا <span id="userName"></span></h2>
+  <p>ID: <span id="userId"></span></p>
+  <p>💰 الرصيد: <span id="balance"></span> $</p>
+  <button onclick="activateDemo()">🎁 تفعيل الرصيد التجريبي</button>
+
+  <div class="games-grid">
+    <div class="game-btn" onclick="playCoin()">🪙 Coin</div>
+    <div class="game-btn" onclick="playDice()">🎲 Dice</div>
+    <div class="game-btn" onclick="playMines()">💣 Mines</div>
+    <div class="game-btn" onclick="playWheel()">🎡 Wheel</div>
+    <div class="game-btn" onclick="playRPS()">✊✋✌️ RPS</div>
+    <div class="game-btn" onclick="playSlot()">🎰 Slot</div>
+  </div>
+
+  <button onclick="showStats()">📊 إحصائياتي</button>
+
+  <h3>📜 سجلي</h3>
+  <table><thead><tr><th>🎮 اللعبة</th><th>💵 الرهان</th><th>📊 النتيجة</th><th>🕒 الوقت</th></tr></thead><tbody id="userTx"></tbody></table>
+  <button onclick="logout()">🚪 خروج</button>
+</div>
+
+<!-- 📊 إحصائياتي -->
+<div id="statsCard" class="card hidden">
+  <h2>📊 إحصائياتي</h2>
+  <table>
+    <tr><th>🎮 الألعاب الملعوبة</th><td id="statGames">0</td></tr>
+    <tr><th>💰 مجموع الأرباح</th><td id="statWins">0</td></tr>
+    <tr><th>💸 مجموع الخسائر</th><td id="statLosses">0</td></tr>
+    <tr><th>💵 الرصيد الحالي</th><td id="statBalance">0</td></tr>
+  </table>
+  <button onclick="backToDash()">⬅️ رجوع</button>
+</div>
+
+<!-- 👑 لوحة الأدمن -->
+<div id="adminPanel" class="card hidden">
   <h3>لوحة تحكم الأدمن</h3>
+  <label>🎛️ وضع النتيجة:</label>
   <select id="forceResult">
     <option value="random">🎲 عشوائي</option>
     <option value="win">✅ ربح دائم</option>
     <option value="lose">❌ خسارة دائمة</option>
   </select>
+
+  <table id="usersTable"><thead><tr><th>اسم</th><th>ID</th><th>رصيد</th><th>تعديل</th></tr></thead><tbody></tbody></table>
+  <h3>📜 سجل العمليات</h3>
+  <table><thead><tr><th>👤 اللاعب</th><th>🎮 اللعبة</th><th>💵</th><th>📊</th><th>🕒</th></tr></thead><tbody id="adminTx"></tbody></table>
 </div>
 
-<!-- نافذة اللعبة -->
-<div id="gameModal" class="modal hidden">
-  <div class="modal-content" id="modalContent"></div>
-</div>
+<!-- 🎵 أصوات -->
+<audio id="winSound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3"></audio>
+<audio id="loseSound" src="https://assets.mixkit.co/sfx/preview/mixkit-losing-bleeps-2026.mp3"></audio>
+<audio id="coinSound" src="https://assets.mixkit.co/sfx/preview/mixkit-coin-classic-1992.mp3"></audio>
+<audio id="diceSound" src="https://assets.mixkit.co/sfx/preview/mixkit-dice-throw-1801.mp3"></audio>
+<audio id="wheelSound" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-wheel-spin-1465.mp3"></audio>
+<audio id="mineExplode" src="https://assets.mixkit.co/sfx/preview/mixkit-explosion-in-battle-2809.mp3"></audio>
+<audio id="mineSafe" src="https://assets.mixkit.co/sfx/preview/mixkit-quick-win-video-game-notification-269.mp3"></audio>
+<audio id="rpsSound" src="https://assets.mixkit.co/sfx/preview/mixkit-sword-slash-swoosh-1470.mp3"></audio>
+<audio id="slotSound" src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-win-1931.mp3"></audio>
 
 <script>
-let balance=20;
-let currentGame="";
+/* Admin ثابت */
+const ADMIN_NAME="youssef";
+const ADMIN_EMAIL="yousssef@gmail.com";
+const ADMIN_PASS="1234567890$";
 
-/* سجل */
-function logTx(game,result){
-  let tx=document.getElementById("userTx");
-  let tr=document.createElement("tr");
-  tr.innerHTML=`<td>${game}</td><td>${result}</td><td>${new Date().toLocaleTimeString()}</td>`;
-  tx.prepend(tr);
+let currentUser=null;
+
+/* Helpers */
+function uid(){return "UID"+Math.floor(Math.random()*99999);}
+function saveUser(u){localStorage.setItem("user_"+u.email,JSON.stringify(u));}
+function loadUser(e){return JSON.parse(localStorage.getItem("user_"+e));}
+function allUsers(){let a=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k.startsWith("user_"))a.push(JSON.parse(localStorage.getItem(k)));}return a;}
+function hideAll(){["auth","dashboard","statsCard","adminPanel"].forEach(id=>document.getElementById(id).classList.add("hidden"));}
+function show(id){document.getElementById(id).classList.remove("hidden");}
+
+/* تسجيل */
+function register(){
+  let name=document.getElementById("name").value.trim();
+  let email=document.getElementById("email").value.trim();
+  let pass=document.getElementById("pass").value.trim();
+  if(!email||!pass||!name){alert("كل الحقول مطلوبة");return;}
+  if(loadUser(email)){alert("الحساب موجود");return;}
+  let role=(email===ADMIN_EMAIL)?"admin":"user";
+  let u={name,email,password:pass,balance:20,id:uid(),role,tx:[]};
+  saveUser(u);alert("تم التسجيل (رصيد ابتدائي 20$).");
 }
+function login(){
+  let email=document.getElementById("email").value.trim();
+  let pass=document.getElementById("pass").value.trim();
+  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){
+    currentUser={name:ADMIN_NAME,email:ADMIN_EMAIL,role:"admin",balance:0,id:"ADMIN",tx:[]};
+    hideAll();show("adminPanel");renderUsers();renderTx();return;
+  }
+  let u=loadUser(email);
+  if(!u||u.password!==pass){alert("بيانات خاطئة");return;}
+  currentUser=u;updateUI();hideAll();show("dashboard");
+}
+function logout(){currentUser=null;hideAll();show("auth");}
+function updateUser(u){saveUser(u);if(currentUser&&currentUser.email===u.email){document.getElementById("balance").innerText=u.balance;}}
 
-/* التحكم في النتيجة */
+/* Dashboard */
+function updateUI(){document.getElementById("userName").innerText=currentUser.name;document.getElementById("userId").innerText=currentUser.id;document.getElementById("balance").innerText=currentUser.balance;renderUserTx();saveUser(currentUser);}
+function activateDemo(){if(currentUser.balance===0&&!currentUser.demoUsed){currentUser.balance=20;currentUser.demoUsed=true;alert("🎁 رصيد تجريبي 20$");updateUI();}else{alert("⚠️ لا يمكن تفعيل الديمو مرة أخرى.");}}
+function renderUserTx(){let tx=document.getElementById("userTx");tx.innerHTML="";if(currentUser.tx){currentUser.tx.forEach(t=>{let tr=document.createElement("tr");tr.innerHTML=`<td>${t.game}</td><td>${t.bet}$</td><td>${t.result}</td><td>${t.time}</td>`;tx.appendChild(tr);});}}
+function logTx(game,bet,result){let time=new Date().toLocaleString();currentUser.tx.unshift({game,bet,result,time});if(currentUser.tx.length>50)currentUser.tx.pop();saveUser(currentUser);}
+
+/* Admin */
+function renderUsers(){let tbody=document.querySelector("#usersTable tbody");tbody.innerHTML="";allUsers().forEach(u=>{let tr=document.createElement("tr");tr.innerHTML=`<td>${u.name}</td><td>${u.id}</td><td>${u.balance}$</td><td><input type="number" value="${u.balance}" id="bal_${u.email}"><button onclick="changeBal('${u.email}')">✔️</button></td>`;tbody.appendChild(tr);});}
+function changeBal(email){let val=parseInt(document.getElementById("bal_"+email).value);let u=loadUser(email);u.balance=val;updateUser(u);renderUsers();}
+function renderTx(){let tx=document.getElementById("adminTx");tx.innerHTML="";allUsers().forEach(u=>{if(u.tx){u.tx.forEach(t=>{let tr=document.createElement("tr");tr.innerHTML=`<td>${u.name}</td><td>${t.game}</td><td>${t.bet}$</td><td>${t.result}</td><td>${t.time}</td>`;tx.appendChild(tr);});}});}
+
+/* تحكم في النتيجة */
 function decideResult(){
-  let mode=document.getElementById("forceResult").value;
+  let mode=document.getElementById("forceResult") ? document.getElementById("forceResult").value : "random";
   if(mode==="win") return true;
   if(mode==="lose") return false;
   return Math.random()<0.5;
 }
 
-/* فتح لعبة */
-function openGame(name){
-  currentGame=name;
-  let modal=document.getElementById("modalContent");
-
-  if(name==="Coin"){
-    modal.innerHTML=`<h3>🪙 Coin Flip</h3>
-      <button onclick="playCoin('وجه')">وجه</button>
-      <button onclick="playCoin('ظهر')">ظهر</button>
-      <button onclick="closeGame()">❌ إغلاق</button>`;
-  }
-  if(name==="Dice"){
-    modal.innerHTML=`<h3>🎲 Dice</h3>
-      <p>اختر رقم:</p>
-      <div class="grid">
-        ${[1,2,3,4,5,6].map(n=>`<div class='cell' onclick="playDice(${n})">${n}</div>`).join("")}
-      </div>
-      <button onclick="closeGame()">❌ إغلاق</button>`;
-  }
-  if(name==="Mines"){
-    modal.innerHTML=`<h3>💣 Mines</h3>
-      <p>اختر خانة:</p>
-      <div class="grid">
-        ${Array(9).fill(0).map((_,i)=>`<div class='cell' onclick="playMines(${i})">?</div>`).join("")}
-      </div>
-      <button onclick="closeGame()">❌ إغلاق</button>`;
-  }
-  if(name==="Wheel"){
-    modal.innerHTML=`<h3>🎡 Wheel</h3>
-      <p>اضغط لتدوير العجلة</p>
-      <button onclick="playWheel()">🎡 Spin</button>
-      <button onclick="closeGame()">❌ إغلاق</button>`;
-  }
-  if(name==="RPS"){
-    modal.innerHTML=`<h3>✊✋✌️ RPS</h3>
-      <button onclick="playRPS('حجرة')">✊ حجرة</button>
-      <button onclick="playRPS('ورقة')">✋ ورقة</button>
-      <button onclick="playRPS('مقص')">✌️ مقص</button>
-      <button onclick="closeGame()">❌ إغلاق</button>`;
-  }
-  if(name==="Slot"){
-    modal.innerHTML=`<h3>🎰 Slot Machine</h3>
-      <p>اضغط للتدوير</p>
-      <button onclick="playSlot()">🎰 Spin</button>
-      <button onclick="closeGame()">❌ إغلاق</button>`;
-  }
-  document.getElementById("gameModal").classList.remove("hidden");
-}
-function closeGame(){document.getElementById("gameModal").classList.add("hidden");}
-
 /* ألعاب */
-function playCoin(choice){
-  let win=decideResult();
-  if(win){balance+=5;logTx("Coin","ربحت");alert(`✅ ${choice} ربح!`);}
-  else{balance-=5;logTx("Coin","خسرت");alert(`❌ ${choice} خسر!`);}
-  document.getElementById("balance").innerText=balance;closeGame();
-}
-
-function playDice(choice){
-  let dice=Math.floor(Math.random()*6)+1;
-  let win=(dice===choice && decideResult());
-  if(win){balance+=10;logTx("Dice","ربحت");alert(`🎲 ${dice} ✅ ربحت!`);}
-  else{balance-=10;logTx("Dice","خسرت");alert(`🎲 ${dice} ❌ خسرت!`);}
-  document.getElementById("balance").innerText=balance;closeGame();
-}
-
-function playMines(index){
-  let win=decideResult();
-  if(win){balance+=8;logTx("Mines","Safe");alert("💎 Safe!");}
-  else{balance-=8;logTx("Mines","خسرت");alert("💣 انفجار! خسرت");}
-  document.getElementById("balance").innerText=balance;closeGame();
-}
-
-function playWheel(){
-  let win=decideResult();
-  let sectors=["10$","Lose","5$","Lose","20$","Lose"];
-  let pick=sectors[Math.floor(Math.random()*sectors.length)];
-  if(win && pick!=="Lose"){balance+=parseInt(pick);logTx("Wheel","ربحت "+pick);alert("✅ ربحت "+pick);}
-  else{balance-=10;logTx("Wheel","خسرت");alert("❌ خسرت!");}
-  document.getElementById("balance").innerText=balance;closeGame();
-}
-
-function playRPS(choice){
-  let options=["حجرة","ورقة","مقص"];
-  let comp=options[Math.floor(Math.random()*3)];
-  let win=decideResult();
-  if(win){balance+=6;logTx("RPS","فزت");alert(`انت: ${choice} | خصم: ${comp} ✅ فزت!`);}
-  else{balance-=6;logTx("RPS","خسرت");alert(`انت: ${choice} | خصم: ${comp} ❌ خسرت!`);}
-  document.getElementById("balance").innerText=balance;closeGame();
-}
-
-function playSlot(){
-  let symbols=["🍒","🍋","⭐","💎"];
-  let spin=[symbols[Math.floor(Math.random()*4)],symbols[Math.floor(Math.random()*4)],symbols[Math.floor(Math.random()*4)]];
-  let win=decideResult();
-  if(win){balance+=15;logTx("Slot","Jackpot");alert("🎰 "+spin.join(" ")+" ✅ Jackpot!");}
-  else{balance-=15;logTx("Slot","خسرت");alert("🎰 "+spin.join(" ")+" ❌ خسرت!");}
-  document.getElementById("balance").innerText=balance;closeGame();
-}
+function playCoin(){document.getElementById("coinSound").play();let win=decideResult();
+  if(win){document.getElementById("winSound").play();alert("✅ ربحت!");currentUser.balance+=5;logTx("Coin",5,"ربحت");}
+  else{document.getElementById("loseSound").play();alert("❌ خسرت!");currentUser.balance=Math.max(0,currentUser.balance-5);logTx("Coin",5,"خسرت");}
+  updateUI();}
+function playDice(){document.getElementById("diceSound").play();let roll=Math.floor(Math.random()*6)+1;let win=decideResult();
+  if(win){document.getElementById("winSound").play();alert("🎲 "+roll+" ✅ ربحت!");currentUser.balance+=10;logTx("Dice",10,"ربحت");}
+  else{document.getElementById("loseSound").play();alert("🎲 "+roll+" ❌ خسرت!");currentUser.balance=Math.max(0,currentUser.balance-10);logTx("Dice",10,"خسرت");}
+  updateUI();}
+function playMines(){let win=decideResult();
+  if(win){document.getElementById("mineSafe").play();alert("💎 Safe!");currentUser.balance+=8;logTx("Mines",8,"Safe");}
+  else{document.getElementById("mineExplode").play();alert("💣 انفجار!");currentUser.balance=Math.max(0,currentUser.balance-8);logTx("Mines",8,"خسرت");}
+  updateUI();}
+function playWheel(){document.getElementById("wheelSound").play();let sectors=["10$","Lose","5$","Lose","20$","Lose"];let pick=sectors[Math.floor(Math.random()*sectors.length)];let win=decideResult();
+  if(win&&pick!=="Lose"){document.getElementById("winSound").play();alert("✅ ربحت "+pick);currentUser.balance+=parseInt(pick);logTx("Wheel",10,"ربحت "+pick);}
+  else{document.getElementById("loseSound").play();alert("❌ خسرت!");currentUser.balance=Math.max(0,currentUser.balance-10);logTx("Wheel",10,"خسرت");}
+  updateUI();}
+function playRPS(){document.getElementById("rpsSound").play();let options=["حجرة","ورقة","مقص"];let comp=options[Math.floor(Math.random()*3)];let win=decideResult();
+  if(win){document.getElementById("winSound").play();alert(`انت فزت ضد ${comp}`);currentUser.balance+=6;logTx("RPS",6,"فزت");}
+  else{document.getElementById("loseSound").play();alert(`انت خسرت ضد ${comp}`);currentUser.balance=Math.max(0,currentUser.balance-6);logTx("RPS",6,"خسرت");}
+  updateUI();}
+function playSlot(){document.getElementById("slotSound").play();let symbols=["🍒","🍋","⭐","💎"];let spin=[symbols[Math.floor(Math.random()*4)],symbols[Math.floor(Math.random()*4)],symbols[Math.floor(Math.random()*4)]];let win=decideResult();
+  if(win){document.getElementById("winSound").play();alert("🎰 "+spin.join(" ")+" ✅ Jackpot!");currentUser.balance+=15;logTx("Slot",15,"Jackpot");}
+  else{document.getElementById("loseSound").play();alert("🎰 "+spin.join(" ")+" ❌ خسرت!");currentUser.balance=Math.max(0,currentUser.balance-15);logTx("Slot",15,"خسرت");}
+  updateUI();}
 </script>
 </body>
 </html>
