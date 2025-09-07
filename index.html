@@ -4,116 +4,46 @@
   <meta charset="UTF-8">
   <title>InstaFly ✈️</title>
   <style>
-    /* 🌈 Instagram Gradient Theme */
     body {
-      margin: 0;
-      font-family: "Tajawal", sans-serif;
-      background: linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7);
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin:0;font-family:"Tajawal",sans-serif;
+      background:linear-gradient(-45deg,#f9ce34,#ee2a7b,#6228d7,#f9ce34);
+      background-size:400% 400%;animation:gradientMove 12s ease infinite;
+      color:white;min-height:100vh;display:flex;justify-content:center;align-items:center;
     }
-    .card {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 18px;
-      width: 400px;
-      max-width: 95%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      animation: fadeIn 1s ease;
-    }
-    @keyframes fadeIn {
-      from {opacity:0; transform:translateY(20px);}
-      to {opacity:1; transform:translateY(0);}
-    }
-    h1,h2,h3 {margin: 0 0 15px;}
-    input,button,select {
-      width: 100%;
-      margin: 6px 0;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-    }
-    input,select {
-      background: rgba(255,255,255,0.9);
-      color: #333;
-    }
-    button {
-      cursor: pointer;
-      font-weight: bold;
-      background: white;
-      color: #6228d7;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #ee2a7b;
-      color: white;
-    }
-    #game {display:none;}
-    #plane {
-      font-size: 80px;
-      margin-top: 20px;
-      transition: transform 0.2s linear;
-    }
-    #multiplier {
-      font-size: 36px;
-      margin: 10px 0;
-      font-weight: bold;
-    }
-    .balance-box {
-      background: rgba(255,255,255,0.1);
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .nav button {
-      flex: 1;
-      margin: 0 3px;
-      padding: 10px;
-      font-size: 14px;
-    }
-    .admin-panel {
-      margin-top: 20px;
-      display:none;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(255,255,255,0.1);
-      margin-top: 10px;
-    }
-    th, td {
-      padding: 6px;
-      border: 1px solid rgba(255,255,255,0.2);
-      font-size: 13px;
-    }
-    th {background: rgba(0,0,0,0.4);}
-    td input {
-      width: 70px;
-      padding: 4px;
-      font-size: 12px;
-    }
+    @keyframes gradientMove {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+    .card {background:rgba(0,0,0,0.6);padding:25px;border-radius:18px;width:420px;max-width:95%;
+      box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+    h1,h2,h3{margin:0 0 15px;}
+    input,button {width:100%;margin:6px 0;padding:12px;border:none;border-radius:10px;font-size:15px;}
+    input{background:rgba(255,255,255,0.9);color:#333;}
+    button{cursor:pointer;font-weight:bold;background:white;color:#6228d7;transition:.3s;}
+    button:hover{background:#ee2a7b;color:white;}
+    #game{display:none;}
+    #plane{font-size:80px;margin:20px 0;transition:transform .2s linear;}
+    #multiplier{font-size:50px;font-weight:bold;text-shadow:0 0 15px #fff,0 0 25px lime;}
+    .balance-box{background:rgba(255,255,255,0.1);padding:10px;border-radius:10px;margin-bottom:15px;}
+    .nav{display:flex;justify-content:space-between;margin-bottom:20px;}
+    .nav button{flex:1;margin:0 3px;}
+    table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
+    th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;}
+    th{background:rgba(0,0,0,0.4);}
+    .live-bets,.leaderboard{margin-top:15px;background:rgba(0,0,0,0.4);padding:10px;border-radius:10px;max-height:150px;overflow-y:auto;}
   </style>
 </head>
 <body>
 
+<!-- 🔐 تسجيل -->
 <div id="auth" class="card">
-  <h1>InstaFly ✈️</h1>
+  <h1>✈️ InstaFly</h1>
   <h3>تسجيل الدخول / إنشاء حساب</h3>
+  <input id="name" type="text" placeholder="الاسم الكامل">
   <input id="email" type="text" placeholder="الإيميل">
   <input id="pass" type="password" placeholder="كلمة المرور">
   <button onclick="register()">تسجيل جديد</button>
   <button onclick="login()">دخول</button>
 </div>
 
+<!-- 🎮 اللعبة -->
 <div id="game" class="card">
   <div class="nav">
     <button onclick="showGame()">🎮 اللعبة</button>
@@ -122,156 +52,127 @@
   </div>
 
   <h2>مرحبا <span id="userName"></span></h2>
-  <div class="balance-box">💰 الرصيد: <span id="balance"></span> MAD</div>
+  <p>ID: <span id="userId"></span></p>
+  <div class="balance-box">💰 الرصيد: <span id="balance"></span> $</div>
 
   <div id="gameArea">
-    <input id="bet" type="number" min="150" placeholder="أدخل المبلغ (>=150)">
+    <input id="bet" type="number" min="1" placeholder="أدخل المبلغ">
     <button onclick="startGame()">ابدأ الرهان</button>
     <button onclick="cashOut()">سحب</button>
     <div id="plane">🛩️</div>
     <div id="multiplier">x1.00</div>
+
+    <div class="live-bets"><h4>💬 رهانات</h4><div id="betsLog"></div></div>
+    <div class="leaderboard"><h4>🏆 المتصدرون</h4><div id="topPlayers"></div></div>
+
+    <h4>🔄 شحن / سحب</h4>
+    <button>إرسال طلب شحن</button>
+    <button>إرسال طلب سحب</button>
   </div>
 
-  <div id="adminPanel" class="admin-panel">
+  <div id="adminPanel" style="display:none;">
     <h3>لوحة تحكم الأدمن</h3>
-    <table id="usersTable">
-      <thead>
-        <tr>
-          <th>الإيميل</th>
-          <th>الرصيد</th>
-          <th>تعديل</th>
-          <th>مسح</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <table id="usersTable"><thead><tr><th>اسم</th><th>ID</th><th>رصيد</th><th>تعديل</th></tr></thead><tbody></tbody></table>
   </div>
 </div>
 
 <script>
-let currentUser=null, balance=0, bet=0, multiplier=1.00, crashed=false, timer, crashPoint;
+let currentUser=null,balance=0,bet=0,multiplier=1,crashed=false,timer,crashPoint,betsHistory=[];
+function uid(){return "UID"+Math.floor(Math.random()*99999);}
+function saveUser(u){localStorage.setItem("user_"+u.email,JSON.stringify(u));}
+function loadUser(e){return JSON.parse(localStorage.getItem("user_"+e));}
+function allUsers(){let a=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k.startsWith("user_"))a.push(JSON.parse(localStorage.getItem(k)));}return a;}
 
-// ------------------------- USER SYSTEM ---------------------------
-function saveUser(u){
-  localStorage.setItem("user_"+u.email, JSON.stringify(u));
-}
-function loadUser(email){
-  return JSON.parse(localStorage.getItem("user_"+email));
-}
-function allUsers(){
-  let arr=[];
-  for(let i=0;i<localStorage.length;i++){
-    let k=localStorage.key(i);
-    if(k.startsWith("user_")) arr.push(JSON.parse(localStorage.getItem(k)));
-  }
-  return arr;
-}
 function register(){
+  let name=document.getElementById("name").value.trim();
   let email=document.getElementById("email").value.trim();
   let pass=document.getElementById("pass").value.trim();
-  if(!email||!pass){alert("مطلوب إيميل وباسورد");return;}
-  if(loadUser(email)){alert("الحساب موجود!");return;}
-  let role = email==="admin@instafly.com" ? "admin" : "user";
-  let u={email,password:pass,balance:1000,role};
-  saveUser(u);
-  alert("تم التسجيل.");
+  if(!email||!pass||!name){alert("كل الحقول مطلوبة");return;}
+  if(loadUser(email)){alert("الحساب موجود");return;}
+  let role=email==="admin.instafly@gmail.com"?"admin":"user";
+  let u={name,email,password:pass,balance:0,trial:10,usedTrial:false,id:uid(),role,profit:0};
+  saveUser(u);alert("تم التسجيل.");
 }
+
 function login(){
   let email=document.getElementById("email").value.trim();
   let pass=document.getElementById("pass").value.trim();
   let u=loadUser(email);
   if(!u||u.password!==pass){alert("بيانات خاطئة");return;}
-  currentUser=u; balance=u.balance;
-  document.getElementById("userName").innerText=email;
+  currentUser=u;balance=u.balance;
+  document.getElementById("userName").innerText=u.name;
+  document.getElementById("userId").innerText=u.id;
   document.getElementById("balance").innerText=balance;
   document.getElementById("auth").style.display="none";
   document.getElementById("game").style.display="block";
-  showGame();
-}
-function logout(){
-  currentUser=null;
-  document.getElementById("auth").style.display="block";
-  document.getElementById("game").style.display="none";
-}
-function updateUserBalance(email,newBalance){
-  let u=loadUser(email);
-  if(u){u.balance=newBalance;saveUser(u);}
-  if(currentUser&&currentUser.email===email){
-    balance=newBalance;
-    document.getElementById("balance").innerText=balance;
-  }
+  showGame();renderLeaderboard();
 }
 
-// ------------------------- GAME LOGIC ----------------------------
+function logout(){currentUser=null;document.getElementById("auth").style.display="block";document.getElementById("game").style.display="none";}
+function updateUser(u){saveUser(u);if(currentUser&&currentUser.email===u.email){balance=u.balance;document.getElementById("balance").innerText=balance;}}
+
+/* GAME */
 function startGame(){
   bet=parseInt(document.getElementById("bet").value);
-  if(isNaN(bet)||bet<150){alert("الحد الأدنى 150 MAD");return;}
-  if(bet>balance){alert("رصيد غير كافي");return;}
-  balance-=bet; updateUserBalance(currentUser.email,balance);
-  document.getElementById("balance").innerText=balance;
-  multiplier=1.00; crashed=false;
-  crashPoint=(Math.random()*30).toFixed(2);
-  document.getElementById("multiplier").innerText="x1.00";
+  if(currentUser.balance<=0&&!currentUser.usedTrial){
+    bet=currentUser.trial;
+    currentUser.usedTrial=true;
+    alert("🎁 تلعب الآن بالرصيد التجريبي (10$)");
+  }
+  if(isNaN(bet)||bet<=0){alert("مبلغ غير صحيح");return;}
+  if(bet>balance&&currentUser.role!=="admin"){alert("رصيد غير كافي");return;}
+  if(balance>=bet)balance-=bet;
+  updateUser(currentUser);
+  multiplier=1;crashed=false;crashPoint=(Math.random()*30).toFixed(2);
   clearInterval(timer);
   timer=setInterval(()=>{
-    if(multiplier>=crashPoint){
-      crashed=true; clearInterval(timer);
-      alert("💥 الطائرة تفركعت عند x"+multiplier.toFixed(2));
-      bet=0; updateUserBalance(currentUser.email,balance);
-    }else{
-      multiplier+=0.05;
-      document.getElementById("multiplier").innerText="x"+multiplier.toFixed(2);
-      document.getElementById("plane").style.transform=`translateY(-${multiplier*5}px)`;
-    }
-  },200);
+    if(multiplier>=crashPoint){crashed=true;clearInterval(timer);alert("💥 كراش عند x"+multiplier.toFixed(2));bet=0;updateUser(currentUser);}
+    else{multiplier+=0.05;document.getElementById("multiplier").innerText="x"+multiplier.toFixed(2);
+      document.getElementById("plane").style.transform=`translateX(${multiplier*10}px) translateY(-${multiplier*3}px)`;}
+  },150);
 }
+
 function cashOut(){
-  if(!crashed && bet>0){
+  if(!crashed&&bet>0){
+    if(currentUser.balance===0 && currentUser.usedTrial){
+      alert("⚠️ لا يمكن السحب في المرحلة التجريبية، المرجو شحن حسابك الحقيقي.");
+      return;
+    }
     let profit=(bet*multiplier).toFixed(2);
     balance+=parseFloat(profit);
-    updateUserBalance(currentUser.email,balance);
-    document.getElementById("balance").innerText=balance;
-    alert("✅ سحبت "+profit+" MAD عند x"+multiplier.toFixed(2));
-    clearInterval(timer); bet=0;
+    currentUser.balance=balance;currentUser.profit+=(profit-bet);
+    updateUser(currentUser);
+    alert("✅ ربحت "+profit+"$ عند x"+multiplier.toFixed(2));
+    clearInterval(timer);bet=0;renderLeaderboard();
   }
 }
 
-// ------------------------- ADMIN PANEL ---------------------------
+/* Leaderboard */
+function renderLeaderboard(){
+  let all=allUsers().filter(u=>u.role!=="admin");all.sort((a,b)=>b.profit-a.profit);
+  let d=document.getElementById("topPlayers");d.innerHTML="";
+  all.slice(0,5).forEach((u,i)=>{let p=document.createElement("p");p.innerText=`${i+1}. ${u.name} (${u.id}) | ${u.profit.toFixed(0)}$`;d.appendChild(p);});
+}
+
+/* Admin */
 function showAdmin(){
-  if(!currentUser||currentUser.role!=="admin"){
-    alert("ليست لك صلاحية الأدمن"); return;
-  }
-  document.getElementById("gameArea").style.display="none";
-  document.getElementById("adminPanel").style.display="block";
+  if(!currentUser||currentUser.role!=="admin"){alert("مو مسموح");return;}
+  document.getElementById("gameArea").style.display="none";document.getElementById("adminPanel").style.display="block";
   renderUsers();
 }
-function showGame(){
-  document.getElementById("gameArea").style.display="block";
-  document.getElementById("adminPanel").style.display="none";
-}
+function showGame(){document.getElementById("gameArea").style.display="block";document.getElementById("adminPanel").style.display="none";}
 function renderUsers(){
-  let tbody=document.querySelector("#usersTable tbody");
-  tbody.innerHTML="";
+  let tbody=document.querySelector("#usersTable tbody");tbody.innerHTML="";
   allUsers().forEach(u=>{
     let tr=document.createElement("tr");
-    tr.innerHTML=`<td>${u.email}</td>
-      <td>${u.balance}</td>
-      <td>
-        <input type="number" value="${u.balance}" id="bal_${u.email}">
-        <button onclick="changeBal('${u.email}')">✔️</button>
-      </td>
-      <td><button onclick="delUser('${u.email}')">🗑️</button></td>`;
+    tr.innerHTML=`<td>${u.name}</td><td>${u.id}</td><td>${u.balance}</td>
+      <td><input type="number" value="${u.balance}" id="bal_${u.email}">
+      <button onclick="changeBal('${u.email}')">✔️</button></td>`;
     tbody.appendChild(tr);
   });
 }
 function changeBal(email){
-  let val=parseInt(document.getElementById("bal_"+email).value);
-  updateUserBalance(email,val);
-  renderUsers();
-}
-function delUser(email){
-  localStorage.removeItem("user_"+email);
-  renderUsers();
+  let val=parseInt(document.getElementById("bal_"+email).value);let u=loadUser(email);u.balance=val;updateUser(u);renderUsers();
 }
 </script>
 
