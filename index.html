@@ -10,18 +10,18 @@
       background-size:400% 400%;animation:gradientMove 12s ease infinite;
       color:white;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;flex-direction:column;}
     @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    .card{background:rgba(0,0,0,0.65);padding:20px;border-radius:18px;width:100%;max-width:440px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.6);margin:10px auto;animation:fadeIn .6s ease;}
+    .card{background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);padding:20px;border-radius:18px;width:100%;max-width:440px;
+      box-shadow:0 12px 35px rgba(0,0,0,0.6);margin:10px auto;animation:fadeIn .6s ease;}
     h1,h2,h3{margin:0 0 15px;text-align:center;text-shadow:0 0 6px #000;}
     input,button,select{width:100%;margin:6px 0;padding:12px;border:none;border-radius:10px;font-size:15px;}
     input,select{background:#fff;color:#333}
-    button{cursor:pointer;font-weight:bold;background:white;color:#6228d7;transition:.3s}
-    button:hover{background:#ee2a7b;color:white;transform:scale(1.05)}
+    button{cursor:pointer;font-weight:bold;background:linear-gradient(45deg,#ff416c,#ff4b2b);color:white;transition:.3s}
+    button:hover{transform:scale(1.07) translateY(-2px);}
     .hidden{display:none}
     .games-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
-    .game-btn{background:#fff;color:#6228d7;padding:14px;border-radius:10px;font-weight:bold;cursor:pointer;transition:.3s;text-align:center}
-    .game-btn:hover{background:#f9ce34;color:#000;transform:scale(1.05)}
-    table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
+    .game-btn{background:linear-gradient(45deg,#36d1dc,#5b86e5);color:#fff;padding:14px;border-radius:12px;font-weight:bold;cursor:pointer;transition:.3s;text-align:center}
+    .game-btn:hover{transform:scale(1.08);box-shadow:0 0 15px rgba(255,255,255,0.6);}
+    table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.08);margin-top:10px;}
     th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;text-align:center}
     th{background:rgba(0,0,0,0.4)}
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
@@ -29,39 +29,45 @@
     @keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0);}40%{transform:translateY(-15px);}60%{transform:translateY(-8px);}}
     .lose-anim{animation:shake 0.5s;}
     .win-anim{animation:bounce 1s;}
-    
-    /* 📱 تحسين للموبايل */
-    @media (max-width:600px){
-      body{padding:10px;}
-      .card{width:100%;padding:14px;margin:8px 0;border-radius:14px;}
-      input,button,select{font-size:15px;padding:12px;width:100%;}
-      h1,h2,h3{font-size:18px;line-height:1.4;}
-      .games-grid{grid-template-columns:1fr;gap:12px;}
-      .game-btn{font-size:16px;padding:16px;}
-    }
+    #confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;}
+    @media (max-width:600px){.card{width:95%;padding:15px;}input,button,select{font-size:14px;padding:10px;}h1,h2,h3{font-size:18px;} .games-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
+<canvas id="confettiCanvas" class="hidden"></canvas>
 
-<!-- 🔊 Sounds -->
+<!-- 🎶 Music + Sounds -->
 <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2023/03/15/audio_4d7fa0c7b6.mp3?filename=retro-game-music-142152.mp3" loop></audio>
 <audio id="winSound" src="https://assets.mixkit.co/sfx/download/mixkit-achievement-bell-600.mp3"></audio>
 <audio id="loseSound" src="https://assets.mixkit.co/sfx/download/mixkit-player-losing-or-failing-2042.mp3"></audio>
 <audio id="clickSound" src="https://assets.mixkit.co/sfx/download/mixkit-fast-small-sweep-transition-166.mp3"></audio>
-
 <button onclick="toggleMusic()" style="position:fixed;top:10px;right:10px;z-index:999;padding:8px;border-radius:8px">🔊 Music</button>
 
-<!-- 🌈 Landing Page -->
+<!-- 🌈 Landing -->
 <div id="landing" class="card">
-  <h1>🎮 Welcome to <span style="color:#f9ce34">InstaPlay</span></h1>
-  <p>أفضل منصة ألعاب ممتعة مع مكافآت وإيداعات وسحوبات فورية</p>
+  <h1>🎮 Welcome to InstaPlay</h1>
   <button onclick="show('auth')">🚀 Get Started</button>
+</div>
+
+<!-- 🎁 عروض -->
+<div class="card">
+  <h2>🎁 عروض حصرية</h2>
+  <ul style="list-style:none;padding:0;text-align:center">
+    <li>💎 100% Bonus على أول إيداع</li>
+    <li>🔥 عروض أسبوعية للاعبين النشيطين</li>
+    <li>🏆 اربح جوائز إضافية كل شهر</li>
+  </ul>
+</div>
+
+<!-- 👥 من نحن -->
+<div class="card">
+  <h2>👥 من نحن</h2>
+  <p>InstaPlay هي منصة ألعاب مبتكرة تجمع بين المتعة والمكافآت. هدفنا هو توفير تجربة آمنة وسهلة لجميع اللاعبين.</p>
 </div>
 
 <!-- 🔐 Auth -->
 <div id="auth" class="card hidden">
   <h1>🎮 InstaPlay</h1>
-  <h3>Login / Register</h3>
   <input id="name" type="text" placeholder="Full name">
   <input id="email" type="text" placeholder="Email">
   <input id="pass" type="password" placeholder="Password">
@@ -76,17 +82,20 @@
   <input id="adminEmail" type="text" placeholder="Email">
   <input id="adminPass" type="password" placeholder="Password">
   <button onclick="adminLogin()">Login</button>
-  <button onclick="backToAuth()">⬅️ Back</button>
+  <button onclick="show('auth')">⬅️ Back</button>
 </div>
 
 <!-- 👑 Admin Panel -->
 <div id="adminPanel" class="card hidden">
   <h2>👑 Admin Panel</h2>
+  <input id="searchId" type="text" placeholder="Search by ID">
+  <button onclick="searchUserById()">🔍 Search</button>
+  <div id="searchResult"></div>
   <table id="usersTable">
-    <thead><tr><th>Name</th><th>ID</th><th>Balance</th><th>Losses</th></tr></thead>
+    <thead><tr><th>Name</th><th>ID</th><th>Balance</th><th>Losses</th><th>Edit</th><th>Mode</th></tr></thead>
     <tbody></tbody>
   </table>
-  <button onclick="backToAuth()">⬅️ Logout</button>
+  <button onclick="logout()">⬅️ Logout</button>
 </div>
 
 <!-- 🎮 Dashboard -->
@@ -95,167 +104,130 @@
   <p>ID: <span id="userId"></span></p>
   <p>💰 Balance: <span id="balance"></span> $</p>
   <select id="betAmount">
-    <option value="5">5$</option>
-    <option value="10">10$</option>
-    <option value="20">20$</option>
-    <option value="50">50$</option>
+    <option value="5">5$</option><option value="10">10$</option>
+    <option value="20">20$</option><option value="50">50$</option>
   </select>
   <div class="games-grid">
-    <div class="game-btn" onclick="hideAll();show('rpsGame')">✊✋✌️ RPS</div>
-    <div class="game-btn" onclick="hideAll();show('slotGame')">🎰 Slot</div>
+    <div class="game-btn" onclick="show('rpsGame')">✊✋✌️ RPS</div>
+    <div class="game-btn" onclick="show('slotGame')">🎰 Slot</div>
     <div class="game-btn" onclick="startMines()">💣 Mines</div>
   </div>
   <button onclick="logout()">🚪 Logout</button>
 </div>
 
-<!-- 🎮 Games -->
-<div id="rpsGame" class="card hidden"><h2>✊✋✌️ RPS</h2>
+<!-- RPS -->
+<div id="rpsGame" class="card hidden">
+  <h2>✊✋✌️ RPS</h2>
   <button onclick="playRPS('✊')">✊</button>
   <button onclick="playRPS('✋')">✋</button>
   <button onclick="playRPS('✌️')">✌️</button>
   <p>انت: <span id="playerChoice"></span></p>
   <p>الكمبيوتر: <span id="computerChoice"></span></p>
-  <p id="rpsResult"></p><button onclick="backToDash()">⬅️ Back</button>
+  <p id="rpsResult"></p>
+  <button onclick="show('dashboard')">⬅️ Back</button>
 </div>
 
-<div id="slotGame" class="card hidden"><h2>🎰 Slot</h2>
-  <button onclick="playSlot()">▶️ Spin</button><p id="slotResult"></p><button onclick="backToDash()">⬅️ Back</button>
+<!-- Slot -->
+<div id="slotGame" class="card hidden">
+  <h2>🎰 Slot</h2>
+  <button onclick="playSlot()">▶️ Spin</button>
+  <p id="slotResult"></p>
+  <button onclick="show('dashboard')">⬅️ Back</button>
 </div>
 
-<div id="minesGame" class="card hidden"><h2>💣 Mines</h2>
+<!-- Mines -->
+<div id="minesGame" class="card hidden">
+  <h2>💣 Mines</h2>
   <div id="minesGrid" style="display:grid;grid-template-columns:repeat(5,60px);gap:10px;justify-content:center;margin:15px 0;"></div>
   <p id="minesResult"></p>
   <button onclick="cashoutMines()">💵 Cashout</button>
   <button onclick="resetMines()">🔄 Reset</button>
-  <button onclick="backToDash()">⬅️ Back</button>
+  <button onclick="show('dashboard')">⬅️ Back</button>
 </div>
 
 <script>
-const ADMIN_EMAIL = atob("c3BlY2lhbEBnbWFpbC5jb20="); 
-const ADMIN_PASS  = atob("c3BlY2lhbDEyMw==");
+/* Admin creds */
+const ADMIN_EMAIL="special@gmail.com", ADMIN_PASS="special123";
 let currentUser=null;
 
-/* 🎶 Music toggle */
-function toggleMusic(){
-  let m=document.getElementById("bgMusic");
-  if(m.paused){m.play().catch(()=>{});}else{m.pause();}
-}
+/* Music */
+function toggleMusic(){let m=document.getElementById("bgMusic");if(m.paused){m.play();}else{m.pause();}}
 
-/* Helper functions */
+/* Helpers */
 function uid(){return "UID"+Math.floor(Math.random()*99999);}
 function saveUser(u){localStorage.setItem("user_"+u.email,JSON.stringify(u));renderUsers();}
 function loadUser(e){return JSON.parse(localStorage.getItem("user_"+e));}
 function allUsers(){let arr=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k.startsWith("user_"))arr.push(JSON.parse(localStorage.getItem(k)));}return arr;}
-function hideAll(){document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));}
-function show(id){hideAll();document.getElementById(id).classList.remove("hidden");}
-function backToDash(){hideAll();show("dashboard");}
-function backToAuth(){hideAll();show("auth");}
-function animateResult(el,isWin){
-  el.classList.remove("win-anim","lose-anim");
-  void el.offsetWidth;
-  el.classList.add(isWin?"win-anim":"lose-anim");
-}
+function show(id){document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");}
 
 /* Auth */
-function register(){
-  let name=document.getElementById("name").value;
-  let email=document.getElementById("email").value;
-  let pass=document.getElementById("pass").value;
+function register(){let name=document.getElementById("name").value,email=document.getElementById("email").value,pass=document.getElementById("pass").value;
   if(!name||!email||!pass){alert("Fill all fields");return;}
-  if(loadUser(email)){alert("Account already exists");return;}
-  let u={name,email,password:pass,balance:20,id:uid(),history:[],losses:0};
-  saveUser(u);alert("Registered successfully (20$ bonus).");
-}
-function login(){
-  let email=document.getElementById("email").value;
-  let pass=document.getElementById("pass").value;
-  let u=loadUser(email);
-  if(!u||u.password!==pass){alert("Invalid credentials");return;}
-  currentUser=u;updateUI();show("dashboard");
-}
-function logout(){currentUser=null;backToAuth();}
-function adminLogin(){
-  let email=document.getElementById("adminEmail").value;
-  let pass=document.getElementById("adminPass").value;
-  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){show("adminPanel");renderUsers();}
-  else alert("❌ Wrong admin login");
-}
-function updateUI(){
-  document.getElementById("userName").innerText=currentUser.name;
-  document.getElementById("userId").innerText=currentUser.id;
-  document.getElementById("balance").innerText=currentUser.balance;
-  saveUser(currentUser);
-}
+  if(loadUser(email)){alert("Account exists");return;}
+  let u={name,email,password:pass,balance:20,id:uid(),mode:"normal",losses:0};saveUser(u);alert("Registered with 20$ bonus.");}
+function login(){let email=document.getElementById("email").value,pass=document.getElementById("pass").value;let u=loadUser(email);
+  if(!u||u.password!==pass){alert("Invalid");return;}currentUser=u;updateUI();show("dashboard");}
+function logout(){currentUser=null;show("auth");}
+function adminLogin(){let email=document.getElementById("adminEmail").value,pass=document.getElementById("adminPass").value;
+  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){show("adminPanel");renderUsers();}else alert("❌ Wrong admin login");}
+function updateUI(){document.getElementById("userName").innerText=currentUser.name;document.getElementById("userId").innerText=currentUser.id;document.getElementById("balance").innerText=currentUser.balance;saveUser(currentUser);}
+function getBet(){let v=parseInt(document.getElementById("betAmount").value);if(currentUser.balance<v){alert("Not enough balance");return null;}return v;}
+function forceResult(){return currentUser.mode||"normal";}
 
 /* Admin Panel */
-function renderUsers(){
-  let tbody=document.querySelector("#usersTable tbody");tbody.innerHTML="";
-  allUsers().forEach(u=>{
-    let tr=document.createElement("tr");
-    tr.innerHTML=`<td>${u.name}</td><td>${u.id}</td><td>${u.balance}</td><td>${u.losses}$</td>`;
-    tbody.appendChild(tr);
-  });
-}
+function renderUsers(){let tbody=document.querySelector("#usersTable tbody");tbody.innerHTML="";
+  allUsers().forEach(u=>{let safeId=btoa(u.email);let tr=document.createElement("tr");
+    tr.innerHTML=`<td>${u.name}</td><td>${u.id}</td><td>${u.balance}</td><td>${u.losses}$</td>
+    <td><input type='number' value='${u.balance}' id='bal_${safeId}'><button onclick="updateBal('${u.email}')">✔️</button></td>
+    <td><select id="mode_${safeId}" onchange="changeMode('${u.email}')">
+      <option value="normal" ${u.mode==="normal"?"selected":""}>⚖️ Normal</option>
+      <option value="win" ${u.mode==="win"?"selected":""}>🔥 Always Win</option>
+      <option value="lose" ${u.mode==="lose"?"selected":""}>❌ Always Lose</option>
+    </select></td>`;tbody.appendChild(tr);});}
+function updateBal(email){let safeId=btoa(email);let u=loadUser(email);u.balance=parseInt(document.getElementById("bal_"+safeId).value);saveUser(u);}
+function changeMode(email){let safeId=btoa(email);let u=loadUser(email);u.mode=document.getElementById("mode_"+safeId).value;saveUser(u);}
+function searchUserById(){let id=document.getElementById("searchId").value.trim();let users=allUsers();let found=users.find(u=>u.id===id);document.getElementById("searchResult").innerHTML=found?`<p>👤 ${found.name}<br>🆔 ${found.id}<br>💰 ${found.balance}$</p>`:"❌ No user";}
 
-/* Games */
-// RPS
-function playRPS(player){
-  let bet=5;
-  let clickSound=document.getElementById("clickSound"); clickSound.currentTime=0; clickSound.play().catch(()=>{});
-  let options=["✊","✋","✌️"];let comp=options[Math.floor(Math.random()*3)];
-  document.getElementById("playerChoice").innerText=player;
-  document.getElementById("computerChoice").innerText=comp;
+/* Games - RPS */
+function playRPS(player){let bet=getBet();if(!bet)return;document.getElementById("clickSound").play();
+  let options=["✊","✋","✌️"];let comp;let mode=forceResult();
+  if(mode==="win"){comp=(player==="✊"?"✌️":player==="✋"?"✊":"✋");}
+  else if(mode==="lose"){comp=(player==="✊"?"✋":player==="✋"?"✌️":"✊");}
+  else{comp=options[Math.floor(Math.random()*3)];}
+  document.getElementById("playerChoice").innerText=player;document.getElementById("computerChoice").innerText=comp;
   let resEl=document.getElementById("rpsResult");
   if(player===comp){resEl.innerText="🤝 Draw";}
-  else if((player==="✊"&&comp==="✌️")||(player==="✋"&&comp==="✊")||(player==="✌️"&&comp==="✋")){
-    currentUser.balance+=bet;resEl.innerText="🎉 Win +"+bet;let w=document.getElementById("winSound");w.currentTime=0;w.play().catch(()=>{});animateResult(resEl,true);
-  }else{
-    currentUser.balance-=bet;resEl.innerText="❌ Lose -"+bet;let l=document.getElementById("loseSound");l.currentTime=0;l.play().catch(()=>{});animateResult(resEl,false);
-  }
-  updateUI();
-}
-
+  else if((player==="✊"&&comp==="✌️")||(player==="✋"&&comp==="✊")||(player==="✌️"&&comp==="✋")){currentUser.balance+=bet;document.getElementById("winSound").play();resEl.innerText="🎉 Win +"+bet;animateResult(resEl,true);launchConfetti();}
+  else{currentUser.balance-=bet;currentUser.losses+=bet;document.getElementById("loseSound").play();resEl.innerText="❌ Lose -"+bet;animateResult(resEl,false);}
+  updateUI();}
+  
 /* Slot */
-function playSlot(){
-  let bet=5;
-  let clickSound=document.getElementById("clickSound"); clickSound.currentTime=0; clickSound.play().catch(()=>{});
-  let s=["🍒","🍋","⭐","🔔","7️⃣"];
-  let r=[s[Math.random()*s.length|0],s[Math.random()*s.length|0],s[Math.random()*s.length|0]];
-  let resEl=document.getElementById("slotResult");let msg="";
-  if(r[0]===r[1]&&r[1]===r[2]){currentUser.balance+=bet*5;msg="🎉 Jackpot!! +"+(bet*5);let w=document.getElementById("winSound");w.currentTime=0;w.play().catch(()=>{});animateResult(resEl,true);}
-  else{currentUser.balance-=bet;msg="❌ Lose -"+bet;let l=document.getElementById("loseSound");l.currentTime=0;l.play().catch(()=>{});animateResult(resEl,false);}
-  resEl.innerHTML=`<span style="font-size:24px">${r.join(" ")}</span><br><b>${msg}</b>`;
-  updateUI();
-}
-
+function playSlot(){let bet=getBet();if(!bet)return;document.getElementById("clickSound").play();
+  let mode=forceResult();let s=["🍒","🍋","⭐","🔔","7️⃣"];let r;
+  if(mode==="win"){r=["7️⃣","7️⃣","7️⃣"];}else if(mode==="lose"){r=["🍒","⭐","🔔"];}else{r=[s[Math.random()*s.length|0],s[Math.random()*s.length|0],s[Math.random()*s.length|0]];}
+  let resEl=document.getElementById("slotResult");if(r[0]===r[1]&&r[1]===r[2]){currentUser.balance+=bet*5;document.getElementById("winSound").play();resEl.innerHTML=`${r.join(" ")}<br>🎉 Jackpot +${bet*5}`;animateResult(resEl,true);launchConfetti();}
+  else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2]){currentUser.balance+=bet;document.getElementById("winSound").play();resEl.innerHTML=`${r.join(" ")}<br>✨ Win +${bet}`;animateResult(resEl,true);}
+  else{currentUser.balance-=bet;currentUser.losses+=bet;document.getElementById("loseSound").play();resEl.innerHTML=`${r.join(" ")}<br>❌ Lose -${bet}`;animateResult(resEl,false);}updateUI();}
+  
 /* Mines */
-let minesData=[];let minesActive=false;let minesBet=0;
-function startMines(){hideAll();show("minesGame");resetMines();}
-function resetMines(){
-  let g=document.getElementById("minesGrid");g.innerHTML="";
-  minesData=[];minesActive=true;minesBet=5;
-  for(let i=0;i<25;i++){
-    let mine=Math.random()<0.2;minesData.push(mine);
-    let b=document.createElement("button");
-    b.innerText="❓";b.style.width="60px";b.style.height="60px";b.style.fontSize="22px";
-    b.onclick=()=>clickMine(i,b);g.appendChild(b);
-  }
-}
-function clickMine(i,btn){
-  if(!minesActive)return;
-  let resEl=document.getElementById("minesResult");
-  if(minesData[i]){btn.innerText="💣";btn.style.background="#ff4444";currentUser.balance-=minesBet;minesActive=false;let l=document.getElementById("loseSound");l.currentTime=0;l.play().catch(()=>{});resEl.innerText="❌ Boom! -"+minesBet;animateResult(resEl,false);}
-  else{btn.innerText="💎";btn.style.background="#44ff44";currentUser.balance+=minesBet;let w=document.getElementById("winSound");w.currentTime=0;w.play().catch(()=>{});resEl.innerText="🎉 Safe! +"+minesBet;animateResult(resEl,true);}
-  updateUI();
-}
+let minesData=[],minesActive=false,minesBet=0;
+function startMines(){show("minesGame");resetMines();}
+function resetMines(){let g=document.getElementById("minesGrid");g.innerHTML="";minesData=[];minesActive=true;minesBet=getBet();if(!minesBet)return;
+  for(let i=0;i<25;i++){let mine=Math.random()<0.2;minesData.push(mine);let b=document.createElement("button");b.innerText="❓";b.style.width="60px";b.style.height="60px";b.onclick=()=>clickMine(i,b);g.appendChild(b);}}
+function clickMine(i,btn){if(!minesActive)return;let resEl=document.getElementById("minesResult");
+  if(minesData[i]){btn.innerText="💣";btn.style.background="#ff4444";currentUser.balance-=minesBet;currentUser.losses+=minesBet;minesActive=false;document.getElementById("loseSound").play();resEl.innerText="❌ Boom -"+minesBet;animateResult(resEl,false);}
+  else{btn.innerText="💎";btn.style.background="#44ff44";currentUser.balance+=minesBet;document.getElementById("winSound").play();resEl.innerText="🎉 Safe +"+minesBet;animateResult(resEl,true);launchConfetti();}updateUI();}
 function cashoutMines(){if(minesActive){minesActive=false;document.getElementById("minesResult").innerText+=" 💵 Cashed Out";}}
 
-/* 🟢 إصلاح عام: تفعيل الأصوات بعد أول كليك */
-document.addEventListener("click", ()=>{
-  document.querySelectorAll("audio").forEach(a=>{
-    a.play().then(()=>a.pause()).catch(()=>{});
-  });
-},{once:true});
+/* Animations */
+function animateResult(el,isWin){el.classList.remove("win-anim","lose-anim");void el.offsetWidth;el.classList.add(isWin?"win-anim":"lose-anim");}
+
+/* Confetti */
+function launchConfetti(){let canvas=document.getElementById("confettiCanvas");canvas.classList.remove("hidden");let ctx=canvas.getContext("2d");canvas.width=innerWidth;canvas.height=innerHeight;
+let pieces=new Array(80).fill().map(()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*6+4,d:Math.random()*100,color:`hsl(${Math.random()*360},100%,50%)`,tilt:Math.random()*10-10}));
+function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{ctx.beginPath();ctx.fillStyle=p.color;ctx.arc(p.x,p.y,p.r,0,Math.PI*2,false);ctx.fill();});update();}
+function update(){pieces.forEach(p=>{p.y+=Math.cos(p.d)+1+p.r/2;p.x+=Math.sin(p.d);if(p.y>canvas.height){p.x=Math.random()*canvas.width;p.y=-10;}});}
+let interval=setInterval(draw,20);setTimeout(()=>{clearInterval(interval);canvas.classList.add("hidden");},3000);}
 </script>
 </body>
 </html>
