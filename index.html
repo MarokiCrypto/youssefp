@@ -10,27 +10,29 @@
       background-size:400% 400%;animation:gradientMove 12s ease infinite;
       color:white;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;}
     @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    .card{background:rgba(0,0,0,0.6);padding:20px;border-radius:18px;width:100%;max-width:420px;box-shadow:0 10px 30px rgba(0,0,0,0.5);margin:10px auto;animation:fadeIn .6s ease;}
+    .card{background:rgba(0,0,0,0.55);backdrop-filter:blur(10px);
+      padding:20px;border-radius:18px;width:100%;max-width:420px;
+      box-shadow:0 12px 35px rgba(0,0,0,0.6);margin:10px auto;
+      animation:fadeIn .6s ease;}
     h1,h2,h3{margin:0 0 15px;text-align:center;}
     input,button,select{width:100%;margin:6px 0;padding:12px;border:none;border-radius:10px;font-size:15px;}
     input,select{background:#fff;color:#333}
-    button{cursor:pointer;font-weight:bold;background:white;color:#6228d7;transition:.3s}
-    button:hover{background:#ee2a7b;color:white;transform:scale(1.05)}
+    button{cursor:pointer;font-weight:bold;background:linear-gradient(45deg,#ff416c,#ff4b2b);color:white;transition:.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+    button:hover{transform:scale(1.07) translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.5);}
     .hidden{display:none}
     .games-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
-    .game-btn{background:#fff;color:#6228d7;padding:14px;border-radius:10px;font-weight:bold;cursor:pointer;transition:.3s}
-    .game-btn:hover{background:#f9ce34;color:#000;transform:scale(1.05)}
+    .game-btn{background:linear-gradient(45deg,#36d1dc,#5b86e5);color:#fff;padding:14px;border-radius:12px;font-weight:bold;cursor:pointer;transition:.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+    .game-btn:hover{transform:scale(1.08);box-shadow:0 0 15px rgba(255,255,255,0.6);}
     table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
     th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;text-align:center}
     th{background:rgba(0,0,0,0.4)}
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-    @media (max-width:600px){
-      .card{width:95%;padding:15px;}
-      input,button,select{font-size:14px;padding:10px;}
-      h1,h2,h3{font-size:18px;}
-      .games-grid{grid-template-columns:1fr;}
-    }
     #confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;}
+    .result{margin-top:12px;font-size:18px;font-weight:bold;animation:fadeIn .5s ease;}
+    .win{color:#4caf50;animation:pop .4s ease;}
+    .lose{color:#f44336;animation:shake .5s;}
+    @keyframes pop{0%{transform:scale(0.8);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+    @keyframes shake{0%{transform:translateX(-5px);}25%{transform:translateX(5px);}50%{transform:translateX(-5px);}75%{transform:translateX(5px);}100%{transform:translateX(0);}}
   </style>
 </head>
 <body>
@@ -65,13 +67,7 @@
   <div id="searchResult" style="margin:8px 0;font-size:14px"></div>
   <table id="usersTable">
     <thead>
-      <tr>
-        <th>Name</th>
-        <th>ID</th>
-        <th>Balance</th>
-        <th>Edit Balance</th>
-        <th>Mode</th>
-      </tr>
+      <tr><th>Name</th><th>ID</th><th>Balance</th><th>Edit Balance</th><th>Mode</th></tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -83,12 +79,7 @@
   <h2>Welcome <span id="userName"></span></h2>
   <p>ID: <span id="userId"></span></p>
   <p>💰 Balance: <span id="balance"></span> $</p>
-  <select id="betAmount">
-    <option value="5">5$</option>
-    <option value="10">10$</option>
-    <option value="20">20$</option>
-    <option value="50">50$</option>
-  </select>
+  <select id="betAmount"><option value="5">5$</option><option value="10">10$</option><option value="20">20$</option><option value="50">50$</option></select>
   <div class="games-grid">
     <div class="game-btn" onclick="hideAll();show('coinGame')">🪙 Coin</div>
     <div class="game-btn" onclick="hideAll();show('diceGame')">🎲 Dice</div>
@@ -104,10 +95,7 @@
 <!-- 📜 Transactions -->
 <div id="historyCard" class="card hidden">
   <h2>📜 Transactions</h2>
-  <table id="historyTable">
-    <thead><tr><th>Type</th><th>Amount</th><th>Date</th></tr></thead>
-    <tbody></tbody>
-  </table>
+  <table id="historyTable"><thead><tr><th>Type</th><th>Amount</th><th>Date</th></tr></thead><tbody></tbody></table>
   <button onclick="backToDash()">⬅️ Back</button>
 </div>
 
@@ -115,98 +103,65 @@
 <div id="bankCard" class="card hidden">
   <h2>🏦 Deposit / Withdraw</h2>
   <ul style="list-style:none;padding:0;text-align:center">
-    <li>💳 Cash Plus</li>
-    <li>🏦 CIH Bank</li>
-    <li>🏦 Al Barid Bank</li>
-    <li>🏦 Attijariwafa Bank</li>
+    <li>💳 Cash Plus</li><li>🏦 CIH Bank</li><li>🏦 Al Barid Bank</li><li>🏦 Attijariwafa Bank</li>
   </ul>
-  <p>📞 تواصل معنا عبر الواتساب:<br>
-     <b style="color:#0f0">+212 713-041921</b></p>
+  <p>📞 تواصل معنا عبر الواتساب:<br><b style="color:#0f0">+212 713-041921</b></p>
   <button onclick="backToDash()">⬅️ Back</button>
 </div>
 
 <!-- 🎮 Games -->
-<div id="coinGame" class="card hidden"><h2>🪙 Coin Toss</h2><button onclick="flipCoin('Heads')">Heads</button><button onclick="flipCoin('Tails')">Tails</button><p id="coinResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
-<div id="diceGame" class="card hidden"><h2>🎲 Dice</h2><button onclick="rollDice()">🎲 Roll</button><p id="diceResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
-<div id="rpsGame" class="card hidden"><h2>✊✋✌️ RPS</h2>
-  <button onclick="playRPS('✊')">✊</button>
-  <button onclick="playRPS('✋')">✋</button>
-  <button onclick="playRPS('✌️')">✌️</button>
-  <p>انت: <span id="playerChoice"></span></p>
-  <p>الكمبيوتر: <span id="computerChoice"></span></p>
-  <p id="rpsResult"></p><button onclick="backToDash()">⬅️ Back</button>
-</div>
-<div id="slotGame" class="card hidden"><h2>🎰 Slot</h2><button onclick="playSlot()">▶️ Spin</button><p id="slotResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
-<div id="minesGame" class="card hidden"><h2>💣 Mines</h2><div id="minesGrid" style="display:grid;grid-template-columns:repeat(5,60px);gap:10px;justify-content:center;margin:15px 0;"></div><p id="minesResult"></p><button onclick="cashoutMines()">💵 Cashout</button><button onclick="resetMines()">🔄 Reset</button><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="coinGame" class="card hidden"><h2>🪙 Coin Toss</h2><button onclick="flipCoin('Heads')">Heads</button><button onclick="flipCoin('Tails')">Tails</button><p id="coinResult" class="result"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="diceGame" class="card hidden"><h2>🎲 Dice</h2><button onclick="rollDice()">🎲 Roll</button><p id="diceResult" class="result"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="rpsGame" class="card hidden"><h2>✊✋✌️ RPS</h2><button onclick="playRPS('✊')">✊</button><button onclick="playRPS('✋')">✋</button><button onclick="playRPS('✌️')">✌️</button><p>انت: <span id="playerChoice"></span></p><p>الكمبيوتر: <span id="computerChoice"></span></p><p id="rpsResult" class="result"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="slotGame" class="card hidden"><h2>🎰 Slot</h2><button onclick="playSlot()">▶️ Spin</button><p id="slotResult" class="result"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="minesGame" class="card hidden"><h2>💣 Mines</h2><div id="minesGrid" style="display:grid;grid-template-columns:repeat(5,60px);gap:10px;justify-content:center;margin:15px 0;"></div><p id="minesResult" class="result"></p><button onclick="cashoutMines()">💵 Cashout</button><button onclick="resetMines()">🔄 Reset</button><button onclick="backToDash()">⬅️ Back</button></div>
 
 <script>
-/* ========== Admin & Users ========== */
-const ADMIN_EMAIL="special@gmail.com";
-const ADMIN_PASS="special123";
-let currentUser=null;
-
-/* 🎵 Sound */
+/* Admin */
+const ADMIN_EMAIL="special@gmail.com";const ADMIN_PASS="special123";let currentUser=null;
+/* Sound */
 const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-function playTone(freq,duration,type="sine"){let o=audioCtx.createOscillator();let g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(freq,audioCtx.currentTime);o.connect(g);g.connect(audioCtx.destination);o.start();g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+duration/1000);o.stop(audioCtx.currentTime+duration/1000);}
+function playTone(f,d,t="sine"){let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=t;o.frequency.setValueAtTime(f,audioCtx.currentTime);o.connect(g);g.connect(audioCtx.destination);o.start();g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+d/1000);o.stop(audioCtx.currentTime+d/1000);}
 function soundClick(){playTone(500,100,"square");}
 function soundWin(){playTone(600,200,"sine");setTimeout(()=>playTone(800,200,"sine"),200);}
 function soundLose(){playTone(400,300,"sawtooth");}
-
-/* 🎉 Confetti */
-function launchConfetti(){
-  let canvas=document.getElementById("confettiCanvas");
-  canvas.classList.remove("hidden");
-  let ctx=canvas.getContext("2d");
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  let pieces=new Array(100).fill().map(()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*6+4,d:Math.random()*100,color:`hsl(${Math.random()*360},100%,50%)`,tilt:Math.random()*10-10}));
-  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{ctx.beginPath();ctx.fillStyle=p.color;ctx.arc(p.x,p.y,p.r,0,Math.PI*2,false);ctx.fill();});update();}
-  function update(){pieces.forEach(p=>{p.y+=Math.cos(p.d)+1+p.r/2;p.x+=Math.sin(p.d);if(p.y>canvas.height){p.x=Math.random()*canvas.width;p.y=-10;}});}
-  let interval=setInterval(draw,20);
-  setTimeout(()=>{clearInterval(interval);canvas.classList.add("hidden");},3000);
-}
-
+/* Confetti */
+function launchConfetti(){let c=document.getElementById("confettiCanvas");c.classList.remove("hidden");let ctx=c.getContext("2d");c.width=window.innerWidth;c.height=window.innerHeight;let p=new Array(100).fill().map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*6+4,d:Math.random()*100,color:`hsl(${Math.random()*360},100%,50%)`,tilt:Math.random()*10-10}));function draw(){ctx.clearRect(0,0,c.width,c.height);p.forEach(x=>{ctx.beginPath();ctx.fillStyle=x.color;ctx.arc(x.x,x.y,x.r,0,Math.PI*2,false);ctx.fill();});update();}function update(){p.forEach(x=>{x.y+=Math.cos(x.d)+1+x.r/2;x.x+=Math.sin(x.d);if(x.y>c.height){x.x=Math.random()*c.width;x.y=-10;}});}let i=setInterval(draw,20);setTimeout(()=>{clearInterval(i);c.classList.add("hidden");},3000);}
 /* Helpers */
 function uid(){return "UID"+Math.floor(Math.random()*99999);}
 function saveUser(u){localStorage.setItem("user_"+u.email,JSON.stringify(u));renderUsers();}
 function loadUser(e){return JSON.parse(localStorage.getItem("user_"+e));}
-function allUsers(){let arr=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k.startsWith("user_"))arr.push(JSON.parse(localStorage.getItem(k)));}return arr;}
+function allUsers(){let a=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k.startsWith("user_"))a.push(JSON.parse(localStorage.getItem(k)));}return a;}
 function hideAll(){document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));}
 function show(id){hideAll();document.getElementById(id).classList.remove("hidden");}
 function backToDash(){hideAll();show("dashboard");}
 function backToAuth(){hideAll();show("auth");}
-
 /* Auth */
-function register(){let name=document.getElementById("name").value;let email=document.getElementById("email").value;let pass=document.getElementById("pass").value;if(!name||!email||!pass){alert("Fill all fields");return;}if(loadUser(email)){alert("Account already exists");return;}let u={name,email,password:pass,balance:20,id:uid(),mode:"normal",isDemo:false};saveUser(u);alert("Registered successfully (20$ bonus).");renderUsers();}
-function login(){let email=document.getElementById("email").value;let pass=document.getElementById("pass").value;let u=loadUser(email);if(!u||u.password!==pass){alert("Invalid credentials");return;}currentUser=u;updateUI();show("dashboard");}
+function register(){let n=document.getElementById("name").value,e=document.getElementById("email").value,p=document.getElementById("pass").value;if(!n||!e||!p){alert("Fill all fields");return;}if(loadUser(e)){alert("Account already exists");return;}let u={name:n,email:e,password:p,balance:20,id:uid(),mode:"normal"};saveUser(u);alert("Registered successfully (20$ bonus).");renderUsers();}
+function login(){let e=document.getElementById("email").value,p=document.getElementById("pass").value;let u=loadUser(e);if(!u||u.password!==p){alert("Invalid credentials");return;}currentUser=u;updateUI();show("dashboard");}
 function logout(){currentUser=null;backToAuth();}
-function adminLogin(){let email=document.getElementById("adminEmail").value;let pass=document.getElementById("adminPass").value;if(email===ADMIN_EMAIL && pass===ADMIN_PASS){show("adminPanel");renderUsers();}else alert("❌ Wrong admin login");}
+function adminLogin(){let e=document.getElementById("adminEmail").value,p=document.getElementById("adminPass").value;if(e===ADMIN_EMAIL&&p===ADMIN_PASS){show("adminPanel");renderUsers();}else alert("❌ Wrong admin login");}
 function updateUI(){document.getElementById("userName").innerText=currentUser.name;document.getElementById("userId").innerText=currentUser.id;document.getElementById("balance").innerText=currentUser.balance;saveUser(currentUser);}
 function getBet(){let v=parseInt(document.getElementById("betAmount").value);if(currentUser.balance<v){alert("Not enough balance");return null;}return v;}
 function forceResult(){return currentUser.mode||"normal";}
-
 /* Admin Panel */
-function renderUsers(){let tbody=document.querySelector("#usersTable tbody");tbody.innerHTML="";allUsers().forEach(u=>{let safeId=btoa(u.email);let label=u.isDemo?"(Demo)":"";let tr=document.createElement("tr");tr.innerHTML=`<td>${u.name} ${label}</td><td>${u.id}</td><td>${u.balance}</td><td><input type='number' value='${u.balance}' id='bal_${safeId}'><button onclick="updateBal('${u.email}')">✔️</button></td><td><select id="mode_${safeId}" onchange="changeMode('${u.email}')"><option value="normal" ${u.mode==="normal"?"selected":""}>⚖️ Normal</option><option value="win" ${u.mode==="win"?"selected":""}>🔥 Always Win</option><option value="lose" ${u.mode==="lose"?"selected":""}>❌ Always Lose</option></select></td>`;tbody.appendChild(tr);});}
-function updateBal(email){let safeId=btoa(email);let u=loadUser(email);u.balance=parseInt(document.getElementById("bal_"+safeId).value);saveUser(u);if(currentUser && currentUser.email===email){currentUser=u;updateUI();}renderUsers();}
-function changeMode(email){let safeId=btoa(email);let u=loadUser(email);u.mode=document.getElementById("mode_"+safeId).value;saveUser(u);if(currentUser && currentUser.email===email){currentUser=u;}renderUsers();}
-
+function renderUsers(){let t=document.querySelector("#usersTable tbody");t.innerHTML="";allUsers().forEach(u=>{let s=btoa(u.email);let tr=document.createElement("tr");tr.innerHTML=`<td>${u.name}</td><td>${u.id}</td><td>${u.balance}</td><td><input type='number' value='${u.balance}' id='bal_${s}'><button onclick="updateBal('${u.email}')">✔️</button></td><td><select id="mode_${s}" onchange="changeMode('${u.email}')"><option value="normal" ${u.mode==="normal"?"selected":""}>⚖️ Normal</option><option value="win" ${u.mode==="win"?"selected":""}>🔥 Always Win</option><option value="lose" ${u.mode==="lose"?"selected":""}>❌ Always Lose</option></select></td>`;t.appendChild(tr);});}
+function updateBal(e){let s=btoa(e);let u=loadUser(e);u.balance=parseInt(document.getElementById("bal_"+s).value);saveUser(u);if(currentUser&&currentUser.email===e){currentUser=u;updateUI();}renderUsers();}
+function changeMode(e){let s=btoa(e);let u=loadUser(e);u.mode=document.getElementById("mode_"+s).value;saveUser(u);if(currentUser&&currentUser.email===e){currentUser=u;}renderUsers();}
 /* Search by ID */
-function searchUserById(){let id=document.getElementById("searchId").value.trim();let users=allUsers();let found=users.find(u=>u.id===id);let div=document.getElementById("searchResult");if(found){div.innerHTML=`<p>👤 <b>${found.name}</b><br>🆔 ${found.id}<br>💰 ${found.balance}$</p>`;}else{div.innerHTML="<p>❌ No user found</p>";}}
-
+function searchUserById(){let id=document.getElementById("searchId").value.trim();let u=allUsers().find(x=>x.id===id);let d=document.getElementById("searchResult");if(u){d.innerHTML=`<p>👤 <b>${u.name}</b><br>🆔 ${u.id}<br>💰 ${u.balance}$</p>`;}else{d.innerHTML="<p>❌ No user found</p>";}}
 /* Games */
-// Coin
-function flipCoin(choice){let bet=getBet();if(!bet)return;soundClick();let mode=forceResult();let result;if(mode==="win"){result=choice;}else if(mode==="lose"){result=(choice==="Heads"?"Tails":"Heads");}else{result=Math.random()<0.5?"Heads":"Tails";}setTimeout(()=>{if(result===choice){currentUser.balance+=bet;document.getElementById("coinResult").innerText="🎉 Win +"+bet;soundWin();launchConfetti();addHistory("Win",bet);}else{currentUser.balance-=bet;document.getElementById("coinResult").innerText="❌ Lose -"+bet;soundLose();addHistory("Lose",bet);}updateUI();},800);}
-// Dice
-function rollDice(){let bet=getBet();if(!bet)return;soundClick();let mode=forceResult();let r;if(mode==="win"){r=6;}else if(mode==="lose"){r=1;}else{r=Math.floor(Math.random()*6)+1;}let faces=["⚀","⚁","⚂","⚃","⚄","⚅"];setTimeout(()=>{if(r>=4){currentUser.balance+=bet;document.getElementById("diceResult").innerText=`${faces[r-1]} 🎉 Win +${bet}`;soundWin();launchConfetti();addHistory("Win",bet);}else{currentUser.balance-=bet;document.getElementById("diceResult").innerText=`${faces[r-1]} ❌ Lose -${bet}`;soundLose();addHistory("Lose",bet);}updateUI();},800);}
-// RPS
-function playRPS(player){let bet=getBet();if(!bet)return;soundClick();let mode=forceResult();let options=["✊","✋","✌️"];let comp;if(mode==="win"){comp=(player==="✊"?"✌️":player==="✋"?"✊":"✋");}else if(mode==="lose"){comp=(player==="✊"?"✋":player==="✋"?"✌️":"✊");}else{comp=options[Math.floor(Math.random()*3)];}document.getElementById("playerChoice").innerText=player;document.getElementById("computerChoice").innerText=comp;let result="";if(player===comp){result="🤝 Draw";addHistory("Draw",0);}else if((player==="✊"&&comp==="✌️")||(player==="✋"&&comp==="✊")||(player==="✌️"&&comp==="✋")){currentUser.balance+=bet;result="🎉 Win +"+bet;soundWin();launchConfetti();addHistory("Win",bet);}else{currentUser.balance-=bet;result="❌ Lose -"+bet;soundLose();addHistory("Lose",bet);}document.getElementById("rpsResult").innerText=result;updateUI();}
-// Slot
-function playSlot(){let bet=getBet();if(!bet)return;soundClick();let mode=forceResult();let s=["🍒","🍋","⭐","🔔","7️⃣"];let r;if(mode==="win"){r=["7️⃣","7️⃣","7️⃣"];}else if(mode==="lose"){r=["🍒","⭐","🔔"];}else{r=[s[Math.floor(Math.random()*s.length)],s[Math.floor(Math.random()*s.length)],s[Math.floor(Math.random()*s.length)]];}let msg="";if(r[0]===r[1]&&r[1]===r[2]){currentUser.balance+=bet*5;msg="🎉 Jackpot!! +"+(bet*5);soundWin();launchConfetti();addHistory("Jackpot",bet*5);}else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2]){currentUser.balance+=bet;msg="✨ Small Win +"+bet;soundWin();launchConfetti();addHistory("Win",bet);}else{currentUser.balance-=bet;msg="❌ Lose -"+bet;soundLose();addHistory("Lose",bet);}document.getElementById("slotResult").innerText=r.join(" ")+" → "+msg;updateUI();}
-// Mines
-let minesData=[];let minesActive=false;let minesBet=0;function startMines(){hideAll();show("minesGame");resetMines();}function resetMines(){let g=document.getElementById("minesGrid");g.innerHTML="";minesData=[];minesActive=true;minesBet=getBet();if(!minesBet)return;for(let i=0;i<25;i++){let mine=Math.random()<0.2;minesData.push(mine);let b=document.createElement("button");b.innerText="❓";b.style.width="60px";b.style.height="60px";b.style.fontSize="22px";b.onclick=()=>clickMine(i,b);g.appendChild(b);}}function clickMine(i,btn){if(!minesActive)return;soundClick();if(minesData[i]){btn.innerText="💣";btn.style.background="#ff4444";currentUser.balance-=minesBet;minesActive=false;document.getElementById("minesResult").innerText="❌ Boom! -"+minesBet;soundLose();addHistory("Lose",minesBet);}else{btn.innerText="💎";btn.style.background="#44ff44";currentUser.balance+=minesBet;document.getElementById("minesResult").innerText="🎉 Safe! +"+minesBet;soundWin();launchConfetti();addHistory("Win",minesBet);}updateUI();}function cashoutMines(){if(minesActive){minesActive=false;document.getElementById("minesResult").innerText+=" 💵 Cashed Out";}}
-
-/* Transactions */
-function addHistory(type,amount){let h=JSON.parse(localStorage.getItem("history_"+currentUser.email)||"[]");h.push({type,amount,date:new Date().toLocaleString()});localStorage.setItem("history_"+currentUser.email,JSON.stringify(h));}
+function flipCoin(c){let b=getBet();if(!b)return;soundClick();let m=forceResult(),r;if(m==="win"){r=c;}else if(m==="lose"){r=(c==="Heads"?"Tails":"Heads");}else{r=Math.random()<0.5?"Heads":"Tails";}setTimeout(()=>{if(r===c){currentUser.balance+=b;document.getElementById("coinResult").innerText="🎉 Win +"+b;document.getElementById("coinResult").className="result win";soundWin();launchConfetti();addHistory("Win",b);}else{currentUser.balance-=b;document.getElementById("coinResult").innerText="❌ Lose -"+b;document.getElementById("coinResult").className="result lose";soundLose();addHistory("Lose",b);}updateUI();},800);}
+function rollDice(){let b=getBet();if(!b)return;soundClick();let m=forceResult(),r;if(m==="win"){r=6;}else if(m==="lose"){r=1;}else{r=Math.floor(Math.random()*6)+1;}let f=["⚀","⚁","⚂","⚃","⚄","⚅"];setTimeout(()=>{if(r>=4){currentUser.balance+=b;document.getElementById("diceResult").innerText=`${f[r-1]} 🎉 Win +${b}`;document.getElementById("diceResult").className="result win";soundWin();launchConfetti();addHistory("Win",b);}else{currentUser.balance-=b;document.getElementById("diceResult").innerText=`${f[r-1]} ❌ Lose -${b}`;document.getElementById("diceResult").className="result lose";soundLose();addHistory("Lose",b);}updateUI();},800);}
+function playRPS(p){let b=getBet();if(!b)return;soundClick();let m=forceResult(),o=["✊","✋","✌️"],c;if(m==="win"){c=(p==="✊"?"✌️":p==="✋"?"✊":"✋");}else if(m==="lose"){c=(p==="✊"?"✋":p==="✋"?"✌️":"✊");}else{c=o[Math.floor(Math.random()*3)];}document.getElementById("playerChoice").innerText=p;document.getElementById("computerChoice").innerText=c;let res="";if(p===c){res="🤝 Draw";addHistory("Draw",0);}else if((p==="✊"&&c==="✌️")||(p==="✋"&&c==="✊")||(p==="✌️"&&c==="✋")){currentUser.balance+=b;res="🎉 Win +"+b;soundWin();launchConfetti();addHistory("Win",b);}else{currentUser.balance-=b;res="❌ Lose -"+b;soundLose();addHistory("Lose",b);}document.getElementById("rpsResult").innerText=res;updateUI();}
+function playSlot(){let b=getBet();if(!b)return;soundClick();let m=forceResult(),s=["🍒","🍋","⭐","🔔","7️⃣"],r;if(m==="win"){r=["7️⃣","7️⃣","7️⃣"];}else if(m==="lose"){r=["🍒","⭐","🔔"];}else{r=[s[Math.floor(Math.random()*s.length)],s[Math.floor(Math.random()*s.length)],s[Math.floor(Math.random()*s.length)]];}let msg="";if(r[0]===r[1]&&r[1]===r[2]){currentUser.balance+=b*5;msg="🎉 Jackpot!! +"+(b*5);soundWin();launchConfetti();addHistory("Jackpot",b*5);}else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2]){currentUser.balance+=b;msg="✨ Small Win +"+b;soundWin();launchConfetti();addHistory("Win",b);}else{currentUser.balance-=b;msg="❌ Lose -"+b;soundLose();addHistory("Lose",b);}document.getElementById("slotResult").innerText=r.join(" ")+" → "+msg;updateUI();}
+let minesData=[],minesActive=false,minesBet=0;
+function startMines(){hideAll();show("minesGame");resetMines();}
+function resetMines(){let g=document.getElementById("minesGrid");g.innerHTML="";minesData=[];minesActive=true;minesBet=getBet();if(!minesBet)return;for(let i=0;i<25;i++){let m=Math.random()<0.2;minesData.push(m);let b=document.createElement("button");b.innerText="❓";b.style.width="60px";b.style.height="60px";b.style.fontSize="22px";b.onclick=()=>clickMine(i,b);g.appendChild(b);}}
+function clickMine(i,btn){if(!minesActive)return;soundClick();if(minesData[i]){btn.innerText="💣";btn.style.background="#ff4444";currentUser.balance-=minesBet;minesActive=false;document.getElementById("minesResult").innerText="❌ Boom! -"+minesBet;document.getElementById("minesResult").className="result lose";soundLose();addHistory("Lose",minesBet);}else{btn.innerText="💎";btn.style.background="#44ff44";currentUser.balance+=minesBet;document.getElementById("minesResult").innerText="🎉 Safe! +"+minesBet;document.getElementById("minesResult").className="result win";soundWin();launchConfetti();addHistory("Win",minesBet);}updateUI();}
+function cashoutMines(){if(minesActive){minesActive=false;document.getElementById("minesResult").innerText+=" 💵 Cashed Out";}}
+/* History */
+function addHistory(t,a){let h=JSON.parse(localStorage.getItem("history_"+currentUser.email)||"[]");h.push({type:t,amount:a,date:new Date().toLocaleString()});localStorage.setItem("history_"+currentUser.email,JSON.stringify(h));}
 function renderHistory(){let tbody=document.querySelector("#historyTable tbody");tbody.innerHTML="";let h=JSON.parse(localStorage.getItem("history_"+currentUser.email)||"[]");h.forEach(op=>{let tr=document.createElement("tr");tr.innerHTML=`<td>${op.type}</td><td>${op.amount}$</td><td>${op.date}</td>`;tbody.appendChild(tr);});}
 </script>
 </body>
