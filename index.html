@@ -23,22 +23,6 @@
     table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
     th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;text-align:center}
     th{background:rgba(0,0,0,0.4)}
-    /* إشعارات الأدمين */
-    #adminNotice {
-      display:none;
-      position:relative;
-      padding:10px;
-      border-radius:8px;
-      margin-bottom:10px;
-      text-align:center;
-      font-weight:bold;
-      animation:slideDown 0.5s ease, fadeOut 0.5s ease 3.5s forwards;
-    }
-    @keyframes slideDown {
-      from {transform:translateY(-20px);opacity:0;}
-      to {transform:translateY(0);opacity:1;}
-    }
-    @keyframes fadeOut {to {opacity:0;}}
     @media (max-width:600px){
       .card{width:95%;padding:15px;}
       input,button,select{font-size:14px;padding:10px;}
@@ -73,7 +57,6 @@
 <!-- 👑 Admin Panel -->
 <div id="adminPanel" class="card hidden">
   <h2>👑 Admin Panel</h2>
-  <div id="adminNotice"></div>
   <table id="usersTable">
     <thead>
       <tr>
@@ -121,8 +104,12 @@
   <button onclick="backToDash()">⬅️ Back</button>
 </div>
 
-<!-- Games (مختصرة) -->
+<!-- Games -->
 <div id="coinGame" class="card hidden"><h2>🪙 Coin Toss</h2><div id="coin" style="font-size:100px;transition:transform 1s;">🪙</div><button onclick="flipCoin('Heads')">Heads</button><button onclick="flipCoin('Tails')">Tails</button><p id="coinResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="diceGame" class="card hidden"><h2>🎲 Dice</h2><div id="dice" style="font-size:100px;margin:15px;">🎲</div><button onclick="rollDice()">🎲 Roll</button><p id="diceResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="rpsGame" class="card hidden"><h2>✊✋✌️ Rock Paper Scissors</h2><div style="display:flex;justify-content:space-around;font-size:60px;margin:15px 0;"><button onclick="playRPS('✊')">✊</button><button onclick="playRPS('✋')">✋</button><button onclick="playRPS('✌️')">✌️</button></div><div id="rpsBattle" style="display:flex;justify-content:space-around;font-size:40px;margin:20px 0;opacity:0;transition:opacity .5s;"><div>👤 <span id="playerChoice">❓</span></div><div>VS</div><div>🤖 <span id="computerChoice">❓</span></div></div><p id="rpsResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="slotGame" class="card hidden"><h2>🎰 Slot Machine</h2><div id="slotReels" style="display:flex;justify-content:center;font-size:50px;gap:20px;margin:15px 0;"><span id="reel1">❓</span><span id="reel2">❓</span><span id="reel3">❓</span></div><button onclick="playSlot()">▶️ Spin</button><p id="slotResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="minesGame" class="card hidden"><h2>💣 Mines</h2><div id="minesGrid" style="display:grid;grid-template-columns:repeat(5,60px);gap:10px;justify-content:center;margin:15px 0;"></div><p id="minesResult"></p><button onclick="resetMines()">🔄 Reset</button><button onclick="backToDash()">⬅️ Back</button></div>
 
 <script>
 const ADMIN_EMAIL="special@gmail.com";
@@ -139,19 +126,6 @@ function show(id){hideAll();document.getElementById(id).classList.remove("hidden
 function backToDash(){hideAll();show("dashboard");}
 function backToAuth(){hideAll();show("auth");}
 
-/* إشعارات */
-function showAdminNotice(msg,type="info"){
-  let notice=document.getElementById("adminNotice");
-  notice.innerText=msg;
-  if(type==="success"){notice.style.background="#44ff44";notice.style.color="#000";}
-  else if(type==="error"){notice.style.background="#ff4444";notice.style.color="#fff";}
-  else{notice.style.background="#3399ff";notice.style.color="#fff";}
-  notice.style.display="block";
-  notice.style.animation="none";void notice.offsetWidth;
-  notice.style.animation="slideDown 0.5s ease, fadeOut 0.5s ease 3.5s forwards";
-  setTimeout(()=>{ notice.style.display="none"; },4000);
-}
-
 /* Auth */
 function register(){
   let name=document.getElementById("name").value;
@@ -160,10 +134,9 @@ function register(){
   if(!name||!email||!pass){alert("Fill all fields");return;}
   if(loadUser(email)){alert("Account already exists");return;}
   let u={name,email,password:pass,balance:20,id:uid(),mode:"normal"};
-  saveUser(u);alert("Registered successfully (20$ bonus).");
-  if(!document.getElementById("adminPanel").classList.contains("hidden")){
-    renderUsers();showAdminNotice("🆕 New player registered: " + name,"success");
-  }
+  saveUser(u);
+  alert("Registered successfully (20$ bonus).");
+  renderUsers(); // ✅ تحديث لائحة الأدمن مباشرة
 }
 function login(){
   let email=document.getElementById("email").value;
@@ -171,16 +144,16 @@ function login(){
   let u=loadUser(email);
   if(!u||u.password!==pass){alert("Invalid credentials");return;}
   currentUser=u;updateUI();show("dashboard");
-  if(!document.getElementById("adminPanel").classList.contains("hidden")){
-    renderUsers();showAdminNotice("👤 Player logged in: " + u.name,"info");
-  }
 }
 function logout(){currentUser=null;backToAuth();}
 function adminLogin(){
   let email=document.getElementById("adminEmail").value;
   let pass=document.getElementById("adminPass").value;
-  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){show("adminPanel");renderUsers();showAdminNotice("✅ Admin logged in","success");}
-  else{alert("❌ Wrong admin login");}
+  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){
+    show("adminPanel");
+    renderUsers(); // ✅ تحديث لائحة عند دخول الأدمن
+  }
+  else alert("❌ Wrong admin login");
 }
 function updateUI(){
   document.getElementById("userName").innerText=currentUser.name;
@@ -207,44 +180,8 @@ function renderUsers(){
     tbody.appendChild(tr);
   });
 }
-function updateBal(email){
-  let u=loadUser(email);
-  u.balance=parseInt(document.getElementById("bal_"+email).value);
-  saveUser(u);renderUsers();showAdminNotice("💰 Balance updated for " + u.name,"info");
-}
-function changeMode(email){
-  let u=loadUser(email);
-  u.mode=document.getElementById("mode_"+email).value;
-  saveUser(u);renderUsers();showAdminNotice("🎮 Mode changed for " + u.name,"info");
-}
-
-/* تحديث دوري */
-setInterval(()=>{
-  if(!document.getElementById("adminPanel").classList.contains("hidden")){renderUsers();}
-  if(currentUser){
-    let fresh=loadUser(currentUser.email);
-    if(fresh && fresh.balance!==currentUser.balance){
-      currentUser=fresh;updateUI();
-      alert("💰 Your balance has been updated by Admin!");
-    }
-  }
-},3000);
-
-/* 🎮 لعبة صغيرة (Coin مثال) */
-function getBet(){let v=parseInt(document.getElementById("betAmount").value);if(currentUser.balance<v){alert("Not enough balance");return null;}return v;}
-function forceResult(){return currentUser.mode||"normal";}
-function flipCoin(choice){
-  let bet=getBet();if(!bet)return;
-  let mode=forceResult();let result;
-  if(mode==="win"){result=choice;}
-  else if(mode==="lose"){result=(choice==="Heads"?"Tails":"Heads");}
-  else{result=Math.random()<0.5?"Heads":"Tails";}
-  setTimeout(()=>{
-    if(result===choice){currentUser.balance+=bet;document.getElementById("coinResult").innerText="🎉 Win +"+bet;}
-    else{currentUser.balance-=bet;document.getElementById("coinResult").innerText="❌ Lose -"+bet;}
-    updateUI();
-  },500);
-}
+function updateBal(email){let u=loadUser(email);u.balance=parseInt(document.getElementById("bal_"+email).value);saveUser(u);renderUsers();}
+function changeMode(email){let u=loadUser(email);u.mode=document.getElementById("mode_"+email).value;saveUser(u);renderUsers();}
 </script>
 </body>
 </html>
