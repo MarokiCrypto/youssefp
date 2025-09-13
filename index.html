@@ -23,14 +23,7 @@
     table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
     th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;text-align:center}
     th{background:rgba(0,0,0,0.4)}
-    @media (max-width:600px){
-      .card{width:95%;padding:15px;}
-      input,button,select{font-size:14px;padding:10px;}
-      h1,h2,h3{font-size:18px;}
-      .games-grid{grid-template-columns:1fr;}
-    }
-
-    /* 🔔 Notifications */
+    /* إشعارات الأدمين */
     #adminNotice {
       display:none;
       position:relative;
@@ -45,7 +38,15 @@
       from {transform:translateY(-20px);opacity:0;}
       to {transform:translateY(0);opacity:1;}
     }
-    @keyframes fadeOut {to {opacity:0;}}
+    @keyframes fadeOut {
+      to {opacity:0;}
+    }
+    @media (max-width:600px){
+      .card{width:95%;padding:15px;}
+      input,button,select{font-size:14px;padding:10px;}
+      h1,h2,h3{font-size:18px;}
+      .games-grid{grid-template-columns:1fr;}
+    }
   </style>
 </head>
 <body>
@@ -74,7 +75,7 @@
 <!-- 👑 Admin Panel -->
 <div id="adminPanel" class="card hidden">
   <h2>👑 Admin Panel</h2>
-  <div id="adminNotice"></div> <!-- 🟢🔴🔵 Notifications -->
+  <div id="adminNotice"></div>
   <table id="usersTable">
     <thead>
       <tr>
@@ -147,7 +148,6 @@ function playTone(freq,duration,type="sine"){
 function soundClick(){playTone(500,100,"square");}
 function soundWin(){playTone(600,200,"sine");setTimeout(()=>playTone(800,200,"sine"),200);}
 function soundLose(){playTone(400,300,"sawtooth");}
-function soundNotice(){playTone(1000,200,"triangle");}
 
 /* Helpers */
 function uid(){return "UID"+Math.floor(Math.random()*99999);}
@@ -159,6 +159,20 @@ function show(id){hideAll();document.getElementById(id).classList.remove("hidden
 function backToDash(){hideAll();show("dashboard");}
 function backToAuth(){hideAll();show("auth");}
 
+/* إشعارات */
+function showAdminNotice(msg,type="info"){
+  let notice=document.getElementById("adminNotice");
+  notice.innerText=msg;
+  if(type==="success"){notice.style.background="#44ff44";notice.style.color="#000";}
+  else if(type==="error"){notice.style.background="#ff4444";notice.style.color="#fff";}
+  else{notice.style.background="#3399ff";notice.style.color="#fff";}
+  notice.style.display="block";
+  notice.style.animation="none";
+  void notice.offsetWidth;
+  notice.style.animation="slideDown 0.5s ease, fadeOut 0.5s ease 3.5s forwards";
+  setTimeout(()=>{ notice.style.display="none"; },4000);
+}
+
 /* Auth */
 function register(){
   let name=document.getElementById("name").value;
@@ -167,8 +181,10 @@ function register(){
   if(!name||!email||!pass){alert("Fill all fields");return;}
   if(loadUser(email)){alert("Account already exists");return;}
   let u={name,email,password:pass,balance:20,id:uid(),mode:"normal"};
-  saveUser(u);alert("Registered successfully (20$ bonus).");renderUsers();
+  saveUser(u);alert("Registered successfully (20$ bonus).");
+
   if(!document.getElementById("adminPanel").classList.contains("hidden")){
+    renderUsers();
     showAdminNotice("🆕 New player registered: " + name,"success");
   }
 }
@@ -183,16 +199,8 @@ function logout(){currentUser=null;backToAuth();}
 function adminLogin(){
   let email=document.getElementById("adminEmail").value;
   let pass=document.getElementById("adminPass").value;
-  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){
-    show("adminPanel");renderUsers();
-    showAdminNotice("✅ Admin logged in","success");
-  }
-  else{
-    alert("❌ Wrong admin login");
-    if(!document.getElementById("adminPanel").classList.contains("hidden")){
-      showAdminNotice("❌ Wrong admin credentials","error");
-    }
-  }
+  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){show("adminPanel");renderUsers();showAdminNotice("✅ Admin logged in","success");}
+  else{alert("❌ Wrong admin login");showAdminNotice("❌ Wrong admin credentials","error");}
 }
 function updateUI(){
   document.getElementById("userName").innerText=currentUser.name;
@@ -206,21 +214,6 @@ function getBet(){
   return v;
 }
 function forceResult(){return currentUser.mode||"normal";}
-
-/* Admin Notifications */
-function showAdminNotice(msg,type="info"){
-  let notice=document.getElementById("adminNotice");
-  notice.innerText=msg;
-  if(type==="success"){notice.style.background="#44ff44";notice.style.color="#000";}
-  else if(type==="error"){notice.style.background="#ff4444";notice.style.color="#fff";}
-  else{notice.style.background="#3399ff";notice.style.color="#fff";}
-  notice.style.display="block";
-  notice.style.animation="none";
-  void notice.offsetWidth;
-  notice.style.animation="slideDown 0.5s ease, fadeOut 0.5s ease 3.5s forwards";
-  soundNotice();
-  setTimeout(()=>{ notice.style.display="none"; },4000);
-}
 
 /* Admin Panel */
 function renderUsers(){
@@ -240,19 +233,11 @@ function renderUsers(){
     tbody.appendChild(tr);
   });
 }
-function updateBal(email){
-  let u=loadUser(email);u.balance=parseInt(document.getElementById("bal_"+email).value);
-  saveUser(u);renderUsers();
-  showAdminNotice("💰 Balance updated for " + u.name,"info");
-}
-function changeMode(email){let u=loadUser(email);u.mode=document.getElementById("mode_"+email).value;saveUser(u);renderUsers();}
+function updateBal(email){let u=loadUser(email);u.balance=parseInt(document.getElementById("bal_"+email).value);saveUser(u);renderUsers();showAdminNotice("💰 Balance updated for " + u.name,"info");}
+function changeMode(email){let u=loadUser(email);u.mode=document.getElementById("mode_"+email).value;saveUser(u);renderUsers();showAdminNotice("🎮 Mode changed for " + u.name,"info");}
 
-/* تحديث تلقائي للجدول كل 3 ثواني */
-setInterval(()=>{
-  if(!document.getElementById("adminPanel").classList.contains("hidden")){
-    renderUsers();
-  }
-},3000);
+/* تحديث دوري للجدول */
+setInterval(()=>{if(!document.getElementById("adminPanel").classList.contains("hidden")){renderUsers();}},3000);
 
 /* Transactions */
 function addHistory(type,amount){
