@@ -28,6 +28,12 @@
     table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.1);margin-top:10px;}
     th,td{padding:6px;border:1px solid rgba(255,255,255,0.2);font-size:13px;text-align:center}
     th{background:rgba(0,0,0,0.4)}
+    @media (max-width:600px){
+      .card{width:95%;padding:15px;}
+      input,button,select{font-size:14px;padding:10px;}
+      h1,h2,h3{font-size:18px;}
+      .games-grid{grid-template-columns:1fr;}
+    }
   </style>
 </head>
 <body>
@@ -56,6 +62,9 @@
 <!-- 👑 Admin Panel -->
 <div id="adminPanel" class="card hidden">
   <h2>👑 Admin Panel</h2>
+  <p>👥 Total Users: <span id="userCount">0</span></p>
+  <p>💰 Total Balance: <span id="totalBalance">0</span> $</p>
+  <input type="text" id="searchUser" placeholder="🔍 Search by name or email" onkeyup="renderUsers()">
   <table id="usersTable">
     <thead>
       <tr>
@@ -83,10 +92,10 @@
     <option value="50">50$</option>
   </select>
   <div class="games-grid">
-    <div class="game-btn" onclick="show('coinGame')">🪙 Coin</div>
-    <div class="game-btn" onclick="show('diceGame')">🎲 Dice</div>
-    <div class="game-btn" onclick="show('rpsGame')">✊✋✌️ RPS</div>
-    <div class="game-btn" onclick="show('slotGame')">🎰 Slot</div>
+    <div class="game-btn" onclick="hideAll();show('coinGame')">🪙 Coin</div>
+    <div class="game-btn" onclick="hideAll();show('diceGame')">🎲 Dice</div>
+    <div class="game-btn" onclick="hideAll();show('rpsGame')">✊✋✌️ RPS</div>
+    <div class="game-btn" onclick="hideAll();show('slotGame')">🎰 Slot</div>
     <div class="game-btn" onclick="startMines()">💣 Mines</div>
   </div>
   <button onclick="show('historyCard');renderHistory()">📜 Transactions</button>
@@ -106,143 +115,170 @@
 <!-- Games -->
 <div id="coinGame" class="card hidden"><h2>🪙 Coin Toss</h2><div id="coin" style="font-size:100px;transition:transform 1s;">🪙</div><button onclick="flipCoin('Heads')">Heads</button><button onclick="flipCoin('Tails')">Tails</button><p id="coinResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
 <div id="diceGame" class="card hidden"><h2>🎲 Dice</h2><div id="dice" style="font-size:100px;margin:15px;">🎲</div><button onclick="rollDice()">🎲 Roll</button><p id="diceResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
-<div id="rpsGame" class="card hidden"><h2>✊✋✌️ RPS</h2><div style="display:flex;justify-content:space-around;font-size:60px;margin:15px 0;"><button onclick="playRPS('✊')">✊</button><button onclick="playRPS('✋')">✋</button><button onclick="playRPS('✌️')">✌️</button></div><div id="rpsBattle" style="display:flex;justify-content:space-around;font-size:40px;margin:20px 0;opacity:0;transition:opacity .5s;"><div>👤 <span id="playerChoice">❓</span></div><div>VS</div><div>🤖 <span id="computerChoice">❓</span></div></div><p id="rpsResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
+<div id="rpsGame" class="card hidden"><h2>✊✋✌️ Rock Paper Scissors</h2><div style="display:flex;justify-content:space-around;font-size:60px;margin:15px 0;"><button onclick="playRPS('✊')">✊</button><button onclick="playRPS('✋')">✋</button><button onclick="playRPS('✌️')">✌️</button></div><div id="rpsBattle" style="display:flex;justify-content:space-around;font-size:40px;margin:20px 0;opacity:0;transition:opacity .5s;"><div>👤 <span id="playerChoice">❓</span></div><div>VS</div><div>🤖 <span id="computerChoice">❓</span></div></div><p id="rpsResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
 <div id="slotGame" class="card hidden"><h2>🎰 Slot Machine</h2><div id="slotReels" style="display:flex;justify-content:center;font-size:50px;gap:20px;margin:15px 0;"><span id="reel1">❓</span><span id="reel2">❓</span><span id="reel3">❓</span></div><button onclick="playSlot()">▶️ Spin</button><p id="slotResult"></p><button onclick="backToDash()">⬅️ Back</button></div>
 <div id="minesGame" class="card hidden"><h2>💣 Mines</h2><div id="minesGrid" style="display:grid;grid-template-columns:repeat(5,60px);gap:10px;justify-content:center;margin:15px 0;"></div><p id="minesResult"></p><button onclick="resetMines()">🔄 Reset</button><button onclick="backToDash()">⬅️ Back</button></div>
 
 <script>
-// ===================== 🔥 Firebase Setup =====================
+/* Firebase Config */
 const firebaseConfig = {
-  apiKey: "XXXXXXX",
-  authDomain: "instaplay-XXXX.firebaseapp.com",
-  projectId: "instaplay-XXXX",
-  storageBucket: "instaplay-XXXX.appspot.com",
+  apiKey: "YOUR_API_KEY",
+  authDomain: "instaplay421f2.firebaseapp.com",
+  projectId: "instaplay421f2",
+  storageBucket: "instaplay421f2.appspot.com",
   messagingSenderId: "XXXXXXX",
-  appId: "1:XXXX:web:XXXX"
+  appId: "XXXXXXXX"
 };
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const db=firebase.firestore();
 
-// ===================== Variables =====================
 const ADMIN_EMAIL="special@gmail.com";
 const ADMIN_PASS="special123";
 let currentUser=null;
 
-// ===================== Helpers =====================
+/* Helpers */
+function uid(){return "UID"+Math.floor(Math.random()*99999);}
 function hideAll(){document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));}
 function show(id){hideAll();document.getElementById(id).classList.remove("hidden");}
-function backToAuth(){hideAll();show("auth");}
 function backToDash(){hideAll();show("dashboard");}
-function updateUI(){
-  document.getElementById("userName").innerText=currentUser.NAME;
-  document.getElementById("userId").innerText=currentUser.id;
-  document.getElementById("balance").innerText=currentUser.balance;
-}
-function getBet(){let v=parseInt(document.getElementById("betAmount").value);if(currentUser.balance<v){alert("Not enough balance");return null;}return v;}
-function forceResult(){if(currentUser.forceWin)return"win";if(currentUser.forceLose)return"lose";return"normal";}
+function backToAuth(){hideAll();show("auth");}
+function forceResult(){return currentUser.mode||"normal";}
 
-// ===================== Auth =====================
+/* Auth */
 async function register(){
   let name=document.getElementById("name").value;
   let email=document.getElementById("email").value;
   let pass=document.getElementById("pass").value;
   if(!name||!email||!pass){alert("Fill all fields");return;}
-  let id="UID"+Math.floor(Math.random()*99999);
-  let u={id,NAME:name,email,password:pass,balance:20,forceWin:false,forceLose:false};
-  await db.collection("users").doc(id).set(u);
+  let doc=await db.collection("users").doc(email).get();
+  if(doc.exists){alert("Account already exists");return;}
+  let u={name,email,password:pass,balance:20,id:uid(),mode:"normal"};
+  await db.collection("users").doc(email).set(u);
   alert("Registered successfully (20$ bonus).");
 }
 async function login(){
   let email=document.getElementById("email").value;
   let pass=document.getElementById("pass").value;
-  let snap=await db.collection("users").where("email","==",email).get();
-  if(snap.empty){alert("Account not found");return;}
-  let u=snap.docs[0].data();
-  if(u.password!==pass){alert("Wrong password");return;}
-  currentUser=u;updateUI();show("dashboard");
+  let doc=await db.collection("users").doc(email).get();
+  if(!doc.exists||doc.data().password!==pass){alert("Invalid credentials");return;}
+  currentUser=doc.data();
+  updateUI();show("dashboard");
 }
 function logout(){currentUser=null;backToAuth();}
-
-// ===================== Admin =====================
 function adminLogin(){
   let email=document.getElementById("adminEmail").value;
   let pass=document.getElementById("adminPass").value;
-  if(email===ADMIN_EMAIL && pass===ADMIN_PASS){show("adminPanel");renderUsers();}
+  if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){show("adminPanel");renderUsers();}
   else alert("❌ Wrong admin login");
 }
+function updateUI(){
+  document.getElementById("userName").innerText=currentUser.name;
+  document.getElementById("userId").innerText=currentUser.id;
+  document.getElementById("balance").innerText=currentUser.balance;
+  db.collection("users").doc(currentUser.email).update(currentUser);
+}
+function getBet(){
+  let v=parseInt(document.getElementById("betAmount").value);
+  if(currentUser.balance<v){alert("Not enough balance");return null;}
+  return v;
+}
+
+/* Admin */
 async function renderUsers(){
   let tbody=document.querySelector("#usersTable tbody");
   tbody.innerHTML="";
+  
   let snap=await db.collection("users").get();
+  
+  document.getElementById("userCount").innerText = snap.size; 
+  let total = 0;
+  let query = document.getElementById("searchUser").value.toLowerCase();
+  
   snap.forEach(doc=>{
     let u=doc.data();
-    let tr=document.createElement("tr");
-    tr.innerHTML=`
-      <td>${u.NAME}</td>
-      <td>${doc.id}</td>
-      <td>${u.balance}</td>
-      <td><input type='number' value='${u.balance}' id='bal_${doc.id}'><button onclick="updateBal('${doc.id}')">✔️</button></td>
-      <td><select id="mode_${doc.id}" onchange="changeMode('${doc.id}')">
-        <option value="normal" ${(!u.forceWin&&!u.forceLose)?"selected":""}>⚖️ Normal</option>
-        <option value="win" ${u.forceWin?"selected":""}>🔥 Always Win</option>
-        <option value="lose" ${u.forceLose?"selected":""}>❌ Always Lose</option>
-      </select></td>`;
-    tbody.appendChild(tr);
+    total += u.balance || 0;
+    if(u.name.toLowerCase().includes(query) || u.email.toLowerCase().includes(query)){
+      let tr=document.createElement("tr");
+      tr.innerHTML=`
+        <td>${u.name}</td>
+        <td>${u.id}</td>
+        <td>${u.balance}</td>
+        <td>
+          <input type='number' value='${u.balance}' id='bal_${u.email}'>
+          <button onclick="updateBal('${u.email}')">✔️</button>
+        </td>
+        <td>
+          <select id="mode_${u.email}" onchange="changeMode('${u.email}')">
+            <option value="normal" ${u.mode==="normal"?"selected":""}>⚖️ Normal</option>
+            <option value="win" ${u.mode==="win"?"selected":""}>🔥 Win</option>
+            <option value="lose" ${u.mode==="lose"?"selected":""}>❌ Lose</option>
+          </select>
+        </td>`;
+      tbody.appendChild(tr);
+    }
   });
+  
+  document.getElementById("totalBalance").innerText = total;
 }
-async function updateBal(userId){let newBal=parseInt(document.getElementById("bal_"+userId).value);await db.collection("users").doc(userId).update({balance:newBal});renderUsers();}
-async function changeMode(userId){
-  let mode=document.getElementById("mode_"+userId).value;
-  if(mode==="win"){await db.collection("users").doc(userId).update({forceWin:true,forceLose:false});}
-  else if(mode==="lose"){await db.collection("users").doc(userId).update({forceWin:false,forceLose:true});}
-  else{await db.collection("users").doc(userId).update({forceWin:false,forceLose:false});}
+async function updateBal(email){
+  let val=parseInt(document.getElementById("bal_"+email).value);
+  await db.collection("users").doc(email).update({balance:val});
+  renderUsers();
+}
+async function changeMode(email){
+  let mode=document.getElementById("mode_"+email).value;
+  await db.collection("users").doc(email).update({mode});
   renderUsers();
 }
 
-// ===================== History =====================
+/* History */
 async function addHistory(type,amount){
-  let ref=db.collection("users").doc(currentUser.id).collection("history");
-  await ref.add({type,amount,date:new Date().toLocaleString()});
+  await db.collection("users").doc(currentUser.email).collection("history")
+    .add({type,amount,date:new Date().toLocaleString()});
 }
 async function renderHistory(){
   let tbody=document.querySelector("#historyTable tbody");
   tbody.innerHTML="";
-  let ref=db.collection("users").doc(currentUser.id).collection("history");
-  let snap=await ref.get();
-  snap.forEach(doc=>{
-    let h=doc.data();
+  let snap=await db.collection("users").doc(currentUser.email).collection("history").get();
+  snap.forEach(op=>{
     let tr=document.createElement("tr");
-    tr.innerHTML=`<td>${h.type}</td><td>${h.amount}$</td><td>${h.date}</td>`;
+    tr.innerHTML=`<td>${op.data().type}</td><td>${op.data().amount}$</td><td>${op.data().date}</td>`;
     tbody.appendChild(tr);
   });
 }
 
-// ===================== Games =====================
-function flipCoin(choice){
+/* Games */
+// 🪙 Coin
+async function flipCoin(choice){
   let bet=getBet();if(!bet)return;
   let mode=forceResult();let result;
   if(mode==="win"){result=choice;}
   else if(mode==="lose"){result=(choice==="Heads"?"Tails":"Heads");}
   else{result=Math.random()<0.5?"Heads":"Tails";}
-  setTimeout(async()=>{
+  let coin=document.getElementById("coin");
+  coin.style.transform="rotateY(720deg)";
+  setTimeout(async ()=>{
+    coin.innerText=(result==="Heads")?"🪙":"💰";
     if(result===choice){currentUser.balance+=bet;document.getElementById("coinResult").innerText="🎉 Win +"+bet;await addHistory("Win",bet);}
     else{currentUser.balance-=bet;document.getElementById("coinResult").innerText="❌ Lose -"+bet;await addHistory("Lose",bet);}
-    await db.collection("users").doc(currentUser.id).update({balance:currentUser.balance});
     updateUI();
-  },800);
+  },1000);
 }
-function rollDice(){
+// 🎲 Dice
+async function rollDice(){
   let bet=getBet();if(!bet)return;
   let mode=forceResult();let r;
   if(mode==="win"){r=6;}else if(mode==="lose"){r=1;}else{r=Math.floor(Math.random()*6)+1;}
-  setTimeout(async()=>{
+  let faces=["⚀","⚁","⚂","⚃","⚄","⚅"];
+  setTimeout(async ()=>{
+    document.getElementById("dice").innerText=faces[r-1];
     if(r>=4){currentUser.balance+=bet;document.getElementById("diceResult").innerText="🎉 Win ("+r+")";await addHistory("Win",bet);}
     else{currentUser.balance-=bet;document.getElementById("diceResult").innerText="❌ Lose ("+r+")";await addHistory("Lose",bet);}
-    await db.collection("users").doc(currentUser.id).update({balance:currentUser.balance});
     updateUI();
   },800);
 }
-function playRPS(player){
+// ✊✋✌️ RPS
+async function playRPS(player){
   let bet=getBet();if(!bet)return;
   let mode=forceResult();let options=["✊","✋","✌️"];let comp;
   if(mode==="win"){comp=(player==="✊"?"✌️":player==="✋"?"✊":"✋");}
@@ -250,26 +286,29 @@ function playRPS(player){
   else{comp=options[Math.floor(Math.random()*3)];}
   document.getElementById("playerChoice").innerText=player;
   document.getElementById("computerChoice").innerText=comp;
-  let result="";
-  if(player===comp){result="🤝 Draw";addHistory("Draw",0);}
-  else if((player==="✊"&&comp==="✌️")||(player==="✋"&&comp==="✊")||(player==="✌️"&&comp==="✋")){currentUser.balance+=bet;result="🎉 Win +"+bet;addHistory("Win",bet);}
-  else{currentUser.balance-=bet;result="❌ Lose -"+bet;addHistory("Lose",bet);}
-  document.getElementById("rpsResult").innerText=result;
-  db.collection("users").doc(currentUser.id).update({balance:currentUser.balance});
+  document.getElementById("rpsBattle").style.opacity=1;
+  if(player===comp){document.getElementById("rpsResult").innerText="🤝 Draw";await addHistory("Draw",0);}
+  else if((player==="✊"&&comp==="✌️")||(player==="✋"&&comp==="✊")||(player==="✌️"&&comp==="✋")){
+    currentUser.balance+=bet;document.getElementById("rpsResult").innerText="🎉 Win +"+bet;await addHistory("Win",bet);
+  }else{currentUser.balance-=bet;document.getElementById("rpsResult").innerText="❌ Lose -"+bet;await addHistory("Lose",bet);}
   updateUI();
 }
-function playSlot(){
+// 🎰 Slot
+async function playSlot(){
   let bet=getBet();if(!bet)return;
   let mode=forceResult();let s=["🍒","🍋","⭐","🔔","7️⃣"];
+  let reels=[document.getElementById("reel1"),document.getElementById("reel2"),document.getElementById("reel3")];
   let r;
   if(mode==="win"){r=["7️⃣","7️⃣","7️⃣"];}
   else if(mode==="lose"){r=["🍒","⭐","🔔"];}
   else{r=[s[Math.floor(Math.random()*s.length)],s[Math.floor(Math.random()*s.length)],s[Math.floor(Math.random()*s.length)]];}
-  if(r[0]===r[1]&&r[1]===r[2]){currentUser.balance+=bet*5;document.getElementById("slotResult").innerText="🎉 Jackpot!!";addHistory("Jackpot",bet*5);}
-  else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2]){currentUser.balance+=bet;document.getElementById("slotResult").innerText="✨ Small Win";addHistory("Win",bet);}
-  else{currentUser.balance-=bet;document.getElementById("slotResult").innerText="❌ Lose";addHistory("Lose",bet);}
-  db.collection("users").doc(currentUser.id).update({balance:currentUser.balance});updateUI();
+  reels[0].innerText=r[0];reels[1].innerText=r[1];reels[2].innerText=r[2];
+  if(r[0]===r[1]&&r[1]===r[2]){currentUser.balance+=bet*5;document.getElementById("slotResult").innerText="🎉 Jackpot!!";await addHistory("Jackpot",bet*5);}
+  else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2]){currentUser.balance+=bet;document.getElementById("slotResult").innerText="✨ Small Win";await addHistory("Win",bet);}
+  else{currentUser.balance-=bet;document.getElementById("slotResult").innerText="❌ Lose";await addHistory("Lose",bet);}
+  updateUI();
 }
+// 💣 Mines
 let minesData=[];let minesActive=true;
 function startMines(){hideAll();show("minesGame");resetMines();}
 function resetMines(){
@@ -286,7 +325,7 @@ async function clickMine(i,btn){
   let bet=getBet();if(!bet)return;
   if(minesData[i]){btn.innerText="💣";btn.style.background="#ff4444";currentUser.balance-=bet;minesActive=false;document.getElementById("minesResult").innerText="❌ Boom! -"+bet;await addHistory("Lose",bet);}
   else{btn.innerText="💎";btn.style.background="#44ff44";currentUser.balance+=bet;document.getElementById("minesResult").innerText="🎉 Safe! +"+bet;await addHistory("Win",bet);}
-  await db.collection("users").doc(currentUser.id).update({balance:currentUser.balance});updateUI();
+  updateUI();
 }
 </script>
 </body>
