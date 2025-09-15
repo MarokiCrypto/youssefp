@@ -156,27 +156,33 @@ async function register(){
   await db.collection("users").doc(email).set(u);
   alert("Registered successfully (20$ bonus).");
 }
+
 async function login(){
   let email=document.getElementById("email").value;
   let pass=document.getElementById("pass").value;
   let doc=await db.collection("users").doc(email).get();
   if(!doc.exists||doc.data().password!==pass){alert("Invalid credentials");return;}
   currentUser=doc.data();
+  currentUser.email=email; // ✅ تخزين الإيميل
   updateUI();show("dashboard");
 }
+
 function logout(){currentUser=null;backToAuth();}
+
 function adminLogin(){
   let email=document.getElementById("adminEmail").value;
   let pass=document.getElementById("adminPass").value;
   if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){show("adminPanel");renderUsers();}
   else alert("❌ Wrong admin login");
 }
+
 function updateUI(){
   document.getElementById("userName").innerText=currentUser.name;
   document.getElementById("userId").innerText=currentUser.id;
   document.getElementById("balance").innerText=currentUser.balance;
   db.collection("users").doc(currentUser.email).update(currentUser);
 }
+
 function getBet(){
   let v=parseInt(document.getElementById("betAmount").value);
   if(currentUser.balance<v){alert("Not enough balance");return null;}
@@ -220,11 +226,13 @@ async function renderUsers(){
   
   document.getElementById("totalBalance").innerText = total;
 }
+
 async function updateBal(email){
   let val=parseInt(document.getElementById("bal_"+email).value);
   await db.collection("users").doc(email).update({balance:val});
   renderUsers();
 }
+
 async function changeMode(email){
   let mode=document.getElementById("mode_"+email).value;
   await db.collection("users").doc(email).update({mode});
@@ -264,6 +272,7 @@ async function flipCoin(choice){
     updateUI();
   },1000);
 }
+
 // 🎲 Dice
 async function rollDice(){
   let bet=getBet();if(!bet)return;
@@ -277,6 +286,7 @@ async function rollDice(){
     updateUI();
   },800);
 }
+
 // ✊✋✌️ RPS
 async function playRPS(player){
   let bet=getBet();if(!bet)return;
@@ -293,6 +303,7 @@ async function playRPS(player){
   }else{currentUser.balance-=bet;document.getElementById("rpsResult").innerText="❌ Lose -"+bet;await addHistory("Lose",bet);}
   updateUI();
 }
+
 // 🎰 Slot
 async function playSlot(){
   let bet=getBet();if(!bet)return;
@@ -308,6 +319,7 @@ async function playSlot(){
   else{currentUser.balance-=bet;document.getElementById("slotResult").innerText="❌ Lose";await addHistory("Lose",bet);}
   updateUI();
 }
+
 // 💣 Mines
 let minesData=[];let minesActive=true;
 function startMines(){hideAll();show("minesGame");resetMines();}
