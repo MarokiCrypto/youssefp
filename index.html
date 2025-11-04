@@ -1,215 +1,191 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ملف المتداول - Mohammed Aliloui</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohammed Aliloui | Entrepreneur</title>
+  <style>
+    /* ألوان على طراز إنستغرام */
+    :root {
+      --grad: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+      --bg-dark: #0d0d12;
+      --text-light: #fdfdfd;
+      --text-muted: #b5b5b5;
+      --card-bg: rgba(255,255,255,0.05);
+    }
 
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-    margin: 0;
-    color: white;
-    animation: gradientMove 10s ease infinite alternate;
-  }
+    body {
+      margin: 0;
+      font-family: 'Poppins', 'Cairo', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-  @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-    
-  }
+    .profile-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(221,42,123,0.3);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
 
-  header {
-    text-align: center;
-    padding: 50px 20px 30px;
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(6px);
-  }
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -40%;
+      width: 180%;
+      height: 180%;
+      background: var(--grad);
+      opacity: 0.15;
+      filter: blur(100px);
+      z-index: 0;
+    }
 
-  header img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    border: 4px solid white;
-    object-fit: cover;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    transition: transform 0.4s;
-  }
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 15px;
+      border: 3px solid transparent;
+      background: var(--grad);
+      background-clip: padding-box;
+    }
 
-  header img:hover {
-    transform: scale(1.05);
-  }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
-  header h1 {
-    margin: 15px 0 5px;
-    font-size: 32px;
-  }
+    h1 {
+      font-size: 1.6rem;
+      margin: 5px 0 2px;
+    }
 
-  header p {
-    margin: 0;
-    font-size: 18px;
-    opacity: 0.9;
-  }
+    .username {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
 
-  section {
-    background: rgba(255,255,255,0.1);
-    margin: 25px 20px;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: transform 0.3s;
-  }
+    .bio {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+      margin-bottom: 25px;
+    }
 
-  section:hover {
-    transform: translateY(-5px);
-  }
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 25px;
+    }
 
-  h2 {
-    color: #fff;
-    border-bottom: 2px solid rgba(255,255,255,0.3);
-    padding-bottom: 8px;
-    margin-bottom: 15px;
-  }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      color: var(--text-light);
+    }
 
-  p {
-    line-height: 1.8;
-    font-size: 16px;
-  }
+    .stat b {
+      font-size: 1.1rem;
+    }
 
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 2;
+      position: relative;
+    }
 
-  .gallery img {
-    width: 30%;
-    border-radius: 12px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--grad);
+      border: none;
+      color: #fff;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
 
-  .gallery img:hover {
-    transform: scale(1.06);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  }
+    .link-btn:hover {
+      transform: scale(1.03);
+    }
 
-  .social {
-    text-align: center;
-  }
+    .credibility {
+      margin-top: 25px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
 
-  .social a {
-    display: inline-block;
-    margin: 10px;
-    padding: 12px 25px;
-    border-radius: 30px;
-    color: white;
-    text-decoration: none;
-    background: linear-gradient(45deg, #fd1d1d, #fcb045, #833ab4);
-    background-size: 200%;
-    transition: 0.4s;
-    font-weight: 600;
-  }
+    .badge {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
 
-  .social a:hover {
-    background-position: right center;
-    transform: scale(1.05);
-  }
-
-  footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-    opacity: 0.8;
-    background: rgba(0,0,0,0.25);
-    border-top: 1px solid rgba(255,255,255,0.2);
-  }
-
-  /* زر العودة للأعلى */
-  #topBtn {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(255,255,255,0.3);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    display: none;
-    transition: 0.3s;
-  }
-
-  #topBtn:hover {
-    background: rgba(255,255,255,0.5);
-  }
-
-  @media (max-width: 768px) {
-    .gallery img { width: 45%; }
-    header img { width: 130px; height: 130px; }
-  }
-
-  @media (max-width: 480px) {
-    .gallery img { width: 90%; }
-  }
-
-</style>
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <img src="94A34170-1C70-44B1-AD6B-97BA3AABD26D.jpeg" alt="Profile">
-  <h1>Mohammed Aliloui</h1>
-  <p>رائد أعمال ومتداول مغربي 🇲🇦</p>
-</header>
+  <div class="profile-card">
+    <div class="avatar">
+      <img src="https://via.placeholder.com/300x300.png?text=Profile" alt="Profile">
+    </div>
+    <h1>Mohammed Aliloui ♛</h1>
+    <div class="username">@mohammedaliloui</div>
 
-<section>
-  <h2>عن المتداول</h2>
-  <p>محمد العيلوي متداول محترف في الأسواق الرقمية، يمتاز بخبرة طويلة في تحليل الأسواق المالية وإدارة المخاطر. يشارك رحلته ومعرفته مع المتابعين، بهدف تمكين الجيل الجديد من تحقيق الحرية المالية عبر التعلم والتطبيق العملي.</p>
-</section>
+    <div class="bio">
+      Entrepreneur<br>
+      Un enfant du pays 🇲🇦
+    </div>
 
-<section>
-  <h2>المصداقية والإنجازات</h2>
-  <p>عرف محمد بمصداقيته العالية ومشاركته للنتائج الحقيقية بشفافية. من أبرز إنجازاته بناء مجتمع تداول متكامل يضم متداولين من مختلف الدول العربية، بالإضافة إلى تطوير استراتيجيات ناجحة تحقق توازناً بين الربح والأمان.</p>
-</section>
+    <div class="stats">
+      <div class="stat"><b>18</b><span>منشورات</span></div>
+      <div class="stat"><b>3.842</b><span>متابع</span></div>
+      <div class="stat"><b>527</b><span>يتابع</span></div>
+    </div>
 
-<section>
-  <h2>معرض الصور</h2>
-  <div class="gallery">
-    <img src="94A34170-1C70-44B1-AD6B-97BA3AABD26D.jpeg" alt="photo1">
-    <img src="94A34170-1C70-44B1-AD6B-97BA3AABD26D.jpeg" alt="photo2">
-    <img src="94A34170-1C70-44B1-AD6B-97BA3AABD26D.jpeg" alt="photo3">
+    <div class="links">
+      <a href="https://instagram.com/mohammedaliloui" target="_blank" class="link-btn">📸 حساب إنستغرام</a>
+      <a href="https://t.me/+xRF1J2vnqigzNDg0" target="_blank" class="link-btn">💬 قناة تيليجرام</a>
+    </div>
+
+    <div class="credibility">
+      الحساب <span class="badge">موثّق ✅</span>  
+      | مجال: <span class="badge">ريادة / استثمار</span>
+    </div>
+
+    <footer>
+      © 2025 – صفحة تعريفية غير رسمية للعرض فقط
+    </footer>
   </div>
-</section>
-
-<section class="social">
-  <h2>تواصل معه</h2>
-  <a href="https://www.instagram.com/mohammedaliloui" target="_blank">📸 إنستغرام</a>
-  <a href="https://t.me/+xRF1J2vnqigzNDg0" target="_blank">💬 تيليجرام</a>
-</section>
-
-<footer>
-  © 2025 جميع الحقوق محفوظة - تصميم مستوحى من ألوان إنستغرام  
-</footer>
-
-<button id="topBtn" onclick="scrollToTop()">↑</button>
-
-<script>
-  const btn = document.getElementById("topBtn");
-  window.onscroll = function() {
-    if (document.documentElement.scrollTop > 300) {
-      btn.style.display = "block";
-    } else {
-      btn.style.display = "none";
-    }
-  };
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
 
 </body>
 </html>
