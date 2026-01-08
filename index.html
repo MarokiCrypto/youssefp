@@ -1,187 +1,279 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>AutoSouk.ma | بيع وحجز السيارات في المغرب</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoSouk | Monde des voitures de luxe</title>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{
+    --gold:#D4AF37;
+    --dark-gold:#996515;
+    --black:#0a0a0a;
+    --dark-gray:#1a1a1a;
+    --white:#ffffff;
+}
 
-    <!-- React -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+body{
+    margin:0;
+    font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    background:var(--black);
+    color:var(--white);
+}
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:rgba(10,10,10,.95);
+    border-bottom:1px solid var(--dark-gold);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
 
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f8f9fa;
-        }
-    </style>
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:28px;
+    font-weight:bold;
+    color:var(--gold);
+    text-decoration:none;
+}
+
+.logo span{
+    color:var(--white);
+    border:2px solid var(--gold);
+    padding:2px 8px;
+    border-radius:5px;
+}
+
+nav a{
+    color:var(--white);
+    text-decoration:none;
+    margin-left:25px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:var(--gold);
+}
+
+/* HERO */
+.hero{
+    height:80vh;
+    background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1350&q=80");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    border-bottom:4px solid var(--gold);
+}
+
+.hero h1{
+    font-size:3.5rem;
+}
+
+.hero h1 span{
+    color:var(--gold);
+}
+
+.hero p{
+    color:#ccc;
+    font-size:1.2rem;
+    margin-bottom:30px;
+}
+
+.btn-gold{
+    background:var(--gold);
+    color:var(--black);
+    padding:12px 35px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    border:2px solid var(--gold);
+    transition:.3s;
+}
+
+.btn-gold:hover{
+    background:transparent;
+    color:var(--gold);
+}
+
+/* CARS */
+.cars-section{
+    padding:60px 8%;
+}
+
+.section-title{
+    text-align:center;
+    font-size:2rem;
+    color:var(--gold);
+    margin-bottom:40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+}
+
+.car-card{
+    background:var(--dark-gray);
+    border-radius:15px;
+    overflow:hidden;
+    transition:.4s;
+    box-shadow:0 10px 25px rgba(0,0,0,.5);
+}
+
+.car-card:hover{
+    transform:translateY(-10px);
+    border:1px solid var(--gold);
+}
+
+.car-img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.car-info{
+    padding:20px;
+}
+
+.car-info h3{
+    color:var(--gold);
+}
+
+.price{
+    font-size:1.3rem;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+/* WHATSAPP */
+.whatsapp{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:60px;
+    height:60px;
+    background:#25D366;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    color:#fff;
+    text-decoration:none;
+    box-shadow:0 5px 15px rgba(0,0,0,.5);
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:40px;
+    background:#050505;
+    border-top:1px solid #222;
+    color:#777;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    header{
+        flex-direction:column;
+        gap:15px;
+    }
+    nav a{
+        margin:10px;
+    }
+    .hero h1{
+        font-size:2.2rem;
+    }
+}
+</style>
 </head>
 
 <body>
-<div id="root"></div>
 
-<script type="text/babel">
-const { useState } = React;
+<header>
+<a href="#" class="logo">
 
-/* ===== أيقونات SVG ===== */
+<!-- SVG LOGO -->
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+xmlns="http://www.w3.org/2000/svg">
+<path d="M3 13L5 7H19L21 13" stroke="#D4AF37" stroke-width="2"/>
+<rect x="3" y="13" width="18" height="5" rx="1" stroke="#D4AF37" stroke-width="2"/>
+<circle cx="7" cy="19" r="2" fill="#D4AF37"/>
+<circle cx="17" cy="19" r="2" fill="#D4AF37"/>
+</svg>
 
-// أيقونة الموقع
-const LocationIcon = () => (
-  <svg className="w-4 h-4 inline ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 21s-6-5.686-6-10a6 6 0 1112 0c0 4.314-6 10-6 10z"/>
-    <circle cx="12" cy="11" r="2"/>
-  </svg>
-);
+<span>Auto</span>Souk
+</a>
 
-// أيقونة التقويم
-const CalendarIcon = () => (
-  <svg className="w-4 h-4 inline ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <rect x="3" y="4" width="18" height="18" rx="2"/>
-    <line x1="16" y1="2" x2="16" y2="6"/>
-    <line x1="8" y1="2" x2="8" y2="6"/>
-  </svg>
-);
+<nav>
+<a href="#">Accueil</a>
+<a href="#">Occasion</a>
+<a href="#">Neuf</a>
+<a href="#">Contact</a>
+</nav>
+</header>
 
-// أيقونة البطاقة البنكية
-const CardIcon = () => (
-  <svg className="w-12 h-12 mx-auto mb-4 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <rect x="2" y="5" width="20" height="14" rx="2"/>
-    <line x1="2" y1="10" x2="22" y2="10"/>
-  </svg>
-);
+<section class="hero">
+<h1>Trouvez la voiture de <span>vos rêves</span></h1>
+<p>Le meilleur marché des voitures de luxe au Maroc</p>
+<a href="#cars" class="btn-gold">Voir le showroom</a>
+</section>
 
-/* ===== التطبيق ===== */
-const App = () => {
+<section class="cars-section" id="cars">
+<h2 class="section-title">Offres sélectionnées</h2>
 
-  // بيانات السيارات
-  const [cars, setCars] = useState([
-    { id: 1, brand: "Dacia", model: "Duster", price: "145,000", city: "الدار البيضاء", year: "2021", status: "available",
-      img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500&q=60" },
-    { id: 2, brand: "Volkswagen", model: "Golf 7", price: "185,000", city: "الرباط", year: "2018", status: "available",
-      img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=500&q=60" },
-    { id: 3, brand: "Renault", model: "Clio 5", price: "130,000", city: "طنجة", year: "2020", status: "reserved",
-      img: "https://images.unsplash.com/photo-1594535182308-8ffefbb661e1?auto=format&fit=crop&w=500&q=60" }
-  ]);
+<div class="grid">
 
-  // التحكم في نافذة الدفع
-  const [showPayment, setShowPayment] = useState(false);
+<div class="car-card">
+<img class="car-img" src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=500&q=60">
+<div class="car-info">
+<h3>Mercedes-Benz Classe S</h3>
+<p>Modèle 2024 | Automatique</p>
+<div class="price">450 000 MAD</div>
+</div>
+</div>
 
-  // السيارة المختارة
-  const [selectedCar, setSelectedCar] = useState(null);
+<div class="car-card">
+<img class="car-img" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=500&q=60">
+<div class="car-info">
+<h3>Chevrolet Corvette</h3>
+<p>Modèle 2023 | Sport</p>
+<div class="price">320 000 MAD</div>
+</div>
+</div>
 
-  // عند الضغط على حجز
-  const handleReserve = (car) => {
-    if (car.status !== "available") return;
-    setSelectedCar(car);
-    setShowPayment(true);
-  };
+<div class="car-card">
+<img class="car-img" src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=500&q=60">
+<div class="car-info">
+<h3>Ferrari F8</h3>
+<p>Modèle 2024 | Turbo</p>
+<div class="price">1 200 000 MAD</div>
+</div>
+</div>
 
-  // محاكاة الدفع
-  const confirmPayment = () => {
-    setCars(cars.map(c =>
-      c.id === selectedCar.id ? { ...c, status: "reserved" } : c
-    ));
-    setShowPayment(false);
-    setSelectedCar(null);
-    alert("✅ تم دفع 500 درهم بنجاح! السيارة الآن محجوزة.");
-  };
+</div>
+</section>
 
-  return (
-    <div className="min-h-screen bg-gray-50">
+<footer>
+<p>Tous droits réservés © 2026 AutoSouk.com</p>
+<p>📍 Maroc | 📞 WhatsApp : +212 6 00 00 00 00</p>
+</footer>
 
-      {/* ===== الهيدر ===== */}
-      <nav className="bg-white shadow-sm p-4 border-b">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-green-700">
-            Auto<span className="text-blue-900">Souk</span>.ma
-          </h1>
-          <button className="bg-green-700 text-white px-5 py-2 rounded-full font-bold">
-            أضف سيارتك
-          </button>
-        </div>
-      </nav>
+<a href="https://wa.me/212600000000" class="whatsapp">☎</a>
 
-      {/* ===== البانر ===== */}
-      <div className="bg-gradient-to-r from-green-900 to-green-700 text-white py-16 text-center">
-        <h2 className="text-4xl font-bold mb-4">احجز سيارتك بكل ثقة</h2>
-        <p className="text-xl opacity-90">500 درهم فقط لتجميد الإعلان</p>
-      </div>
-
-      {/* ===== السيارات ===== */}
-      <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {cars.map(car => (
-          <div key={car.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition">
-            <img src={car.img} className="w-full h-56 object-cover"/>
-            <div className="p-5">
-              <h3 className="text-xl font-bold">{car.brand} {car.model}</h3>
-              <p className="text-green-600 text-2xl font-bold my-2">{car.price} DH</p>
-
-              <div className="flex justify-between text-sm text-gray-500 border-t pt-3">
-                <span><LocationIcon /> {car.city}</span>
-                <span><CalendarIcon /> {car.year}</span>
-              </div>
-
-              <button
-                disabled={car.status !== "available"}
-                onClick={() => handleReserve(car)}
-                className={`w-full mt-4 py-3 rounded-xl font-bold
-                  ${car.status === "available"
-                    ? "bg-orange-500 text-white hover:bg-orange-600"
-                    : "bg-gray-200 text-gray-500"}`}
-              >
-                {car.status === "available" ? "حجز السيارة (500 DH)" : "محجوزة"}
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* ===== نافذة الدفع ===== */}
-      {showPayment && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-3xl max-w-md w-full text-center">
-            <CardIcon />
-            <h3 className="text-2xl font-bold mb-2">
-              تأكيد حجز {selectedCar.brand} {selectedCar.model}
-            </h3>
-            <p className="text-gray-600 mb-6">
-              سيتم خصم <strong>500 درهم</strong> لحجز السيارة لمدة 48 ساعة
-            </p>
-
-            <input type="text" placeholder="**** **** **** ****"
-              className="w-full border p-2 rounded mb-4 text-center"/>
-
-            <div className="flex gap-4">
-              <button onClick={confirmPayment}
-                className="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold">
-                تأكيد
-              </button>
-              <button onClick={() => setShowPayment(false)}
-                className="flex-1 bg-gray-100 py-3 rounded-xl font-bold">
-                إلغاء
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ===== الفوتر ===== */}
-      <footer className="bg-blue-900 text-white py-8 text-center mt-10">
-        © 2024 AutoSouk.ma — جميع الحقوق محفوظة
-      </footer>
-
-    </div>
-  );
-};
-
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-</script>
 </body>
 </html>
