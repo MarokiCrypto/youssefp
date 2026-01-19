@@ -1,279 +1,183 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AutoSouk | Monde des voitures de luxe</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anas Trader | القمة في التداول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-gold: #aa8c2c;
+            --black: #050505;
+            --grey: #1a1a1a;
+            --white: #ffffff;
+        }
 
-<style>
-:root{
-    --gold:#D4AF37;
-    --dark-gold:#996515;
-    --black:#0a0a0a;
-    --dark-gray:#1a1a1a;
-    --white:#ffffff;
-}
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
 
-body{
-    margin:0;
-    font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-    background:var(--black);
-    color:var(--white);
-}
+        /* Header & Logo */
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--grey);
+        }
 
-/* HEADER */
-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 8%;
-    background:rgba(10,10,10,.95);
-    border-bottom:1px solid var(--dark-gold);
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:28px;
-    font-weight:bold;
-    color:var(--gold);
-    text-decoration:none;
-}
+        .slogan {
+            font-size: 1.1rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-.logo span{
-    color:var(--white);
-    border:2px solid var(--gold);
-    padding:2px 8px;
-    border-radius:5px;
-}
+        /* Experience Section */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 50px 20px;
+            background: linear-gradient(to bottom, #050505, #111);
+        }
 
-nav a{
-    color:var(--white);
-    text-decoration:none;
-    margin-left:25px;
-    transition:.3s;
-}
+        .stat-card {
+            background: var(--grey);
+            padding: 20px;
+            border-radius: 15px;
+            width: 150px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
 
-nav a:hover{
-    color:var(--gold);
-}
+        .stat-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
 
-/* HERO */
-.hero{
-    height:80vh;
-    background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1350&q=80");
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    border-bottom:4px solid var(--gold);
-}
+        .stat-card h3 {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin: 0;
+        }
 
-.hero h1{
-    font-size:3.5rem;
-}
+        /* Links Section */
+        .links-section {
+            padding: 40px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
 
-.hero h1 span{
-    color:var(--gold);
-}
+        .link-btn {
+            display: block;
+            background-color: var(--grey);
+            color: var(--white);
+            text-decoration: none;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-.hero p{
-    color:#ccc;
-    font-size:1.2rem;
-    margin-bottom:30px;
-}
+        .link-btn:hover {
+            background-color: var(--gold);
+            color: var(--black);
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
 
-.btn-gold{
-    background:var(--gold);
-    color:var(--black);
-    padding:12px 35px;
-    border-radius:30px;
-    text-decoration:none;
-    font-weight:bold;
-    border:2px solid var(--gold);
-    transition:.3s;
-}
+        /* Testimonials */
+        .testimonials {
+            padding: 50px 20px;
+            background-color: #080808;
+        }
 
-.btn-gold:hover{
-    background:transparent;
-    color:var(--gold);
-}
+        .test-card {
+            background: #111;
+            padding: 20px;
+            border-right: 4px solid var(--gold);
+            margin: 15px auto;
+            max-width: 600px;
+            border-radius: 0 10px 10px 0;
+        }
 
-/* CARS */
-.cars-section{
-    padding:60px 8%;
-}
+        .test-card p { font-style: italic; color: #ddd; }
+        .test-card span { color: var(--gold); font-weight: bold; }
 
-.section-title{
-    text-align:center;
-    font-size:2rem;
-    color:var(--gold);
-    margin-bottom:40px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:30px;
-}
-
-.car-card{
-    background:var(--dark-gray);
-    border-radius:15px;
-    overflow:hidden;
-    transition:.4s;
-    box-shadow:0 10px 25px rgba(0,0,0,.5);
-}
-
-.car-card:hover{
-    transform:translateY(-10px);
-    border:1px solid var(--gold);
-}
-
-.car-img{
-    width:100%;
-    height:200px;
-    object-fit:cover;
-}
-
-.car-info{
-    padding:20px;
-}
-
-.car-info h3{
-    color:var(--gold);
-}
-
-.price{
-    font-size:1.3rem;
-    font-weight:bold;
-    margin-top:10px;
-}
-
-/* WHATSAPP */
-.whatsapp{
-    position:fixed;
-    bottom:25px;
-    right:25px;
-    width:60px;
-    height:60px;
-    background:#25D366;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    color:#fff;
-    text-decoration:none;
-    box-shadow:0 5px 15px rgba(0,0,0,.5);
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:40px;
-    background:#050505;
-    border-top:1px solid #222;
-    color:#777;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-    header{
-        flex-direction:column;
-        gap:15px;
-    }
-    nav a{
-        margin:10px;
-    }
-    .hero h1{
-        font-size:2.2rem;
-    }
-}
-</style>
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-<a href="#" class="logo">
+    <header>
+        <div class="logo">ANAS TRADER</div>
+        <p class="slogan">"الاحترافية ليست مجرد صفقات، بل هي عقلية استثمارية تبدأ من هنا."</p>
+    </header>
 
-<!-- SVG LOGO -->
-<svg width="40" height="40" viewBox="0 0 24 24" fill="none"
-xmlns="http://www.w3.org/2000/svg">
-<path d="M3 13L5 7H19L21 13" stroke="#D4AF37" stroke-width="2"/>
-<rect x="3" y="13" width="18" height="5" rx="1" stroke="#D4AF37" stroke-width="2"/>
-<circle cx="7" cy="19" r="2" fill="#D4AF37"/>
-<circle cx="17" cy="19" r="2" fill="#D4AF37"/>
-</svg>
+    <section class="stats-container">
+        <div class="stat-card">
+            <h3>+5</h3>
+            <p>سنوات خبرة</p>
+        </div>
+        <div class="stat-card">
+            <h3>+2k</h3>
+            <p>مشترك نشط</p>
+        </div>
+        <div class="stat-card">
+            <h3>90%</h3>
+            <p>دقة التحليل</p>
+        </div>
+    </section>
 
-<span>Auto</span>Souk
-</a>
+    <section class="links-section">
+        <h2 style="text-align: center; color: var(--gold);">روابط الوصول السريع</h2>
+        <a href="https://t.me/anastrader" class="link-btn">قناتي على تليجرام (توصيات مجانية)</a>
+        <a href="#" class="link-btn">دورة احتراف التداول (VIP)</a>
+        <a href="#" class="link-btn">افتح حسابك مع الوسيط المعتمد</a>
+        <a href="https://instagram.com/anastrader" class="link-btn">تابع يومياتي على إنستغرام</a>
+    </section>
 
-<nav>
-<a href="#">Accueil</a>
-<a href="#">Occasion</a>
-<a href="#">Neuf</a>
-<a href="#">Contact</a>
-</nav>
-</header>
+    <section class="testimonials">
+        <h2 style="text-align: center; color: var(--gold);">ماذا يقول المتداولون؟</h2>
+        <div class="test-card">
+            <p>"بفضل الله ثم توصيات أنس، حققت استقرار مالي لم أتوقعه. الشفافية هي سر النجاح."</p>
+            <span>- أحمد الكواري</span>
+        </div>
+        <div class="test-card">
+            <p>"تعلمت منه إدارة المخاطر قبل الربح، وهذا ما جعلني أستمر في السوق حتى الآن."</p>
+            <span>- يوسف منصور</span>
+        </div>
+    </section>
 
-<section class="hero">
-<h1>Trouvez la voiture de <span>vos rêves</span></h1>
-<p>Le meilleur marché des voitures de luxe au Maroc</p>
-<a href="#cars" class="btn-gold">Voir le showroom</a>
-</section>
-
-<section class="cars-section" id="cars">
-<h2 class="section-title">Offres sélectionnées</h2>
-
-<div class="grid">
-
-<div class="car-card">
-<img class="car-img" src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=500&q=60">
-<div class="car-info">
-<h3>Mercedes-Benz Classe S</h3>
-<p>Modèle 2024 | Automatique</p>
-<div class="price">450 000 MAD</div>
-</div>
-</div>
-
-<div class="car-card">
-<img class="car-img" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=500&q=60">
-<div class="car-info">
-<h3>Chevrolet Corvette</h3>
-<p>Modèle 2023 | Sport</p>
-<div class="price">320 000 MAD</div>
-</div>
-</div>
-
-<div class="car-card">
-<img class="car-img" src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=500&q=60">
-<div class="car-info">
-<h3>Ferrari F8</h3>
-<p>Modèle 2024 | Turbo</p>
-<div class="price">1 200 000 MAD</div>
-</div>
-</div>
-
-</div>
-</section>
-
-<footer>
-<p>Tous droits réservés © 2026 AutoSouk.com</p>
-<p>📍 Maroc | 📞 WhatsApp : +212 6 00 00 00 00</p>
-</footer>
-
-<a href="https://wa.me/212600000000" class="whatsapp">☎</a>
+    <footer>
+        &copy; 2026 Anas Trader | جميع الحقوق محفوظة
+    </footer>
 
 </body>
 </html>
