@@ -1,183 +1,395 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anas Trader | القمة في التداول</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
+    <title>Youssef Ouyade - Portfolio TS QHSE</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --gold: #d4af37;
-            --dark-gold: #aa8c2c;
-            --black: #050505;
-            --grey: #1a1a1a;
-            --white: #ffffff;
+        body { font-family: 'Poppins', sans-serif; }
+        
+        /* Custom Keyframe Animations for Vector Icons */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
-
-        body {
-            background-color: var(--black);
-            color: var(--white);
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.6; }
+            50% { transform: scale(1.08); opacity: 0.2; }
+            100% { transform: scale(0.95); opacity: 0.6; }
         }
-
-        /* Header & Logo */
-        header {
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--grey);
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
+        
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-pulse-ring { animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .slogan {
-            font-size: 1.1rem;
-            color: #ccc;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Experience Section */
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 50px 20px;
-            background: linear-gradient(to bottom, #050505, #111);
-        }
-
-        .stat-card {
-            background: var(--grey);
-            padding: 20px;
-            border-radius: 15px;
-            width: 150px;
-            text-align: center;
-            border: 1px solid #333;
-            transition: 0.3s;
-        }
-
-        .stat-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-        }
-
-        .stat-card h3 {
-            color: var(--gold);
-            font-size: 1.8rem;
-            margin: 0;
-        }
-
-        /* Links Section */
-        .links-section {
-            padding: 40px 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .link-btn {
-            display: block;
-            background-color: var(--grey);
-            color: var(--white);
-            text-decoration: none;
-            padding: 18px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 500;
-            border: 1px solid #222;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .link-btn:hover {
-            background-color: var(--gold);
-            color: var(--black);
-            font-weight: bold;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 50px 20px;
-            background-color: #080808;
-        }
-
-        .test-card {
-            background: #111;
-            padding: 20px;
-            border-right: 4px solid var(--gold);
-            margin: 15px auto;
-            max-width: 600px;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .test-card p { font-style: italic; color: #ddd; }
-        .test-card span { color: var(--gold); font-weight: bold; }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            font-size: 0.9rem;
-            color: #555;
+        /* Custom Card Light Shadow */
+        .light-card {
+            background: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white">
 
-    <header>
-        <div class="logo">ANAS TRADER</div>
-        <p class="slogan">"الاحترافية ليست مجرد صفقات، بل هي عقلية استثمارية تبدأ من هنا."</p>
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3 mb-3 sm:mb-0">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center shadow-md text-white font-bold text-xl">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                        Youssef Ouyade
+                        <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">TS QHSE</span>
+                    </h1>
+                    <p class="text-xs text-slate-500 font-medium">Technicien Spécialisé Qualité, Hygiène, Sécurité et Environnement</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200 text-xs text-emerald-700 font-semibold shadow-inner">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span>Normes ISO 9001 | 14001 | 45001</span>
+            </div>
+        </div>
     </header>
 
-    <section class="stats-container">
-        <div class="stat-card">
-            <h3>+5</h3>
-            <p>سنوات خبرة</p>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-emerald-700 font-bold tracking-wider uppercase text-xs bg-emerald-100/80 border border-emerald-200 px-3.5 py-1.5 rounded-full shadow-sm inline-block mb-3">
+                <i class="fa-solid fa-star mr-1.5 text-emerald-600"></i> Les 7 Tâches QHSE Fondamentales
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-4">
+                Portefeuille d'Icônes & Missions
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                Découvrez l'ensemble des 7 missions d'un TS QHSE présentées sous forme d'illustrations vectorielles circulaires animées de haute qualité. Cliquez sur chaque carte pour explorer les détails et opérations associées.
+            </p>
         </div>
-        <div class="stat-card">
-            <h3>+2k</h3>
-            <p>مشترك نشط</p>
-        </div>
-        <div class="stat-card">
-            <h3>90%</h3>
-            <p>دقة التحليل</p>
-        </div>
-    </section>
 
-    <section class="links-section">
-        <h2 style="text-align: center; color: var(--gold);">روابط الوصول السريع</h2>
-        <a href="https://t.me/anastrader" class="link-btn">قناتي على تليجرام (توصيات مجانية)</a>
-        <a href="#" class="link-btn">دورة احتراف التداول (VIP)</a>
-        <a href="#" class="link-btn">افتح حسابك مع الوسيط المعتمد</a>
-        <a href="https://instagram.com/anastrader" class="link-btn">تابع يومياتي على إنستغرام</a>
-    </section>
+        <!-- Responsive Grid of 7 Animated Icon Tasks -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-    <section class="testimonials">
-        <h2 style="text-align: center; color: var(--gold);">ماذا يقول المتداولون؟</h2>
-        <div class="test-card">
-            <p>"بفضل الله ثم توصيات أنس، حققت استقرار مالي لم أتوقعه. الشفافية هي سر النجاح."</p>
-            <span>- أحمد الكواري</span>
-        </div>
-        <div class="test-card">
-            <p>"تعلمت منه إدارة المخاطر قبل الربح، وهذا ما جعلني أستمر في السوق حتى الآن."</p>
-            <span>- يوسف منصور</span>
-        </div>
-    </section>
+            <!-- Tâche 1: Hard Hat / Safety -->
+            <div onclick="openModal(1)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-emerald-100/50 rounded-full blur-xl group-hover:bg-emerald-200/50 transition-all"></div>
+                <!-- Circular Icon -->
+                <div class="w-28 h-28 mb-5 rounded-full bg-emerald-50 border-4 border-emerald-200 flex items-center justify-center shadow-inner relative animate-float">
+                    <div class="absolute inset-0 rounded-full border border-emerald-300 animate-pulse-ring"></div>
+                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-emerald-600 drop-shadow-sm">
+                        <path d="M15 55 C15 35 32 20 50 20 C68 20 85 35 85 55 C85 62 78 68 70 68 H30 C22 68 15 62 15 55 Z" fill="#FBBF24" stroke="#D97706" stroke-width="4"/>
+                        <path d="M10 60 C10 56 14 54 18 54 H82 C86 54 90 56 90 60 V65 C90 69 86 72 82 72 H18 C14 72 10 69 10 65 Z" fill="#D97706" stroke="#B45309" stroke-width="3"/>
+                        <rect x="42" y="32" width="16" height="8" rx="2" fill="#FEF3C7"/>
+                    </svg>
+                </div>
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 01</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">Sécurité sur Chantier & EPI</h3>
+                <p class="text-xs text-slate-600 mb-4">Garantir le port des équipements de protection et prévenir les risques sur site.</p>
+                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-emerald-600 font-semibold">
+                    <span>Voir les détails</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
 
-    <footer>
-        &copy; 2026 Anas Trader | جميع الحقوق محفوظة
+            <!-- Tâche 2: DUER / Risk Assessment -->
+            <div onclick="openModal(2)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-rose-100/50 rounded-full blur-xl group-hover:bg-rose-200/50 transition-all"></div>
+                <div class="w-28 h-28 mb-5 rounded-full bg-rose-50 border-4 border-rose-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 0.3s;">
+                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-rose-600 drop-shadow-sm">
+                        <rect x="22" y="15" width="45" height="70" rx="6" fill="#3B82F6" stroke="#1D4ED8" stroke-width="4"/>
+                        <line x1="32" y1="30" x2="52" y2="30" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="32" y1="42" x2="47" y2="42" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="32" y1="54" x2="52" y2="54" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="62" cy="62" r="18" fill="#FEF3C7" stroke="#D97706" stroke-width="4"/>
+                        <text x="62" y="69" font-size="18" font-weight="bold" fill="#B45309" text-anchor="middle">!</text>
+                        <line x1="75" y1="75" x2="90" y2="90" stroke="#D97706" stroke-width="5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="bg-rose-100 text-rose-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 02</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-rose-600 transition-colors">Évaluation des Risques & DUER</h3>
+                <p class="text-xs text-slate-600 mb-4">Analyse approfondie des dangers et mise en place du document unique.</p>
+                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-rose-600 font-semibold">
+                    <span>Voir les détails</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+
+            <!-- Tâche 3: Visual Audit / Inspection -->
+            <div onclick="openModal(3)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-teal-100/50 rounded-full blur-xl group-hover:bg-teal-200/50 transition-all"></div>
+                <div class="w-28 h-28 mb-5 rounded-full bg-teal-50 border-4 border-teal-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 0.6s;">
+                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-teal-600 drop-shadow-sm">
+                        <rect x="25" y="15" width="50" height="70" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="4"/>
+                        <line x1="37" y1="32" x2="63" y2="32" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="37" y1="44" x2="63" y2="44" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+                        <ellipse cx="50" cy="63" rx="16" ry="10" fill="#0D9488" class="animate-bounce-subtle"/>
+                        <circle cx="50" cy="63" r="5" fill="#FFFFFF"/>
+                        <circle cx="51" cy="63" r="2" fill="#0F172A"/>
+                    </svg>
+                </div>
+                <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 03</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-teal-600 transition-colors">Inspections & Audits Visuels</h3>
+                <p class="text-xs text-slate-600 mb-4">Surveillance continue des conformités sur site et rondes de sécurité.</p>
+                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-teal-600 font-semibold">
+                    <span>Voir les détails</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+
+            <!-- Tâche 4: Target & Objectives -->
+            <div onclick="openModal(4)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-amber-100/50 rounded-full blur-xl group-hover:bg-amber-200/50 transition-all"></div>
+                <div class="w-28 h-28 mb-5 rounded-full bg-amber-50 border-4 border-amber-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 0.9s;">
+                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-amber-600 drop-shadow-sm">
+                        <circle cx="50" cy="50" r="36" fill="none" stroke="#EF4444" stroke-width="8"/>
+                        <circle cx="50" cy="50" r="24" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+                        <circle cx="50" cy="50" r="12" fill="#EF4444"/>
+                        <line x1="75" y1="25" x2="52" y2="48" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/>
+                        <polygon points="75,25 68,27 73,32" fill="#3B82F6"/>
+                    </svg>
+                </div>
+                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 04</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-amber-600 transition-colors">Politique & Objectifs QHSE</h3>
+                <p class="text-xs text-slate-600 mb-4">Fixation des indicateurs de performance (KPI) et atteinte des objectifs.</p>
+                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-amber-600 font-semibold">
+                    <span>Voir les détails</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+
+            <!-- Tâche 5: Action Plan & Dashboard -->
+            <div onclick="openModal(5)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-blue-100/50 rounded-full blur-xl group-hover:bg-blue-200/50 transition-all"></div>
+                <div class="w-28 h-28 mb-5 rounded-full bg-blue-50 border-4 border-blue-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 1.2s;">
+                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-blue-600 drop-shadow-sm">
+                        <rect x="15" y="20" width="70" height="50" rx="6" fill="#1E293B" stroke="#3B82F6" stroke-width="4"/>
+                        <line x1="25" y1="55" x2="40" y2="35" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="40" y1="35" x2="55" y2="45" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="55" y1="45" x2="75" y2="28" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="25" y="62" width="50" height="4" rx="2" fill="#64748B"/>
+                    </svg>
+                </div>
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 05</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Plan d'Action & Suivi Statistique</h3>
+                <p class="text-xs text-slate-600 mb-4">Pilotage des actions correctives et préventives via tableaux de bord.</p>
+                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-blue-600 font-semibold">
+                    <span>Voir les détails</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+
+            <!-- Tâche 6: Regulations & Computer -->
+            <div onclick="openModal(6)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-indigo-100/50 rounded-full blur-xl group-hover:bg-indigo-200/50 transition-all"></div>
+                <div class="w-28 h-28 mb-5 rounded-full bg-indigo-50 border-4 border-indigo-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 1.5s;">
+                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-indigo-600 drop-shadow-sm">
+                        <rect x="18" y="22" width="64" height="42" rx="6" fill="#1E293B" stroke="#6366F1" stroke-width="4"/>
+                        <line x1="42" y1="64" x2="58" y2="64" stroke="#6366F1" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M32 72 H68" stroke="#6366F1" stroke-width="5" stroke-linecap="round"/>
+                        <line x1="28" y1="34" x2="50" y2="34" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="28" y1="46" x2="42" y2="46" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 06</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">Veille Réglementaire & Registres</h3>
+                <p class="text-xs text-slate-600 mb-4">Mise à jour des registres légaux, exigences normatives et bases de données.</p>
+                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-indigo-600 font-semibold">
+                    <span>Voir les détails</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tâche 7: Meeting Table (Centered full width row) -->
+        <div class="mt-8 max-w-xl mx-auto">
+            <div onclick="openModal(7)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-purple-100/50 rounded-full blur-xl group-hover:bg-purple-200/50 transition-all"></div>
+                <div class="w-28 h-28 mb-5 rounded-full bg-purple-50 border-4 border-purple-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 1.8s;">
+                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-purple-600 drop-shadow-sm">
+                        <ellipse cx="50" cy="55" rx="28" ry="14" fill="#334155" stroke="#A855F7" stroke-width="4"/>
+                        <circle cx="50" cy="28" r="7" fill="#F43F5E"/>
+                        <circle cx="22" cy="55" r="7" fill="#3B82F6"/>
+                        <circle cx="78" cy="55" r="7" fill="#10B981"/>
+                        <circle cx="50" cy="82" r="7" fill="#F59E0B"/>
+                    </svg>
+                </div>
+                <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 07</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-purple-600 transition-colors">Animation des Réunions & Sensibilisation</h3>
+                <p class="text-xs text-slate-600 mb-4">Conduite de réunions HSE, causeries sécurité et formation du personnel.</p>
+                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-purple-600 font-semibold">
+                    <span>Voir les détails</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="taskModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div id="modalContent" class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 w-9 h-9 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalBody">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 text-slate-500 py-6 text-center text-xs shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <p>&copy; 2026 - Conçu pour <strong class="text-slate-800">Youssef Ouyade</strong> (Technicien Spécialisé QHSE).</p>
+            <div class="flex items-center space-x-4 text-emerald-600 font-medium">
+                <span><i class="fa-solid fa-check-circle mr-1"></i> ISO 45001</span>
+                <span><i class="fa-solid fa-check-circle mr-1"></i> ISO 14001</span>
+                <span><i class="fa-solid fa-check-circle mr-1"></i> ISO 9001</span>
+            </div>
+        </div>
     </footer>
 
+    <script>
+        const taskDetails = {
+            1: {
+                title: "Sécurité sur Chantier & EPI",
+                badge: "Tâche 01 - Hygiène & Sécurité",
+                color: "emerald",
+                desc: "Garantir le respect strict du port des Équipements de Protection Individuelle (EPI) et collective sur tous les chantiers et sites industriels.",
+                points: [
+                    "Vérification quotidienne de l'état des casques, harnais et chaussures de sécurité.",
+                    "Contrôle de l'accès aux zones à risques et signalisation réglementaire.",
+                    "Réduction des accidents de travail par la prévention proactive."
+                ]
+            },
+            2: {
+                title: "Évaluation des Risques & DUER",
+                badge: "Tâche 02 - Analyse des Dangers",
+                color: "rose",
+                desc: "Identifier, analyser et hiérarchiser les risques professionnels afin d'établir le Document Unique d'Évaluation des Risques (DUER).",
+                points: [
+                    "Cartographie exhaustive des unités de travail et de leurs dangers associés.",
+                    "Cotation de la fréquence et de la gravité des risques identifiés.",
+                    "Proposition de mesures de maîtrise et de hiérarchisation des priorités."
+                ]
+            },
+            3: {
+                title: "Inspections & Audits Visuels",
+                badge: "Tâche 03 - Contrôle Terrain",
+                color: "teal",
+                desc: "Réaliser des rondes de sécurité régulières et des audits de terrain pour s'assurer de l'application des consignes QHSE.",
+                points: [
+                    "Détection immédiate des situations dangereuses et des actes non-sûrs.",
+                    "Rapports d'inspection visuelle avec preuves photographiques.",
+                    "Suivi des actions correctives immédiates avec les superviseurs de zone."
+                ]
+            },
+            4: {
+                title: "Politique & Objectifs QHSE",
+                badge: "Tâche 04 - Stratégie & Management",
+                color: "amber",
+                desc: "Définir la vision stratégique de l'entreprise en matière de Qualité, Sécurité et Environnement en accord avec la direction.",
+                points: [
+                    "Établissement des indicateurs clés de performance (KPI HSE).",
+                    "Fixation des objectifs annuels (ex: Taux de fréquence zéro accident).",
+                    "Alignement avec les exigences des référentiels ISO 9001, 14001 et 45001."
+                ]
+            },
+            5: {
+                title: "Plan d'Action & Suivi Statistique",
+                badge: "Tâche 05 - Pilotage & Reporting",
+                color: "blue",
+                desc: "Mettre en œuvre et suivre l'avancement des plans d'action correctifs et préventifs suite aux audits et incidents.",
+                points: [
+                    "Suivi rigoureux des actions via des tableaux de bord dynamiques.",
+                    "Analyse statistique mensuelle des taux de fréquence et de gravité.",
+                    "Rapports d'efficacité des mesures mises en place."
+                ]
+            },
+            6: {
+                title: "Veille Réglementaire & Registres",
+                badge: "Tâche 06 - Conformité & Lois",
+                color: "indigo",
+                desc: "Assurer une veille légale constante sur les évolutions des lois en vigueur et tenir à jour l'ensemble des registres obligatoires.",
+                points: [
+                    "Mise à jour de la matrice de conformité réglementaire.",
+                    "Gestion et archivage des registres de sécurité et des fiches de données de sécurité.",
+                    "Évaluation de la conformité de l'établissement face aux nouvelles législations."
+                ]
+            },
+            7: {
+                title: "Animation des Réunions & Sensibilisation",
+                badge: "Tâche 07 - Communication & Culture HSE",
+                color: "purple",
+                desc: "Animer des réunions d'information, des causeries sécurité (quarts d'heure sécurité) et former les équipes aux bonnes pratiques.",
+                points: [
+                    "Animation de quarts d'heure sécurité avant chaque démarrage de poste.",
+                    "Sensibilisation aux gestes et postures, tri des déchets et respect environnemental.",
+                    "Création d'une culture d'entreprise forte axée sur la sécurité participative."
+                ]
+            }
+        };
+
+        function openModal(taskId) {
+            const data = taskDetails[taskId];
+            const modal = document.getElementById('taskModal');
+            const modalContent = document.getElementById('modalContent');
+            const modalBody = document.getElementById('modalBody');
+
+            let pointsHtml = data.points.map(p => `<li class="flex items-start text-xs sm:text-sm text-slate-600 mb-2.5"><i class="fa-solid fa-circle-check text-emerald-600 mr-2.5 mt-1 shrink-0"></i><span>${p}</span></li>`).join('');
+
+            modalBody.innerHTML = `
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="bg-${data.color}-100 text-${data.color}-800 border border-${data.color}-200 text-xs font-bold px-3 py-1 rounded-full">${data.badge}</span>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-3">${data.title}</h3>
+                <p class="text-slate-600 text-sm mb-6 leading-relaxed">${data.desc}</p>
+                <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 mb-6 shadow-inner">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3"><i class="fa-solid fa-list-check mr-1.5 text-emerald-600"></i> Missions Clés & Opérations :</h4>
+                    <ul class="space-y-1">${pointsHtml}</ul>
+                </div>
+                <div class="flex justify-end">
+                    <button onclick="closeModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-md">
+                        Fermer la fenêtre
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('taskModal');
+            const modalContent = document.getElementById('modalContent');
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('taskModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>
