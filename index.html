@@ -1,395 +1,958 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youssef Ouyade - Portfolio TS QHSE</title>
-    <!-- Tailwind CSS CDN -->
+    <title>تخصص QHSE - الشعار والتحدي التفاعلي | TS QHSE Showcase</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        qhse: {
+                            q: '#3B82F6', // Quality - Blue
+                            h: '#EC4899', // Health - Pink/Red
+                            s: '#F59E0B', // Safety - Gold/Amber
+                            e: '#10B981', // Environment - Green
+                            bg: '#0F172A',
+                            panel: '#1E293B',
+                            accent: '#06B6D4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        glow: {
+                            '0%': { filter: 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.4))' },
+                            '100%': { filter: 'drop-shadow(0 0 25px rgba(6, 182, 212, 0.8))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Poppins', sans-serif; }
-        
-        /* Custom Keyframe Animations for Vector Icons */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-        }
-        @keyframes pulse-ring {
-            0% { transform: scale(0.95); opacity: 0.6; }
-            50% { transform: scale(1.08); opacity: 0.2; }
-            100% { transform: scale(0.95); opacity: 0.6; }
-        }
-        @keyframes bounce-subtle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-        
-        .animate-float { animation: float 4s ease-in-out infinite; }
-        .animate-pulse-ring { animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        .animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        /* Custom Card Light Shadow */
-        .light-card {
-            background: #ffffff;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #f1f5f9;
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2);
+        }
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .sound-wave span {
+            display: inline-block;
+            width: 3px;
+            height: 12px;
+            background-color: #06b6d4;
+            border-radius: 3px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        .sound-wave span:nth-child(2) { animation-delay: 0.2s; }
+        .sound-wave span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes wave {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+        [dir="ltr"] body {
+            font-family: 'Poppins', 'Tajawal', sans-serif;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
 
-    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
-            <div class="flex items-center space-x-3 mb-3 sm:mb-0">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center shadow-md text-white font-bold text-xl">
-                    <i class="fa-solid fa-shield-halved"></i>
+    <canvas id="particles-canvas"></canvas>
+
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" id="header-logo-btn">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-emerald-500 to-amber-500 p-[2px] flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                    <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-cyan-400 text-lg"></i>
+                    </div>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-                        Youssef Ouyade
-                        <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">TS QHSE</span>
-                    </h1>
-                    <p class="text-xs text-slate-500 font-medium">Technicien Spécialisé Qualité, Hygiène, Sécurité et Environnement</p>
+                    <span class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 tracking-wider">TS QHSE</span>
+                    <span class="block text-[10px] text-slate-400 font-medium tracking-widest uppercase">Filière Officielle</span>
                 </div>
             </div>
-            <div class="flex items-center space-x-2 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200 text-xs text-emerald-700 font-semibold shadow-inner">
-                <span class="relative flex h-2.5 w-2.5">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                </span>
-                <span>Normes ISO 9001 | 14001 | 45001</span>
+
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-6 space-x-reverse text-sm font-medium">
+                <a href="#hero" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="الشعار التفاعلي" data-lang-fr="Logo Interactif">الشعار التفاعلي</a>
+                <a href="#pillars" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="الأركان الأربعة" data-lang-fr="Les 4 Piliers">الأركان الأربعة</a>
+                <a href="#builder" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="صانع الشعار" data-lang-fr="Générateur de Logo">صانع الشعار</a>
+                <a href="#challenge" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="التحدي والمسابقة" data-lang-fr="Le Défi (Atelier)">التحدي والمسابقة</a>
+            </nav>
+
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button id="sound-toggle" class="flex items-center space-x-2 space-x-reverse bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-700/60 transition-all shadow-sm">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-cyan-400 text-sm"></i>
+                    <span id="sound-text" class="hidden sm:inline" data-lang-ar="الصوت مفعل" data-lang-fr="Sons Activés">الصوت مفعل</span>
+                    <div id="sound-wave" class="sound-wave flex items-center space-x-0.5 space-x-reverse ml-1">
+                        <span></span><span></span><span></span>
+                    </div>
+                </button>
+
+                <button id="lang-toggle" class="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-md shadow-cyan-900/40 transition-all flex items-center space-x-1.5 space-x-reverse">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="lang-text">Français</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="text-emerald-700 font-bold tracking-wider uppercase text-xs bg-emerald-100/80 border border-emerald-200 px-3.5 py-1.5 rounded-full shadow-sm inline-block mb-3">
-                <i class="fa-solid fa-star mr-1.5 text-emerald-600"></i> Les 7 Tâches QHSE Fondamentales
-            </span>
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-4">
-                Portefeuille d'Icônes & Missions
-            </h2>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Découvrez l'ensemble des 7 missions d'un TS QHSE présentées sous forme d'illustrations vectorielles circulaires animées de haute qualité. Cliquez sur chaque carte pour explorer les détails et opérations associées.
+    <main class="flex-grow z-10">
+
+        <section id="hero" class="relative py-12 lg:py-20 px-4 max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
+            
+            <div class="inline-flex items-center space-x-2 space-x-reverse bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 px-4 py-1.5 rounded-full text-xs font-medium mb-8 backdrop-blur-md">
+                <span class="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+                <span data-lang-ar="تحدي ورشة الإبداع: LOGO DE LA FILIÈRE TS QHSE" data-lang-fr="Atelier Créatif : LOGO DE LA FILIÈRE TS QHSE">تحدي ورشة الإبداع: LOGO DE LA FILIÈRE TS QHSE</span>
+            </div>
+
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4 max-w-4xl leading-tight">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-pink-400 via-amber-400 to-emerald-400" data-lang-ar="هوية بصرية متكاملة لتخصص QHSE" data-lang-fr="Identité Visuelle Dynamique TS QHSE">هوية بصرية متكاملة لتخصص QHSE</span>
+            </h1>
+            <p class="text-slate-400 text-sm md:text-base max-w-2xl mb-10 leading-relaxed" data-lang-ar="استكشف الشعار التفاعلي لشعبة الجودة والصحة والسلامة والبيئة. اضغط وتفاعل مع العناصر الصوتية والرسم المباشر للأركان الأساسية." data-lang-fr="Explorez le logo interactif de la filière Qualité, Hygiène, Sécurité et Environnement. Interagissez avec les éléments visuels et sonores synthétisés.">
+                استكشف الشعار التفاعلي لشعبة الجودة والصحة والسلامة والبيئة. اضغط وتفاعل مع العناصر الصوتية والرسم المباشر للأركان الأساسية.
             </p>
-        </div>
 
-        <!-- Responsive Grid of 7 Animated Icon Tasks -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="relative w-full max-w-md aspect-square my-4 p-6 glass-panel rounded-3xl border border-slate-700/50 shadow-2xl flex flex-col items-center justify-center group transition-all duration-500 hover:border-cyan-500/40">
+                
+                <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/10 via-pink-600/10 via-amber-600/10 to-emerald-600/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all opacity-70"></div>
 
-            <!-- Tâche 1: Hard Hat / Safety -->
-            <div onclick="openModal(1)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-32 h-32 bg-emerald-100/50 rounded-full blur-xl group-hover:bg-emerald-200/50 transition-all"></div>
-                <!-- Circular Icon -->
-                <div class="w-28 h-28 mb-5 rounded-full bg-emerald-50 border-4 border-emerald-200 flex items-center justify-center shadow-inner relative animate-float">
-                    <div class="absolute inset-0 rounded-full border border-emerald-300 animate-pulse-ring"></div>
-                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-emerald-600 drop-shadow-sm">
-                        <path d="M15 55 C15 35 32 20 50 20 C68 20 85 35 85 55 C85 62 78 68 70 68 H30 C22 68 15 62 15 55 Z" fill="#FBBF24" stroke="#D97706" stroke-width="4"/>
-                        <path d="M10 60 C10 56 14 54 18 54 H82 C86 54 90 56 90 60 V65 C90 69 86 72 82 72 H18 C14 72 10 69 10 65 Z" fill="#D97706" stroke="#B45309" stroke-width="3"/>
-                        <rect x="42" y="32" width="16" height="8" rx="2" fill="#FEF3C7"/>
-                    </svg>
-                </div>
-                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 01</span>
-                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">Sécurité sur Chantier & EPI</h3>
-                <p class="text-xs text-slate-600 mb-4">Garantir le port des équipements de protection et prévenir les risques sur site.</p>
-                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-emerald-600 font-semibold">
-                    <span>Voir les détails</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                <svg id="qhse-main-logo" viewBox="0 0 500 500" class="w-full h-full z-10 transition-transform duration-500 filter drop-shadow-xl" style="max-width: 380px;">
+                    <defs>
+                        <linearGradient id="grad-q" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#60A5FA" />
+                            <stop offset="100%" stop-color="#1D4ED8" />
+                        </linearGradient>
+                        <linearGradient id="grad-h" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#F472B6" />
+                            <stop offset="100%" stop-color="#BE185D" />
+                        </linearGradient>
+                        <linearGradient id="grad-s" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FBBF24" />
+                            <stop offset="100%" stop-color="#B45309" />
+                        </linearGradient>
+                        <linearGradient id="grad-e" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#34D399" />
+                            <stop offset="100%" stop-color="#047857" />
+                        </linearGradient>
+                        
+                        <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.4" />
+                            <stop offset="100%" stop-color="#06B6D4" stop-opacity="0" />
+                        </radialGradient>
+                    </defs>
+
+                    <circle cx="250" cy="250" r="220" fill="none" stroke="url(#grad-q)" stroke-width="1.5" stroke-dasharray="8 8" class="animate-spin-slow opacity-40" />
+                    <circle cx="250" cy="250" r="190" fill="none" stroke="url(#grad-e)" stroke-width="1" stroke-dasharray="12 6" class="animate-spin-slow opacity-30" style="animation-direction: reverse; animation-duration: 20s;" />
+
+                    <circle id="logo-center-aura" cx="250" cy="250" r="120" fill="url(#center-glow)" class="transition-all duration-300" />
+
+                    <!-- Sector Q - Quality -->
+                    <g id="petal-q" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="q">
+                        <path d="M 240 240 L 130 130 A 150 150 0 0 1 240 90 Z" fill="url(#grad-q)" opacity="0.85" />
+                        <circle cx="185" cy="155" r="28" fill="#1E293B" stroke="#60A5FA" stroke-width="2" />
+                        <path d="M 185 142 L 195 146 V 156 C 195 163 185 168 185 168 C 185 168 175 163 175 156 V 146 Z" fill="none" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 181 154 L 184 157 L 189 151" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+
+                    <!-- Sector H - Health -->
+                    <g id="petal-h" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="h">
+                        <path d="M 260 240 L 260 90 A 150 150 0 0 1 370 130 Z" fill="url(#grad-h)" opacity="0.85" />
+                        <circle cx="315" cy="155" r="28" fill="#1E293B" stroke="#F472B6" stroke-width="2" />
+                        <path d="M 303 155 H 308 L 311 146 L 315 163 L 319 150 L 322 155 H 327" fill="none" stroke="#F472B6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+
+                    <!-- Sector S - Safety -->
+                    <g id="petal-s" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="s">
+                        <path d="M 260 260 L 370 370 A 150 150 0 0 1 260 410 Z" fill="url(#grad-s)" opacity="0.85" />
+                        <circle cx="315" cy="345" r="28" fill="#1E293B" stroke="#FBBF24" stroke-width="2" />
+                        <path d="M 302 348 C 302 338 310 334 315 334 C 320 334 328 338 328 348 H 302 Z" fill="none" stroke="#FBBF24" stroke-width="2.5"/>
+                        <rect x="300" y="348" width="30" height="4" rx="2" fill="#FBBF24" />
+                    </g>
+
+                    <!-- Sector E - Environment -->
+                    <g id="petal-e" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="e">
+                        <path d="M 240 260 L 240 410 A 150 150 0 0 1 130 370 Z" fill="url(#grad-e)" opacity="0.85" />
+                        <circle cx="185" cy="345" r="28" fill="#1E293B" stroke="#34D399" stroke-width="2" />
+                        <path d="M 175 352 C 175 335 195 332 195 332 C 195 332 195 352 175 352 Z" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linejoin="round"/>
+                        <path d="M 178 350 Q 187 344 193 334" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- Center Core -->
+                    <g id="logo-core" class="cursor-pointer">
+                        <circle cx="250" cy="250" r="55" fill="#0F172A" stroke="#06B6D4" stroke-width="3" class="shadow-lg" />
+                        <circle cx="250" cy="250" r="48" fill="#1E293B" />
+                        <text x="250" y="244" text-anchor="middle" fill="#FFFFFF" font-weight="900" font-size="22" font-family="'Poppins', sans-serif" letter-spacing="1">TS</text>
+                        <text x="250" y="266" text-anchor="middle" fill="#06B6D4" font-weight="800" font-size="16" font-family="'Poppins', sans-serif" letter-spacing="2">QHSE</text>
+                    </g>
+                </svg>
+
+                <div class="flex items-center space-x-2 space-x-reverse mt-6 z-10">
+                    <button id="btn-trigger-reveal" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-cyan-500/25 transition-all flex items-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span data-lang-ar="إعادة العرض المتحرك" data-lang-fr="Animer le Logo">إعادة العرض المتحرك</span>
+                    </button>
+                    
+                    <button id="btn-mode-glow" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold border border-slate-700 transition-all">
+                        <i class="fa-solid fa-lightbulb text-amber-400"></i>
+                        <span data-lang-ar="مؤثر التوهج" data-lang-fr="Effet Néon">مؤثر التوهج</span>
+                    </button>
+                    
+                    <button id="btn-sound-test" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold border border-slate-700 transition-all">
+                        <i class="fa-solid fa-music text-pink-400"></i>
+                        <span data-lang-ar="نغمة الهوية" data-lang-fr="Jingle QHSE">نغمة الهوية</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Tâche 2: DUER / Risk Assessment -->
-            <div onclick="openModal(2)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-32 h-32 bg-rose-100/50 rounded-full blur-xl group-hover:bg-rose-200/50 transition-all"></div>
-                <div class="w-28 h-28 mb-5 rounded-full bg-rose-50 border-4 border-rose-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 0.3s;">
-                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-rose-600 drop-shadow-sm">
-                        <rect x="22" y="15" width="45" height="70" rx="6" fill="#3B82F6" stroke="#1D4ED8" stroke-width="4"/>
-                        <line x1="32" y1="30" x2="52" y2="30" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-                        <line x1="32" y1="42" x2="47" y2="42" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-                        <line x1="32" y1="54" x2="52" y2="54" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-                        <circle cx="62" cy="62" r="18" fill="#FEF3C7" stroke="#D97706" stroke-width="4"/>
-                        <text x="62" y="69" font-size="18" font-weight="bold" fill="#B45309" text-anchor="middle">!</text>
-                        <line x1="75" y1="75" x2="90" y2="90" stroke="#D97706" stroke-width="5" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <span class="bg-rose-100 text-rose-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 02</span>
-                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-rose-600 transition-colors">Évaluation des Risques & DUER</h3>
-                <p class="text-xs text-slate-600 mb-4">Analyse approfondie des dangers et mise en place du document unique.</p>
-                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-rose-600 font-semibold">
-                    <span>Voir les détails</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                </div>
+            <!-- Pillar Navigation Tabs -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-3xl mt-6">
+                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-blue-500 hover:bg-slate-800/60" data-pillar="q">
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">Q</div>
+                    <div class="text-right rtl:text-right ltr:text-left">
+                        <div class="text-xs font-bold text-slate-200" data-lang-ar="الجوّدة" data-lang-fr="Qualité">الجوّدة</div>
+                        <div class="text-[10px] text-slate-400">Quality</div>
+                    </div>
+                </button>
+
+                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-pink-500 hover:bg-slate-800/60" data-pillar="h">
+                    <div class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-sm">H</div>
+                    <div class="text-right rtl:text-right ltr:text-left">
+                        <div class="text-xs font-bold text-slate-200" data-lang-ar="الصحة والسلامة" data-lang-fr="Hygiène & Santé">الصحة والسلامة</div>
+                        <div class="text-[10px] text-slate-400">Health</div>
+                    </div>
+                </button>
+
+                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-amber-500 hover:bg-slate-800/60" data-pillar="s">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">S</div>
+                    <div class="text-right rtl:text-right ltr:text-left">
+                        <div class="text-xs font-bold text-slate-200" data-lang-ar="السلامة المهنية" data-lang-fr="Sécurité">السلامة المهنية</div>
+                        <div class="text-[10px] text-slate-400">Safety</div>
+                    </div>
+                </button>
+
+                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-emerald-500 hover:bg-slate-800/60" data-pillar="e">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">E</div>
+                    <div class="text-right rtl:text-right ltr:text-left">
+                        <div class="text-xs font-bold text-slate-200" data-lang-ar="البيئة" data-lang-fr="Environnement">البيئة</div>
+                        <div class="text-[10px] text-slate-400">Environment</div>
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <section id="pillars" class="py-16 px-4 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="text-center mb-14">
+                <h2 class="text-2xl md:text-4xl font-bold mb-3" data-lang-ar="الأركان الأربعة لشعبة TS QHSE" data-lang-fr="Les 4 Piliers Fondamentaux du TS QHSE">الأركان الأربعة لشعبة TS QHSE</h2>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto" data-lang-ar="كل جزء في الشعار يمثل ركناً استراتيجياً في إدارة الجودة والصحة والسلامة المهنية والبيئة" data-lang-fr="Chaque élément du logo représente un axe stratégique du management QHSE.">
+                    كل جزء في الشعار يمثل ركناً استراتيجياً في إدارة الجودة والصحة والسلامة المهنية والبيئة
+                </p>
             </div>
 
-            <!-- Tâche 3: Visual Audit / Inspection -->
-            <div onclick="openModal(3)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-32 h-32 bg-teal-100/50 rounded-full blur-xl group-hover:bg-teal-200/50 transition-all"></div>
-                <div class="w-28 h-28 mb-5 rounded-full bg-teal-50 border-4 border-teal-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 0.6s;">
-                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-teal-600 drop-shadow-sm">
-                        <rect x="25" y="15" width="50" height="70" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="4"/>
-                        <line x1="37" y1="32" x2="63" y2="32" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
-                        <line x1="37" y1="44" x2="63" y2="44" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
-                        <ellipse cx="50" cy="63" rx="16" ry="10" fill="#0D9488" class="animate-bounce-subtle"/>
-                        <circle cx="50" cy="63" r="5" fill="#FFFFFF"/>
-                        <circle cx="51" cy="63" r="2" fill="#0F172A"/>
-                    </svg>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Quality Card -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-blue-500" id="card-q">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <span class="text-xs font-black tracking-widest text-blue-400 uppercase">Qualité</span>
+                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="إدارة الجودة" data-lang-fr="Management de la Qualité">إدارة الجودة</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="ضمان مطابقة المعايير الدولية (ISO 9001)، تحسين العمليات، والتحسين المستمر للخدمات والمنتجات." data-lang-fr="Normes ISO 9001, maîtrise des processus, satisfaction client et amélioration continue.">
+                        ضمان مطابقة المعايير الدولية (ISO 9001)، تحسين العمليات، والتحسين المستمر للخدمات والمنتجات.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2.5 py-1 rounded-md">ISO 9001</span>
+                        <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2.5 py-1 rounded-md" data-lang-ar="معايير الأداء" data-lang-fr="Audits">معايير الأداء</span>
+                        <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2.5 py-1 rounded-md" data-lang-ar="التميز" data-lang-fr="Excellence">التميز</span>
+                    </div>
                 </div>
-                <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 03</span>
-                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-teal-600 transition-colors">Inspections & Audits Visuels</h3>
-                <p class="text-xs text-slate-600 mb-4">Surveillance continue des conformités sur site et rondes de sécurité.</p>
-                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-teal-600 font-semibold">
-                    <span>Voir les détails</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+
+                <!-- Health Card -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-pink-500" id="card-h">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <span class="text-xs font-black tracking-widest text-pink-400 uppercase">Hygiène & Santé</span>
+                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="الصحة والنظافة" data-lang-fr="Hygiène & Santé au Travail">الصحة والنظافة</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="الحفاظ على صحة العاملين، الوقاية من الأمراض المهنية، وتوفير بيئة عمل صحية ومريحة." data-lang-fr="Prévention des maladies professionnelles, ergonomie des postes et bien-être au travail.">
+                        الحفاظ على صحة العاملين، الوقاية من الأمراض المهنية، وتوفير بيئة عمل صحية ومريحة.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2.5 py-1 rounded-md" data-lang-ar="صحة العمل" data-lang-fr="Santé">صحة العمل</span>
+                        <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2.5 py-1 rounded-md" data-lang-ar="الوقاية" data-lang-fr="Prévention">الوقاية</span>
+                        <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2.5 py-1 rounded-md" data-lang-ar="الأرغونوميا" data-lang-fr="Ergonomie">الأرغونوميا</span>
+                    </div>
+                </div>
+
+                <!-- Safety Card -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-amber-500" id="card-s">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-hard-hat"></i>
+                    </div>
+                    <span class="text-xs font-black tracking-widest text-amber-400 uppercase">Sécurité</span>
+                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="السلَامة المهنية" data-lang-fr="Sécurité au Travail">السلَامة المهنية</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="تقييم المخاطر، الحد من حوادث الشغل (ISO 45001)، فرض معدات الحماية الفردية والجماعية." data-lang-fr="Norme ISO 45001, évaluation des risques, prévention des accidents et équipements EPI.">
+                        تقييم المخاطر، الحد من حوادث الشغل (ISO 45001)، فرض معدات الحماية الفردية والجماعية.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2.5 py-1 rounded-md">ISO 45001</span>
+                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2.5 py-1 rounded-md" data-lang-ar="تقييم المخاطر" data-lang-fr="Risques">تقييم المخاطر</span>
+                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2.5 py-1 rounded-md" data-lang-ar="الحماية EPI" data-lang-fr="EPI">الحماية EPI</span>
+                    </div>
+                </div>
+
+                <!-- Environment Card -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-emerald-500" id="card-e">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Environnement</span>
+                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="حماية البيئة" data-lang-fr="Management Environnemental">حماية البيئة</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="إدارة النفايات، تقليل البصمة الكربونية (ISO 14001)، وتطبيق التنمية المستدامة بالمؤسسات." data-lang-fr="Norme ISO 14001, gestion des déchets, réduction de l'empreinte carbone et développement durable.">
+                        إدارة النفايات، تقليل البصمة الكربونية (ISO 14001)، وتطبيق التنمية المستدامة بالمؤسسات.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2.5 py-1 rounded-md">ISO 14001</span>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2.5 py-1 rounded-md" data-lang-ar="الاستدامة" data-lang-fr="Durabilité">الاستدامة</span>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2.5 py-1 rounded-md" data-lang-ar="إدارة النفايات" data-lang-fr="Recyclage">إدارة النفايات</span>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Tâche 4: Target & Objectives -->
-            <div onclick="openModal(4)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-32 h-32 bg-amber-100/50 rounded-full blur-xl group-hover:bg-amber-200/50 transition-all"></div>
-                <div class="w-28 h-28 mb-5 rounded-full bg-amber-50 border-4 border-amber-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 0.9s;">
-                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-amber-600 drop-shadow-sm">
-                        <circle cx="50" cy="50" r="36" fill="none" stroke="#EF4444" stroke-width="8"/>
-                        <circle cx="50" cy="50" r="24" fill="none" stroke="#FFFFFF" stroke-width="8"/>
-                        <circle cx="50" cy="50" r="12" fill="#EF4444"/>
-                        <line x1="75" y1="25" x2="52" y2="48" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/>
-                        <polygon points="75,25 68,27 73,32" fill="#3B82F6"/>
-                    </svg>
+        <section id="builder" class="py-16 px-4 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="glass-panel p-6 lg:p-10 rounded-3xl border border-slate-700/60 shadow-2xl">
+                
+                <div class="text-center mb-10">
+                    <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest" data-lang-ar="ورشة التخصيص التفاعلية" data-lang-fr="Studio de Création">ورشة التخصيص التفاعلية</span>
+                    <h2 class="text-2xl md:text-4xl font-black mt-1" data-lang-ar="مبتكر ومصمم شعار TS QHSE" data-lang-fr="Générateur & Personnaliseur de Logo">مبتكر ومصمم شعار TS QHSE</h2>
+                    <p class="text-slate-400 text-sm mt-2 max-w-lg mx-auto" data-lang-ar="قم بتجربة تركيب الألوان والأيقونات والأنماط لابتكار الشعار المناسب للمجموعات" data-lang-fr="Personnalisez la forme, les couleurs et les icônes pour créer le logo idéal.">
+                        قم بتجربة تركيب الألوان والأيقونات والأنماط لابتكار الشعار المناسب للمجموعات
+                    </p>
                 </div>
-                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 04</span>
-                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-amber-600 transition-colors">Politique & Objectifs QHSE</h3>
-                <p class="text-xs text-slate-600 mb-4">Fixation des indicateurs de performance (KPI) et atteinte des objectifs.</p>
-                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-amber-600 font-semibold">
-                    <span>Voir les détails</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-5 bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+                        
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2" data-lang-ar="نمط وهيكل الشعار:" data-lang-fr="Style du Logo :">نمط وهيكل الشعار:</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="builder-shape-btn active bg-cyan-600 text-white p-2.5 rounded-xl text-xs font-bold border border-cyan-400 transition-all text-center" data-shape="shield">
+                                    <i class="fa-solid fa-shield-halved block text-base mb-1"></i>
+                                    <span data-lang-ar="درع الوقاية" data-lang-fr="Bouclier">درع الوقاية</span>
+                                </button>
+                                <button class="builder-shape-btn bg-slate-800 hover:bg-slate-700 text-slate-300 p-2.5 rounded-xl text-xs font-bold border border-slate-700 transition-all text-center" data-shape="circle">
+                                    <i class="fa-solid fa-circle-notch block text-base mb-1"></i>
+                                    <span data-lang-ar="دائرة التكامل" data-lang-fr="Cercle">دائرة التكامل</span>
+                                </button>
+                                <button class="builder-shape-btn bg-slate-800 hover:bg-slate-700 text-slate-300 p-2.5 rounded-xl text-xs font-bold border border-slate-700 transition-all text-center" data-shape="leaf">
+                                    <i class="fa-solid fa-leaf block text-base mb-1"></i>
+                                    <span data-lang-ar="ورقة الاستدامة" data-lang-fr="Feuille">ورقة الاستدامة</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2" data-lang-ar="لوحة الألوان الأساسية:" data-lang-fr="Palette de Couleurs :">لوحة الألوان الأساسية:</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="builder-palette-btn active bg-slate-800 p-2 rounded-xl border border-cyan-400 flex items-center space-x-2 space-x-reverse" data-palette="standard">
+                                    <div class="flex -space-x-1 space-x-reverse">
+                                        <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                                        <span class="w-3 h-3 rounded-full bg-pink-500"></span>
+                                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                    </div>
+                                    <span class="text-[11px] font-semibold text-slate-200" data-lang-ar="القياسي" data-lang-fr="Standard">القياسي</span>
+                                </button>
+
+                                <button class="builder-palette-btn bg-slate-800 p-2 rounded-xl border border-slate-700 hover:border-slate-500 flex items-center space-x-2 space-x-reverse" data-palette="eco">
+                                    <div class="flex -space-x-1 space-x-reverse">
+                                        <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                                        <span class="w-3 h-3 rounded-full bg-teal-500"></span>
+                                        <span class="w-3 h-3 rounded-full bg-cyan-600"></span>
+                                        <span class="w-3 h-3 rounded-full bg-green-700"></span>
+                                    </div>
+                                    <span class="text-[11px] font-semibold text-slate-200" data-lang-ar="إيكولوجي" data-lang-fr="Éco-Vert">إيكولوجي</span>
+                                </button>
+
+                                <button class="builder-palette-btn bg-slate-800 p-2 rounded-xl border border-slate-700 hover:border-slate-500 flex items-center space-x-2 space-x-reverse" data-palette="neon">
+                                    <div class="flex -space-x-1 space-x-reverse">
+                                        <span class="w-3 h-3 rounded-full bg-cyan-400"></span>
+                                        <span class="w-3 h-3 rounded-full bg-fuchsia-500"></span>
+                                        <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                        <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                                    </div>
+                                    <span class="text-[11px] font-semibold text-slate-200" data-lang-ar="نيون عالي" data-lang-fr="Néon Cyber">نيون عالي</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1" data-lang-ar="النص المركزي للشعار:" data-lang-fr="Texte Central du Logo :">النص المركزي للشعار:</label>
+                            <input type="text" id="builder-text-input" value="TS QHSE" class="w-full bg-slate-800 border border-slate-700 focus:border-cyan-500 rounded-xl px-3.5 py-2 text-sm font-bold text-cyan-300 focus:outline-none transition-colors">
+                        </div>
+
+                        <div class="pt-2 flex items-center space-x-3 space-x-reverse">
+                            <button id="btn-export-logo" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white py-2.5 rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-download"></i>
+                                <span data-lang-ar="تحميل الشعار (SVG)" data-lang-fr="Télécharger Logo (SVG)">تحميل الشعار (SVG)</span>
+                            </button>
+                            <button id="btn-random-builder" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3.5 py-2.5 rounded-xl border border-slate-700 text-xs font-bold transition-all">
+                                <i class="fa-solid fa-dice"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="lg:col-span-7 flex flex-col items-center justify-center p-8 bg-slate-950/80 rounded-2xl border border-slate-800 relative min-h-[350px]">
+                        <div class="absolute top-3 right-3 text-[10px] bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 px-2.5 py-1 rounded-full font-mono">
+                            LIVE PREVIEW
+                        </div>
+
+                        <div id="builder-svg-container" class="w-64 h-64 md:w-80 md:h-80 flex items-center justify-center filter drop-shadow-2xl">
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
+        </section>
 
-            <!-- Tâche 5: Action Plan & Dashboard -->
-            <div onclick="openModal(5)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-32 h-32 bg-blue-100/50 rounded-full blur-xl group-hover:bg-blue-200/50 transition-all"></div>
-                <div class="w-28 h-28 mb-5 rounded-full bg-blue-50 border-4 border-blue-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 1.2s;">
-                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-blue-600 drop-shadow-sm">
-                        <rect x="15" y="20" width="70" height="50" rx="6" fill="#1E293B" stroke="#3B82F6" stroke-width="4"/>
-                        <line x1="25" y1="55" x2="40" y2="35" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
-                        <line x1="40" y1="35" x2="55" y2="45" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
-                        <line x1="55" y1="45" x2="75" y2="28" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
-                        <rect x="25" y="62" width="50" height="4" rx="2" fill="#64748B"/>
-                    </svg>
+        <section id="challenge" class="py-16 px-4 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center space-x-2 space-x-reverse bg-amber-500/10 border border-amber-500/30 text-amber-400 px-3.5 py-1.5 rounded-full text-xs font-semibold">
+                        <i class="fa-solid fa-paintbrush"></i>
+                        <span data-lang-ar="تحدي ورشة التصميم والإبداع" data-lang-fr="Atelier de Création : LOGO DE LA FILIÈRE">تحدي ورشة التصميم والإبداع</span>
+                    </div>
+
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-slate-100" data-lang-ar="« À vos pinceaux : LOGO DE LA FILIÈRE TS QHSE »" data-lang-fr="« À vos pinceaux : LOGO DE LA FILIÈRE TS QHSE »">
+                        « À vos pinceaux : LOGO DE LA FILIÈRE TS QHSE »
+                    </h2>
+
+                    <div class="space-y-4 text-slate-300 text-sm leading-relaxed glass-card p-6 rounded-2xl">
+                        <p data-lang-ar="يتم تقسيم المتدربين (Les stagiaires) إلى مجموعات عمل لتصميم وإنشاء شعار خاص ورسمي بتخصص شعبة **TS QHSE**." data-lang-fr="Les stagiaires sont répartis en groupes afin de créer un logo spécifique pour la filière TS QHSE.">
+                            يتم تقسيم المتدربين (Les stagiaires) إلى مجموعات عمل لتصميم وإنشاء شعار خاص ورسمي بتخصص شعبة <strong>TS QHSE</strong>.
+                        </p>
+                        <p data-lang-ar="هذه النشاط ذو طابع فني وإبداعي خالص؛ يمكن استخدام الوسائل التقليدية (أقلام، فرشي رسم، أوراق...) أو برامج ومصممات التصميم الرقمي والذكاء الاصطناعي." data-lang-fr="Cette activité est purement artistique, vous pouvez utiliser des outils physiques (crayons, pinceaux, papier dessin...) ou des outils de design informatique.">
+                            هذه النشاط ذو طابع فني وإبداعي خالص؛ يمكن استخدام الوسائل التقليدية (أقلام، فرشي رسم، أوراق...) أو برامج ومصممات التصميم الرقمي والذكاء الاصطناعي.
+                        </p>
+                        <div class="p-3.5 bg-cyan-950/40 border-r-4 border-r-cyan-400 ltr:border-r-0 ltr:border-l-4 ltr:border-l-cyan-400 rounded-lg text-xs font-bold text-cyan-200">
+                            <i class="fa-solid fa-star text-amber-400 ml-1"></i>
+                            <span data-lang-ar="سيتم اختيار التصميم الأكثر إبداعاً وتعبيرية ووضوحاً ليكون الشعار الرسمي المعتمد للشعبة!" data-lang-fr="La création la plus créative et la plus descriptive de la filière sera considérée comme le logo officiel.">سيتم اختيار التصميم الأكثر إبداعاً وتعبيرية ووضوحاً ليكون الشعار الرسمي المعتمد للشعبة!</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
+                            <span data-lang-ar="عمل جماعي وتشاركي" data-lang-fr="Travail en Équipe">عمل جماعي وتشاركي</span>
+                        </div>
+                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
+                            <span data-lang-ar="أدوات يدوية أو رقمية" data-lang-fr="Outils Physiques ou Digitaux">أدوات يدوية أو رقمية</span>
+                        </div>
+                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
+                            <span data-lang-ar="تعبير دقيق عن QHSE" data-lang-fr="Représentation des 4 Piliers">تعبير دقيق عن QHSE</span>
+                        </div>
+                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
+                            <span data-lang-ar="اعتماد الشعار الفائز" data-lang-fr="Sélection du Logo Officiel">اعتماد الشعار الفائز</span>
+                        </div>
+                    </div>
                 </div>
-                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 05</span>
-                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Plan d'Action & Suivi Statistique</h3>
-                <p class="text-xs text-slate-600 mb-4">Pilotage des actions correctives et préventives via tableaux de bord.</p>
-                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-blue-600 font-semibold">
-                    <span>Voir les détails</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+
+                <div class="lg:col-span-5 flex flex-col items-center">
+                    <div class="relative w-full glass-panel p-6 rounded-3xl border border-slate-700/60 text-center shadow-xl overflow-hidden group">
+                        <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-cyan-500 via-pink-500 to-amber-500 p-[3px] shadow-lg mb-4">
+                            <div class="w-full h-full bg-slate-900 rounded-[21px] flex items-center justify-center">
+                                <i class="fa-solid fa-palette text-3xl text-cyan-400"></i>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold text-slate-100" data-lang-ar="المشاركة في التحدي" data-lang-fr="Soumettre une Proposition">المشاركة في التحدي</h3>
+                        <p class="text-xs text-slate-400 mt-2 mb-6" data-lang-ar="هل أتممت رسم الفكرة؟ اضغط هنا لإرسال التهنئة وإشعارات الابتكار" data-lang-fr="Avez-vous finalisé votre concept ? Célébrez votre création ici !">
+                            هل أتممت رسم الفكرة؟ اضغط هنا لإرسال التهنئة وإشعارات الابتكار
+                        </p>
+
+                        <button id="btn-celebrate" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-cyan-500 hover:opacity-90 text-slate-950 font-black py-3 rounded-2xl shadow-xl transition-all flex items-center justify-center space-x-2 space-x-reverse text-sm">
+                            <i class="fa-solid fa-trophy"></i>
+                            <span data-lang-ar="احتفل باكتشمال الشعار 🎉" data-lang-fr="Célébrer la Création 🎉">احتفل باكتشمال الشعار 🎉</span>
+                        </button>
+                    </div>
                 </div>
+
             </div>
+        </section>
 
-            <!-- Tâche 6: Regulations & Computer -->
-            <div onclick="openModal(6)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-32 h-32 bg-indigo-100/50 rounded-full blur-xl group-hover:bg-indigo-200/50 transition-all"></div>
-                <div class="w-28 h-28 mb-5 rounded-full bg-indigo-50 border-4 border-indigo-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 1.5s;">
-                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-indigo-600 drop-shadow-sm">
-                        <rect x="18" y="22" width="64" height="42" rx="6" fill="#1E293B" stroke="#6366F1" stroke-width="4"/>
-                        <line x1="42" y1="64" x2="58" y2="64" stroke="#6366F1" stroke-width="5" stroke-linecap="round"/>
-                        <path d="M32 72 H68" stroke="#6366F1" stroke-width="5" stroke-linecap="round"/>
-                        <line x1="28" y1="34" x2="50" y2="34" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="28" y1="46" x2="42" y2="46" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 06</span>
-                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">Veille Réglementaire & Registres</h3>
-                <p class="text-xs text-slate-600 mb-4">Mise à jour des registres légaux, exigences normatives et bases de données.</p>
-                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-indigo-600 font-semibold">
-                    <span>Voir les détails</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Tâche 7: Meeting Table (Centered full width row) -->
-        <div class="mt-8 max-w-xl mx-auto">
-            <div onclick="openModal(7)" class="light-card group cursor-pointer rounded-3xl p-6 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-32 h-32 bg-purple-100/50 rounded-full blur-xl group-hover:bg-purple-200/50 transition-all"></div>
-                <div class="w-28 h-28 mb-5 rounded-full bg-purple-50 border-4 border-purple-200 flex items-center justify-center shadow-inner relative animate-float" style="animation-delay: 1.8s;">
-                    <svg width="64" height="64" viewBox="0 0 100 100" class="text-purple-600 drop-shadow-sm">
-                        <ellipse cx="50" cy="55" rx="28" ry="14" fill="#334155" stroke="#A855F7" stroke-width="4"/>
-                        <circle cx="50" cy="28" r="7" fill="#F43F5E"/>
-                        <circle cx="22" cy="55" r="7" fill="#3B82F6"/>
-                        <circle cx="78" cy="55" r="7" fill="#10B981"/>
-                        <circle cx="50" cy="82" r="7" fill="#F59E0B"/>
-                    </svg>
-                </div>
-                <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full mb-2">Tâche 07</span>
-                <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-purple-600 transition-colors">Animation des Réunions & Sensibilisation</h3>
-                <p class="text-xs text-slate-600 mb-4">Conduite de réunions HSE, causeries sécurité et formation du personnel.</p>
-                <div class="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-purple-600 font-semibold">
-                    <span>Voir les détails</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                </div>
-            </div>
-        </div>
     </main>
 
-    <div id="taskModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div id="modalContent" class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative transform scale-95 transition-transform duration-300">
-            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 w-9 h-9 rounded-full flex items-center justify-center transition-colors">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="modalBody">
-                <!-- Injected via JavaScript -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-8 px-4 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <span class="font-bold text-slate-300">TS QHSE</span>
+                <span>-</span>
+                <span data-lang-ar="منصة الشعار والتفاعل الرسمي" data-lang-fr="Plateforme Interactive du Logo">منصة الشعار والتفاعل الرسمي</span>
             </div>
-        </div>
-    </div>
-
-    <footer class="bg-white border-t border-slate-200 text-slate-500 py-6 text-center text-xs shadow-inner">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-            <p>&copy; 2026 - Conçu pour <strong class="text-slate-800">Youssef Ouyade</strong> (Technicien Spécialisé QHSE).</p>
-            <div class="flex items-center space-x-4 text-emerald-600 font-medium">
-                <span><i class="fa-solid fa-check-circle mr-1"></i> ISO 45001</span>
-                <span><i class="fa-solid fa-check-circle mr-1"></i> ISO 14001</span>
-                <span><i class="fa-solid fa-check-circle mr-1"></i> ISO 9001</span>
+            <div>
+                <span>Qualité • Hygiène • Sécurité • Environnement</span>
             </div>
         </div>
     </footer>
 
     <script>
-        const taskDetails = {
-            1: {
-                title: "Sécurité sur Chantier & EPI",
-                badge: "Tâche 01 - Hygiène & Sécurité",
-                color: "emerald",
-                desc: "Garantir le respect strict du port des Équipements de Protection Individuelle (EPI) et collective sur tous les chantiers et sites industriels.",
-                points: [
-                    "Vérification quotidienne de l'état des casques, harnais et chaussures de sécurité.",
-                    "Contrôle de l'accès aux zones à risques et signalisation réglementaire.",
-                    "Réduction des accidents de travail par la prévention proactive."
-                ]
-            },
-            2: {
-                title: "Évaluation des Risques & DUER",
-                badge: "Tâche 02 - Analyse des Dangers",
-                color: "rose",
-                desc: "Identifier, analyser et hiérarchiser les risques professionnels afin d'établir le Document Unique d'Évaluation des Risques (DUER).",
-                points: [
-                    "Cartographie exhaustive des unités de travail et de leurs dangers associés.",
-                    "Cotation de la fréquence et de la gravité des risques identifiés.",
-                    "Proposition de mesures de maîtrise et de hiérarchisation des priorités."
-                ]
-            },
-            3: {
-                title: "Inspections & Audits Visuels",
-                badge: "Tâche 03 - Contrôle Terrain",
-                color: "teal",
-                desc: "Réaliser des rondes de sécurité régulières et des audits de terrain pour s'assurer de l'application des consignes QHSE.",
-                points: [
-                    "Détection immédiate des situations dangereuses et des actes non-sûrs.",
-                    "Rapports d'inspection visuelle avec preuves photographiques.",
-                    "Suivi des actions correctives immédiates avec les superviseurs de zone."
-                ]
-            },
-            4: {
-                title: "Politique & Objectifs QHSE",
-                badge: "Tâche 04 - Stratégie & Management",
-                color: "amber",
-                desc: "Définir la vision stratégique de l'entreprise en matière de Qualité, Sécurité et Environnement en accord avec la direction.",
-                points: [
-                    "Établissement des indicateurs clés de performance (KPI HSE).",
-                    "Fixation des objectifs annuels (ex: Taux de fréquence zéro accident).",
-                    "Alignement avec les exigences des référentiels ISO 9001, 14001 et 45001."
-                ]
-            },
-            5: {
-                title: "Plan d'Action & Suivi Statistique",
-                badge: "Tâche 05 - Pilotage & Reporting",
-                color: "blue",
-                desc: "Mettre en œuvre et suivre l'avancement des plans d'action correctifs et préventifs suite aux audits et incidents.",
-                points: [
-                    "Suivi rigoureux des actions via des tableaux de bord dynamiques.",
-                    "Analyse statistique mensuelle des taux de fréquence et de gravité.",
-                    "Rapports d'efficacité des mesures mises en place."
-                ]
-            },
-            6: {
-                title: "Veille Réglementaire & Registres",
-                badge: "Tâche 06 - Conformité & Lois",
-                color: "indigo",
-                desc: "Assurer une veille légale constante sur les évolutions des lois en vigueur et tenir à jour l'ensemble des registres obligatoires.",
-                points: [
-                    "Mise à jour de la matrice de conformité réglementaire.",
-                    "Gestion et archivage des registres de sécurité et des fiches de données de sécurité.",
-                    "Évaluation de la conformité de l'établissement face aux nouvelles législations."
-                ]
-            },
-            7: {
-                title: "Animation des Réunions & Sensibilisation",
-                badge: "Tâche 07 - Communication & Culture HSE",
-                color: "purple",
-                desc: "Animer des réunions d'information, des causeries sécurité (quarts d'heure sécurité) et former les équipes aux bonnes pratiques.",
-                points: [
-                    "Animation de quarts d'heure sécurité avant chaque démarrage de poste.",
-                    "Sensibilisation aux gestes et postures, tri des déchets et respect environnemental.",
-                    "Création d'une culture d'entreprise forte axée sur la sécurité participative."
-                ]
+        class AudioEngine {
+            constructor() {
+                this.ctx = null;
+                this.muted = false;
             }
-        };
 
-        function openModal(taskId) {
-            const data = taskDetails[taskId];
-            const modal = document.getElementById('taskModal');
-            const modalContent = document.getElementById('modalContent');
-            const modalBody = document.getElementById('modalBody');
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioCtx();
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
 
-            let pointsHtml = data.points.map(p => `<li class="flex items-start text-xs sm:text-sm text-slate-600 mb-2.5"><i class="fa-solid fa-circle-check text-emerald-600 mr-2.5 mt-1 shrink-0"></i><span>${p}</span></li>`).join('');
+            playClick() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200, this.ctx.currentTime + 0.08);
+                
+                gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
 
-            modalBody.innerHTML = `
-                <div class="flex items-center space-x-3 mb-4">
-                    <span class="bg-${data.color}-100 text-${data.color}-800 border border-${data.color}-200 text-xs font-bold px-3 py-1 rounded-full">${data.badge}</span>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-3">${data.title}</h3>
-                <p class="text-slate-600 text-sm mb-6 leading-relaxed">${data.desc}</p>
-                <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 mb-6 shadow-inner">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3"><i class="fa-solid fa-list-check mr-1.5 text-emerald-600"></i> Missions Clés & Opérations :</h4>
-                    <ul class="space-y-1">${pointsHtml}</ul>
-                </div>
-                <div class="flex justify-end">
-                    <button onclick="closeModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-md">
-                        Fermer la fenêtre
-                    </button>
-                </div>
-            `;
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.08);
+            }
 
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modalContent.classList.remove('scale-95');
-                modalContent.classList.add('scale-100');
-            }, 10);
-        }
+            playHover() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(450, this.ctx.currentTime + 0.05);
+                
+                gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
 
-        function closeModal() {
-            const modal = document.getElementById('taskModal');
-            const modalContent = document.getElementById('modalContent');
-            modal.classList.add('opacity-0');
-            modalContent.classList.remove('scale-100');
-            modalContent.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.05);
+            }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('taskModal');
-            if (event.target == modal) {
-                closeModal();
+            playPillarSound(pillar) {
+                if (this.muted) return;
+                this.init();
+
+                const freqs = {
+                    q: [523.25, 659.25, 783.99],
+                    h: [587.33, 698.46, 880.00],
+                    s: [659.25, 830.61, 987.77],
+                    e: [440.00, 554.37, 659.25]
+                };
+
+                const notes = freqs[pillar] || [440, 550, 660];
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.06);
+                    
+                    gain.gain.setValueAtTime(0, this.ctx.currentTime + idx * 0.06);
+                    gain.gain.linearRampToValueAtTime(0.2, this.ctx.currentTime + idx * 0.06 + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.06 + 0.3);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.06);
+                    osc.stop(this.ctx.currentTime + idx * 0.06 + 0.3);
+                });
+            }
+
+            playJingle() {
+                if (this.muted) return;
+                this.init();
+
+                const notes = [440, 554.37, 659.25, 880, 1108.73];
+                notes.forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.1);
+                    
+                    gain.gain.setValueAtTime(0.15, this.ctx.currentTime + i * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + i * 0.1 + 0.4);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + i * 0.1);
+                    osc.stop(this.ctx.currentTime + i * 0.1 + 0.4);
+                });
             }
         }
+
+        const audio = new AudioEngine();
+
+        // Particles Background Engine
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = ['#3B82F6', '#EC4899', '#F59E0B', '#10B981', '#06B6D4'][Math.floor(Math.random() * 5)];
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 45; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Sound Toggle Handler
+            const soundBtn = document.getElementById('sound-toggle');
+            const soundIcon = document.getElementById('sound-icon');
+            const soundText = document.getElementById('sound-text');
+            const soundWave = document.getElementById('sound-wave');
+
+            soundBtn.addEventListener('click', () => {
+                audio.muted = !audio.muted;
+                if (audio.muted) {
+                    soundIcon.className = 'fa-solid fa-volume-xmark text-slate-500';
+                    soundText.textContent = audio.muted ? (currentLang === 'ar' ? 'الصوت مكتوم' : 'Sons Mute') : '';
+                    soundWave.style.display = 'none';
+                } else {
+                    soundIcon.className = 'fa-solid fa-volume-high text-cyan-400';
+                    soundText.textContent = currentLang === 'ar' ? 'الصوت مفعل' : 'Sons Activés';
+                    soundWave.style.display = 'flex';
+                    audio.playClick();
+                }
+            });
+
+            // Bilingual Language Toggle
+            let currentLang = 'ar';
+            const langBtn = document.getElementById('lang-toggle');
+            const langText = document.getElementById('lang-text');
+
+            langBtn.addEventListener('click', () => {
+                audio.playClick();
+                currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+                document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = currentLang;
+                langText.textContent = currentLang === 'ar' ? 'Français' : 'العربية';
+
+                document.querySelectorAll('[data-lang-ar]').forEach(el => {
+                    el.textContent = el.getAttribute(`data-lang-${currentLang}`);
+                });
+            });
+
+            // Interactive Logo Sector Actions
+            const sectors = document.querySelectorAll('.logo-sector');
+            sectors.forEach(sector => {
+                sector.addEventListener('click', () => {
+                    const pillar = sector.getAttribute('data-pillar');
+                    audio.playPillarSound(pillar);
+                    
+                    const targetCard = document.getElementById(`card-${pillar}`);
+                    if (targetCard) {
+                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        targetCard.classList.add('ring-2', 'ring-cyan-400', 'scale-105');
+                        setTimeout(() => {
+                            targetCard.classList.remove('ring-2', 'ring-cyan-400', 'scale-105');
+                        }, 1500);
+                    }
+                });
+
+                sector.addEventListener('mouseenter', () => {
+                    audio.playHover();
+                });
+            });
+
+            // Pillar Quick Tab Click
+            document.querySelectorAll('.pillar-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const pillar = tab.getAttribute('data-pillar');
+                    audio.playPillarSound(pillar);
+                    const targetCard = document.getElementById(`card-${pillar}`);
+                    if (targetCard) {
+                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            });
+
+            // Re-animate Logo Reveal Button
+            const revealBtn = document.getElementById('btn-trigger-reveal');
+            const mainLogo = document.getElementById('qhse-main-logo');
+            revealBtn.addEventListener('click', () => {
+                audio.playJingle();
+                mainLogo.classList.add('scale-90', 'rotate-180', 'opacity-20');
+                setTimeout(() => {
+                    mainLogo.classList.remove('scale-90', 'rotate-180', 'opacity-20');
+                }, 400);
+            });
+
+            // Glow Mode Button
+            const glowBtn = document.getElementById('btn-mode-glow');
+            let isGlow = false;
+            glowBtn.addEventListener('click', () => {
+                audio.playClick();
+                isGlow = !isGlow;
+                if (isGlow) {
+                    mainLogo.style.filter = 'drop-shadow(0 0 25px rgba(6, 182, 212, 0.9))';
+                    glowBtn.classList.add('bg-cyan-600', 'text-white');
+                } else {
+                    mainLogo.style.filter = 'drop-shadow(0 0 10px rgba(0,0,0,0.5))';
+                    glowBtn.classList.remove('bg-cyan-600', 'text-white');
+                }
+            });
+
+            // Sound Test Button
+            document.getElementById('btn-sound-test').addEventListener('click', () => {
+                audio.playJingle();
+            });
+
+            // Logo Builder Studio Implementation
+            const builderContainer = document.getElementById('builder-svg-container');
+            const builderTextInput = document.getElementById('builder-text-input');
+            let currentShape = 'shield';
+            let currentPalette = 'standard';
+
+            const palettes = {
+                standard: ['#3B82F6', '#EC4899', '#F59E0B', '#10B981'],
+                eco: ['#34D399', '#10B981', '#059669', '#047857'],
+                neon: ['#22D3EE', '#E0E7FF', '#FACC15', '#A855F7']
+            };
+
+            function renderBuilderLogo() {
+                const colors = palettes[currentPalette];
+                const text = builderTextInput.value || 'TS QHSE';
+
+                let pathContent = '';
+                if (currentShape === 'shield') {
+                    pathContent = `
+                        <path d="M 150 20 L 260 60 V 160 C 260 230 150 280 150 280 C 150 280 40 230 40 160 V 60 Z" fill="none" stroke="${colors[0]}" stroke-width="8" />
+                        <path d="M 150 40 L 240 75 V 155 C 240 215 150 260 150 260 C 150 260 60 215 60 155 V 75 Z" fill="#0F172A" opacity="0.9" />
+                        <circle cx="100" cy="110" r="22" fill="${colors[0]}" opacity="0.8" />
+                        <circle cx="200" cy="110" r="22" fill="${colors[1]}" opacity="0.8" />
+                        <circle cx="100" cy="190" r="22" fill="${colors[2]}" opacity="0.8" />
+                        <circle cx="200" cy="190" r="22" fill="${colors[3]}" opacity="0.8" />
+                    `;
+                } else if (currentShape === 'circle') {
+                    pathContent = `
+                        <circle cx="150" cy="150" r="120" fill="none" stroke="${colors[0]}" stroke-width="6" stroke-dasharray="10 5" />
+                        <circle cx="150" cy="150" r="100" fill="#0F172A" stroke="${colors[1]}" stroke-width="4" />
+                        <path d="M 150 50 A 100 100 0 0 1 250 150 L 150 150 Z" fill="${colors[0]}" opacity="0.7"/>
+                        <path d="M 250 150 A 100 100 0 0 1 150 250 L 150 150 Z" fill="${colors[1]}" opacity="0.7"/>
+                        <path d="M 150 250 A 100 100 0 0 1 50 150 L 150 150 Z" fill="${colors[2]}" opacity="0.7"/>
+                        <path d="M 50 150 A 100 100 0 0 1 150 50 L 150 150 Z" fill="${colors[3]}" opacity="0.7"/>
+                    `;
+                } else if (currentShape === 'leaf') {
+                    pathContent = `
+                        <path d="M 150 30 C 230 30 270 110 270 190 C 270 240 220 270 150 270 C 80 270 30 240 30 190 C 30 110 70 30 150 30 Z" fill="#0F172A" stroke="${colors[3]}" stroke-width="6" />
+                        <path d="M 150 30 V 270" stroke="${colors[0]}" stroke-width="4" stroke-dasharray="6 4" />
+                        <circle cx="110" cy="130" r="25" fill="${colors[0]}" opacity="0.8" />
+                        <circle cx="190" cy="130" r="25" fill="${colors[1]}" opacity="0.8" />
+                        <circle cx="110" cy="200" r="25" fill="${colors[2]}" opacity="0.8" />
+                        <circle cx="190" cy="200" r="25" fill="${colors[3]}" opacity="0.8" />
+                    `;
+                }
+
+                builderContainer.innerHTML = `
+                    <svg viewBox="0 0 300 300" class="w-full h-full">
+                        ${pathContent}
+                        <circle cx="150" cy="150" r="42" fill="#020617" stroke="${colors[0]}" stroke-width="3" />
+                        <text x="150" y="156" text-anchor="middle" fill="#FFFFFF" font-weight="900" font-size="16" font-family="'Poppins', sans-serif">${text}</text>
+                    </svg>
+                `;
+            }
+
+            renderBuilderLogo();
+
+            document.querySelectorAll('.builder-shape-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    audio.playClick();
+                    document.querySelectorAll('.builder-shape-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-cyan-600', 'text-white', 'border-cyan-400');
+                        b.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+                    });
+                    btn.classList.add('active', 'bg-cyan-600', 'text-white', 'border-cyan-400');
+                    btn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+                    currentShape = btn.getAttribute('data-shape');
+                    renderBuilderLogo();
+                });
+            });
+
+            document.querySelectorAll('.builder-palette-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    audio.playClick();
+                    document.querySelectorAll('.builder-palette-btn').forEach(b => {
+                        b.classList.remove('active', 'border-cyan-400');
+                        b.classList.add('border-slate-700');
+                    });
+                    btn.classList.add('active', 'border-cyan-400');
+                    btn.classList.remove('border-slate-700');
+                    currentPalette = btn.getAttribute('data-palette');
+                    renderBuilderLogo();
+                });
+            });
+
+            builderTextInput.addEventListener('input', () => {
+                renderBuilderLogo();
+            });
+
+            document.getElementById('btn-random-builder').addEventListener('click', () => {
+                audio.playClick();
+                const shapes = ['shield', 'circle', 'leaf'];
+                const pkeys = ['standard', 'eco', 'neon'];
+                currentShape = shapes[Math.floor(Math.random() * shapes.length)];
+                currentPalette = pkeys[Math.floor(Math.random() * pkeys.length)];
+                renderBuilderLogo();
+            });
+
+            document.getElementById('btn-export-logo').addEventListener('click', () => {
+                audio.playJingle();
+                const svgData = builderContainer.innerHTML;
+                const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `QHSE_Logo_${Date.now()}.svg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+            document.getElementById('btn-celebrate').addEventListener('click', () => {
+                audio.playJingle();
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+            });
+
+            document.querySelectorAll('button, .glass-card').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    audio.playHover();
+                });
+            });
+
+        });
     </script>
 </body>
 </html>
