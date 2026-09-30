@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="fr" dir="ltr" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تخصص QHSE - الشعار والتحدي التفاعلي | TS QHSE Showcase</title>
+    <title>ISO 9001:2015 Audit & Compliance System - Training Organizations</title>
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,947 +13,800 @@
             theme: {
                 extend: {
                     colors: {
-                        qhse: {
-                            q: '#3B82F6', // Quality - Blue
-                            h: '#EC4899', // Health - Pink/Red
-                            s: '#F59E0B', // Safety - Gold/Amber
-                            e: '#10B981', // Environment - Green
-                            bg: '#0F172A',
-                            panel: '#1E293B',
-                            accent: '#06B6D4'
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
                         }
                     },
                     fontFamily: {
-                        sans: ['Tajawal', 'Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 12s linear infinite',
-                        'float': 'float 4s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        glow: {
-                            '0%': { filter: 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.4))' },
-                            '100%': { filter: 'drop-shadow(0 0 25px rgba(6, 182, 212, 0.8))' },
-                        }
+                        sans: ['Inter', 'Segoe UI', 'Tahoma', 'Geneva', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #0b0f19;
-            color: #f3f4f6;
-            overflow-x: hidden;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
         }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(6, 182, 212, 0.4);
-            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2);
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
-        #particles-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+
+        /* Responsive & RTL Fixes */
+        [dir="rtl"] .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+            --tw-space-x-reverse: 1;
         }
-        .sound-wave span {
-            display: inline-block;
-            width: 3px;
-            height: 12px;
-            background-color: #06b6d4;
-            border-radius: 3px;
-            animation: wave 1s ease-in-out infinite;
+        [dir="rtl"] .text-right-rtl {
+            text-align: right;
         }
-        .sound-wave span:nth-child(2) { animation-delay: 0.2s; }
-        .sound-wave span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes wave {
-            0%, 100% { height: 4px; }
-            50% { height: 16px; }
+
+        /* Printable Area Customizing */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            main {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .page-break {
+                page-break-inside: avoid;
+            }
         }
-        [dir="ltr"] body {
-            font-family: 'Poppins', 'Tajawal', sans-serif;
+        
+        .print-only {
+            display: none;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 h-full flex flex-col font-sans antialiased">
 
-    <canvas id="particles-canvas"></canvas>
-
-    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80 px-4 lg:px-8 py-3">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" id="header-logo-btn">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-emerald-500 to-amber-500 p-[2px] flex items-center justify-center shadow-lg shadow-cyan-500/20">
-                    <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
-                        <i class="fa-solid fa-shield-halved text-cyan-400 text-lg"></i>
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title -->
+                <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <div class="bg-brand-600 text-white p-2.5 rounded-xl shadow-md shrink-0">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-base sm:text-lg leading-tight text-slate-900" id="app-title">ISO 9001:2015 Audit Tool</h1>
+                        <p class="text-xs text-slate-500 hidden sm:block" id="app-subtitle">Chapitres 4 à 10 — Organismes de Formation</p>
                     </div>
                 </div>
-                <div>
-                    <span class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 tracking-wider">TS QHSE</span>
-                    <span class="block text-[10px] text-slate-400 font-medium tracking-widest uppercase">Filière Officielle</span>
-                </div>
-            </div>
 
-            <nav class="hidden md:flex items-center space-x-1 lg:space-x-6 space-x-reverse text-sm font-medium">
-                <a href="#hero" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="الشعار التفاعلي" data-lang-fr="Logo Interactif">الشعار التفاعلي</a>
-                <a href="#pillars" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="الأركان الأربعة" data-lang-fr="Les 4 Piliers">الأركان الأربعة</a>
-                <a href="#builder" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="صانع الشعار" data-lang-fr="Générateur de Logo">صانع الشعار</a>
-                <a href="#challenge" class="nav-link text-slate-300 hover:text-cyan-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-800/50" data-lang-ar="التحدي والمسابقة" data-lang-fr="Le Défi (Atelier)">التحدي والمسابقة</a>
-            </nav>
-
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <button id="sound-toggle" class="flex items-center space-x-2 space-x-reverse bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-700/60 transition-all shadow-sm">
-                    <i id="sound-icon" class="fa-solid fa-volume-high text-cyan-400 text-sm"></i>
-                    <span id="sound-text" class="hidden sm:inline" data-lang-ar="الصوت مفعل" data-lang-fr="Sons Activés">الصوت مفعل</span>
-                    <div id="sound-wave" class="sound-wave flex items-center space-x-0.5 space-x-reverse ml-1">
-                        <span></span><span></span><span></span>
+                <!-- Actions & Language Switcher -->
+                <div class="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
+                    <!-- Language Selector -->
+                    <div class="flex bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs font-semibold">
+                        <button id="lang-fr" onclick="setLanguage('fr')" class="px-2.5 sm:px-3 py-1.5 rounded-md transition-all bg-white text-slate-900 shadow-sm">Français</button>
+                        <button id="lang-ar" onclick="setLanguage('ar')" class="px-2.5 sm:px-3 py-1.5 rounded-md transition-all text-slate-600 hover:text-slate-900">العربية</button>
                     </div>
-                </button>
 
-                <button id="lang-toggle" class="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-md shadow-cyan-900/40 transition-all flex items-center space-x-1.5 space-x-reverse">
-                    <i class="fa-solid fa-globe"></i>
-                    <span id="lang-text">Français</span>
-                </button>
+                    <!-- Print Button -->
+                    <button onclick="triggerPrint()" class="flex items-center space-x-1.5 rtl:space-x-reverse px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded-lg shadow transition whitespace-nowrap">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                        <span id="btn-print-text" class="hidden sm:inline">Exporter / Imprimer</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow z-10">
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
 
-        <section id="hero" class="relative py-12 lg:py-20 px-4 max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
-            
-            <div class="inline-flex items-center space-x-2 space-x-reverse bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 px-4 py-1.5 rounded-full text-xs font-medium mb-8 backdrop-blur-md">
-                <span class="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
-                <span data-lang-ar="تحدي ورشة الإبداع: LOGO DE LA FILIÈRE TS QHSE" data-lang-fr="Atelier Créatif : LOGO DE LA FILIÈRE TS QHSE">تحدي ورشة الإبداع: LOGO DE LA FILIÈRE TS QHSE</span>
-            </div>
-
-            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4 max-w-4xl leading-tight">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-pink-400 via-amber-400 to-emerald-400" data-lang-ar="هوية بصرية متكاملة لتخصص QHSE" data-lang-fr="Identité Visuelle Dynamique TS QHSE">هوية بصرية متكاملة لتخصص QHSE</span>
-            </h1>
-            <p class="text-slate-400 text-sm md:text-base max-w-2xl mb-10 leading-relaxed" data-lang-ar="استكشف الشعار التفاعلي لشعبة الجودة والصحة والسلامة والبيئة. اضغط وتفاعل مع العناصر الصوتية والرسم المباشر للأركان الأساسية." data-lang-fr="Explorez le logo interactif de la filière Qualité, Hygiène, Sécurité et Environnement. Interagissez avec les éléments visuels et sonores synthétisés.">
-                استكشف الشعار التفاعلي لشعبة الجودة والصحة والسلامة والبيئة. اضغط وتفاعل مع العناصر الصوتية والرسم المباشر للأركان الأساسية.
-            </p>
-
-            <div class="relative w-full max-w-md aspect-square my-4 p-6 glass-panel rounded-3xl border border-slate-700/50 shadow-2xl flex flex-col items-center justify-center group transition-all duration-500 hover:border-cyan-500/40">
-                
-                <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/10 via-pink-600/10 via-amber-600/10 to-emerald-600/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all opacity-70"></div>
-
-                <svg id="qhse-main-logo" viewBox="0 0 500 500" class="w-full h-full z-10 transition-transform duration-500 filter drop-shadow-xl" style="max-width: 380px;">
-                    <defs>
-                        <linearGradient id="grad-q" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#60A5FA" />
-                            <stop offset="100%" stop-color="#1D4ED8" />
-                        </linearGradient>
-                        <linearGradient id="grad-h" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#F472B6" />
-                            <stop offset="100%" stop-color="#BE185D" />
-                        </linearGradient>
-                        <linearGradient id="grad-s" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#FBBF24" />
-                            <stop offset="100%" stop-color="#B45309" />
-                        </linearGradient>
-                        <linearGradient id="grad-e" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#34D399" />
-                            <stop offset="100%" stop-color="#047857" />
-                        </linearGradient>
-                        
-                        <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.4" />
-                            <stop offset="100%" stop-color="#06B6D4" stop-opacity="0" />
-                        </radialGradient>
-                    </defs>
-
-                    <circle cx="250" cy="250" r="220" fill="none" stroke="url(#grad-q)" stroke-width="1.5" stroke-dasharray="8 8" class="animate-spin-slow opacity-40" />
-                    <circle cx="250" cy="250" r="190" fill="none" stroke="url(#grad-e)" stroke-width="1" stroke-dasharray="12 6" class="animate-spin-slow opacity-30" style="animation-direction: reverse; animation-duration: 20s;" />
-
-                    <circle id="logo-center-aura" cx="250" cy="250" r="120" fill="url(#center-glow)" class="transition-all duration-300" />
-
-                    <!-- Sector Q - Quality -->
-                    <g id="petal-q" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="q">
-                        <path d="M 240 240 L 130 130 A 150 150 0 0 1 240 90 Z" fill="url(#grad-q)" opacity="0.85" />
-                        <circle cx="185" cy="155" r="28" fill="#1E293B" stroke="#60A5FA" stroke-width="2" />
-                        <path d="M 185 142 L 195 146 V 156 C 195 163 185 168 185 168 C 185 168 175 163 175 156 V 146 Z" fill="none" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M 181 154 L 184 157 L 189 151" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </g>
-
-                    <!-- Sector H - Health -->
-                    <g id="petal-h" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="h">
-                        <path d="M 260 240 L 260 90 A 150 150 0 0 1 370 130 Z" fill="url(#grad-h)" opacity="0.85" />
-                        <circle cx="315" cy="155" r="28" fill="#1E293B" stroke="#F472B6" stroke-width="2" />
-                        <path d="M 303 155 H 308 L 311 146 L 315 163 L 319 150 L 322 155 H 327" fill="none" stroke="#F472B6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </g>
-
-                    <!-- Sector S - Safety -->
-                    <g id="petal-s" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="s">
-                        <path d="M 260 260 L 370 370 A 150 150 0 0 1 260 410 Z" fill="url(#grad-s)" opacity="0.85" />
-                        <circle cx="315" cy="345" r="28" fill="#1E293B" stroke="#FBBF24" stroke-width="2" />
-                        <path d="M 302 348 C 302 338 310 334 315 334 C 320 334 328 338 328 348 H 302 Z" fill="none" stroke="#FBBF24" stroke-width="2.5"/>
-                        <rect x="300" y="348" width="30" height="4" rx="2" fill="#FBBF24" />
-                    </g>
-
-                    <!-- Sector E - Environment -->
-                    <g id="petal-e" class="logo-sector cursor-pointer transition-transform duration-300 hover:scale-105" data-pillar="e">
-                        <path d="M 240 260 L 240 410 A 150 150 0 0 1 130 370 Z" fill="url(#grad-e)" opacity="0.85" />
-                        <circle cx="185" cy="345" r="28" fill="#1E293B" stroke="#34D399" stroke-width="2" />
-                        <path d="M 175 352 C 175 335 195 332 195 332 C 195 332 195 352 175 352 Z" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linejoin="round"/>
-                        <path d="M 178 350 Q 187 344 193 334" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round"/>
-                    </g>
-
-                    <!-- Center Core -->
-                    <g id="logo-core" class="cursor-pointer">
-                        <circle cx="250" cy="250" r="55" fill="#0F172A" stroke="#06B6D4" stroke-width="3" class="shadow-lg" />
-                        <circle cx="250" cy="250" r="48" fill="#1E293B" />
-                        <text x="250" y="244" text-anchor="middle" fill="#FFFFFF" font-weight="900" font-size="22" font-family="'Poppins', sans-serif" letter-spacing="1">TS</text>
-                        <text x="250" y="266" text-anchor="middle" fill="#06B6D4" font-weight="800" font-size="16" font-family="'Poppins', sans-serif" letter-spacing="2">QHSE</text>
-                    </g>
-                </svg>
-
-                <div class="flex items-center space-x-2 space-x-reverse mt-6 z-10">
-                    <button id="btn-trigger-reveal" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-cyan-500/25 transition-all flex items-center space-x-2 space-x-reverse">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <span data-lang-ar="إعادة العرض المتحرك" data-lang-fr="Animer le Logo">إعادة العرض المتحرك</span>
-                    </button>
-                    
-                    <button id="btn-mode-glow" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold border border-slate-700 transition-all">
-                        <i class="fa-solid fa-lightbulb text-amber-400"></i>
-                        <span data-lang-ar="مؤثر التوهج" data-lang-fr="Effet Néon">مؤثر التوهج</span>
-                    </button>
-                    
-                    <button id="btn-sound-test" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold border border-slate-700 transition-all">
-                        <i class="fa-solid fa-music text-pink-400"></i>
-                        <span data-lang-ar="نغمة الهوية" data-lang-fr="Jingle QHSE">نغمة الهوية</span>
-                    </button>
+        <!-- KPI & Stats Dashboard -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 no-print">
+            <!-- Global Score Card -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400" id="kpi-compliance-rate">Taux de Conformité</span>
+                        <h2 class="text-3xl font-extrabold text-slate-900 mt-1" id="stat-score">0%</h2>
+                    </div>
+                    <span class="p-2.5 bg-brand-50 text-brand-600 rounded-lg shrink-0">
+                        <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div id="progress-bar-score" class="bg-brand-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2" id="kpi-score-desc">Basé sur les réponses "Oui"</p>
                 </div>
             </div>
 
-            <!-- Pillar Navigation Tabs -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-3xl mt-6">
-                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-blue-500 hover:bg-slate-800/60" data-pillar="q">
-                    <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">Q</div>
-                    <div class="text-right rtl:text-right ltr:text-left">
-                        <div class="text-xs font-bold text-slate-200" data-lang-ar="الجوّدة" data-lang-fr="Qualité">الجوّدة</div>
-                        <div class="text-[10px] text-slate-400">Quality</div>
+            <!-- Status Breakdown -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400" id="kpi-status-breakdown">Répartition des Statuts</span>
+                <div class="grid grid-cols-3 gap-2 mt-3 text-center">
+                    <div class="bg-emerald-50 p-2 rounded-lg border border-emerald-100">
+                        <span class="text-base sm:text-lg font-bold text-emerald-700 block" id="count-oui">0</span>
+                        <span class="text-[10px] font-semibold text-emerald-600 uppercase" id="lbl-oui">Oui</span>
                     </div>
-                </button>
-
-                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-pink-500 hover:bg-slate-800/60" data-pillar="h">
-                    <div class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-sm">H</div>
-                    <div class="text-right rtl:text-right ltr:text-left">
-                        <div class="text-xs font-bold text-slate-200" data-lang-ar="الصحة والسلامة" data-lang-fr="Hygiène & Santé">الصحة والسلامة</div>
-                        <div class="text-[10px] text-slate-400">Health</div>
+                    <div class="bg-amber-50 p-2 rounded-lg border border-amber-100">
+                        <span class="text-base sm:text-lg font-bold text-amber-700 block" id="count-encours">26</span>
+                        <span class="text-[10px] font-semibold text-amber-600 uppercase" id="lbl-encours">En cours</span>
                     </div>
-                </button>
-
-                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-amber-500 hover:bg-slate-800/60" data-pillar="s">
-                    <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">S</div>
-                    <div class="text-right rtl:text-right ltr:text-left">
-                        <div class="text-xs font-bold text-slate-200" data-lang-ar="السلامة المهنية" data-lang-fr="Sécurité">السلامة المهنية</div>
-                        <div class="text-[10px] text-slate-400">Safety</div>
+                    <div class="bg-rose-50 p-2 rounded-lg border border-rose-100">
+                        <span class="text-base sm:text-lg font-bold text-rose-700 block" id="count-non">0</span>
+                        <span class="text-[10px] font-semibold text-rose-600 uppercase" id="lbl-non">Non</span>
                     </div>
-                </button>
-
-                <button class="pillar-tab glass-card p-3 rounded-2xl flex items-center space-x-3 space-x-reverse border-b-2 border-b-emerald-500 hover:bg-slate-800/60" data-pillar="e">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">E</div>
-                    <div class="text-right rtl:text-right ltr:text-left">
-                        <div class="text-xs font-bold text-slate-200" data-lang-ar="البيئة" data-lang-fr="Environnement">البيئة</div>
-                        <div class="text-[10px] text-slate-400">Environment</div>
-                    </div>
-                </button>
-            </div>
-        </section>
-
-        <section id="pillars" class="py-16 px-4 max-w-7xl mx-auto border-t border-slate-800/60">
-            <div class="text-center mb-14">
-                <h2 class="text-2xl md:text-4xl font-bold mb-3" data-lang-ar="الأركان الأربعة لشعبة TS QHSE" data-lang-fr="Les 4 Piliers Fondamentaux du TS QHSE">الأركان الأربعة لشعبة TS QHSE</h2>
-                <p class="text-slate-400 text-sm max-w-xl mx-auto" data-lang-ar="كل جزء في الشعار يمثل ركناً استراتيجياً في إدارة الجودة والصحة والسلامة المهنية والبيئة" data-lang-fr="Chaque élément du logo représente un axe stratégique du management QHSE.">
-                    كل جزء في الشعار يمثل ركناً استراتيجياً في إدارة الجودة والصحة والسلامة المهنية والبيئة
-                </p>
+                </div>
+                <p class="text-xs text-slate-400 mt-3" id="stat-evaluated">26 / 26 Évaluations effectuées</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Quality Card -->
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-blue-500" id="card-q">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-award"></i>
-                    </div>
-                    <span class="text-xs font-black tracking-widest text-blue-400 uppercase">Qualité</span>
-                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="إدارة الجودة" data-lang-fr="Management de la Qualité">إدارة الجودة</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="ضمان مطابقة المعايير الدولية (ISO 9001)، تحسين العمليات، والتحسين المستمر للخدمات والمنتجات." data-lang-fr="Normes ISO 9001, maîtrise des processus, satisfaction client et amélioration continue.">
-                        ضمان مطابقة المعايير الدولية (ISO 9001)، تحسين العمليات، والتحسين المستمر للخدمات والمنتجات.
-                    </p>
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2.5 py-1 rounded-md">ISO 9001</span>
-                        <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2.5 py-1 rounded-md" data-lang-ar="معايير الأداء" data-lang-fr="Audits">معايير الأداء</span>
-                        <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2.5 py-1 rounded-md" data-lang-ar="التميز" data-lang-fr="Excellence">التميز</span>
-                    </div>
+            <!-- Chapter Coverage Progress -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400" id="kpi-chapters-title">Couverture des Chapitres</span>
+                <div class="space-y-1.5 mt-2 custom-scrollbar overflow-y-auto max-h-24 pr-1">
+                    <div class="text-xs flex justify-between items-center"><span class="text-slate-600" id="lbl-ch4">Ch. 4 Contexte</span><span class="font-bold text-slate-800" id="prog-ch4">0%</span></div>
+                    <div class="text-xs flex justify-between items-center"><span class="text-slate-600" id="lbl-ch5">Ch. 5 Leadership</span><span class="font-bold text-slate-800" id="prog-ch5">0%</span></div>
+                    <div class="text-xs flex justify-between items-center"><span class="text-slate-600" id="lbl-ch6">Ch. 6 Planification</span><span class="font-bold text-slate-800" id="prog-ch6">0%</span></div>
+                    <div class="text-xs flex justify-between items-center"><span class="text-slate-600" id="lbl-ch7">Ch. 7 Support</span><span class="font-bold text-slate-800" id="prog-ch7">0%</span></div>
+                    <div class="text-xs flex justify-between items-center"><span class="text-slate-600" id="lbl-ch8">Ch. 8 Réalisation</span><span class="font-bold text-slate-800" id="prog-ch8">0%</span></div>
+                    <div class="text-xs flex justify-between items-center"><span class="text-slate-600" id="lbl-ch9">Ch. 9 Évaluation</span><span class="font-bold text-slate-800" id="prog-ch9">0%</span></div>
+                    <div class="text-xs flex justify-between items-center"><span class="text-slate-600" id="lbl-ch10">Ch. 10 Amélioration</span><span class="font-bold text-slate-800" id="prog-ch10">0%</span></div>
                 </div>
+            </div>
 
-                <!-- Health Card -->
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-pink-500" id="card-h">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                    </div>
-                    <span class="text-xs font-black tracking-widest text-pink-400 uppercase">Hygiène & Santé</span>
-                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="الصحة والنظافة" data-lang-fr="Hygiène & Santé au Travail">الصحة والنظافة</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="الحفاظ على صحة العاملين، الوقاية من الأمراض المهنية، وتوفير بيئة عمل صحية ومريحة." data-lang-fr="Prévention des maladies professionnelles, ergonomie des postes et bien-être au travail.">
-                        الحفاظ على صحة العاملين، الوقاية من الأمراض المهنية، وتوفير بيئة عمل صحية ومريحة.
-                    </p>
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2.5 py-1 rounded-md" data-lang-ar="صحة العمل" data-lang-fr="Santé">صحة العمل</span>
-                        <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2.5 py-1 rounded-md" data-lang-ar="الوقاية" data-lang-fr="Prévention">الوقاية</span>
-                        <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2.5 py-1 rounded-md" data-lang-ar="الأرغونوميا" data-lang-fr="Ergonomie">الأرغونوميا</span>
-                    </div>
-                </div>
-
-                <!-- Safety Card -->
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-amber-500" id="card-s">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-hard-hat"></i>
-                    </div>
-                    <span class="text-xs font-black tracking-widest text-amber-400 uppercase">Sécurité</span>
-                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="السلَامة المهنية" data-lang-fr="Sécurité au Travail">السلَامة المهنية</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="تقييم المخاطر، الحد من حوادث الشغل (ISO 45001)، فرض معدات الحماية الفردية والجماعية." data-lang-fr="Norme ISO 45001, évaluation des risques, prévention des accidents et équipements EPI.">
-                        تقييم المخاطر، الحد من حوادث الشغل (ISO 45001)، فرض معدات الحماية الفردية والجماعية.
-                    </p>
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2.5 py-1 rounded-md">ISO 45001</span>
-                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2.5 py-1 rounded-md" data-lang-ar="تقييم المخاطر" data-lang-fr="Risques">تقييم المخاطر</span>
-                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2.5 py-1 rounded-md" data-lang-ar="الحماية EPI" data-lang-fr="EPI">الحماية EPI</span>
-                    </div>
-                </div>
-
-                <!-- Environment Card -->
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group border-t-4 border-t-emerald-500" id="card-e">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-leaf"></i>
-                    </div>
-                    <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Environnement</span>
-                    <h3 class="text-xl font-bold text-slate-100 mt-1 mb-3" data-lang-ar="حماية البيئة" data-lang-fr="Management Environnemental">حماية البيئة</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-4" data-lang-ar="إدارة النفايات، تقليل البصمة الكربونية (ISO 14001)، وتطبيق التنمية المستدامة بالمؤسسات." data-lang-fr="Norme ISO 14001, gestion des déchets, réduction de l'empreinte carbone et développement durable.">
-                        إدارة النفايات، تقليل البصمة الكربونية (ISO 14001)، وتطبيق التنمية المستدامة بالمؤسسات.
-                    </p>
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2.5 py-1 rounded-md">ISO 14001</span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2.5 py-1 rounded-md" data-lang-ar="الاستدامة" data-lang-fr="Durabilité">الاستدامة</span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2.5 py-1 rounded-md" data-lang-ar="إدارة النفايات" data-lang-fr="Recyclage">إدارة النفايات</span>
-                    </div>
+            <!-- Chart Card -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-center relative min-h-[140px]">
+                <div class="w-28 h-28 relative">
+                    <canvas id="complianceChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <section id="builder" class="py-16 px-4 max-w-7xl mx-auto border-t border-slate-800/60">
-            <div class="glass-panel p-6 lg:p-10 rounded-3xl border border-slate-700/60 shadow-2xl">
-                
-                <div class="text-center mb-10">
-                    <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest" data-lang-ar="ورشة التخصيص التفاعلية" data-lang-fr="Studio de Création">ورشة التخصيص التفاعلية</span>
-                    <h2 class="text-2xl md:text-4xl font-black mt-1" data-lang-ar="مبتكر ومصمم شعار TS QHSE" data-lang-fr="Générateur & Personnaliseur de Logo">مبتكر ومصمم شعار TS QHSE</h2>
-                    <p class="text-slate-400 text-sm mt-2 max-w-lg mx-auto" data-lang-ar="قم بتجربة تركيب الألوان والأيقونات والأنماط لابتكار الشعار المناسب للمجموعات" data-lang-fr="Personnalisez la forme, les couleurs et les icônes pour créer le logo idéal.">
-                        قم بتجربة تركيب الألوان والأيقونات والأنماط لابتكار الشعار المناسب للمجموعات
-                    </p>
-                </div>
+        <!-- Filters Section -->
+        <section class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center no-print">
+            <!-- Filter by Chapter -->
+            <div class="flex items-center space-x-2 rtl:space-x-reverse overflow-x-auto py-1 max-w-full custom-scrollbar">
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap" id="filter-chapter-label">Chapitres:</span>
+                <button onclick="filterByChapter('all')" class="chap-btn active px-3 py-1 rounded-lg text-xs font-medium bg-brand-600 text-white transition whitespace-nowrap" data-chap="all" id="btn-chap-all">Tous</button>
+                <button onclick="filterByChapter('4')" class="chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" data-chap="4" id="btn-chap-4">4. Contexte</button>
+                <button onclick="filterByChapter('5')" class="chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" data-chap="5" id="btn-chap-5">5. Leadership</button>
+                <button onclick="filterByChapter('6')" class="chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" data-chap="6" id="btn-chap-6">6. Planification</button>
+                <button onclick="filterByChapter('7')" class="chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" data-chap="7" id="btn-chap-7">7. Support</button>
+                <button onclick="filterByChapter('8')" class="chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" data-chap="8" id="btn-chap-8">8. Réalisation</button>
+                <button onclick="filterByChapter('9')" class="chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" data-chap="9" id="btn-chap-9">9. Évaluation</button>
+                <button onclick="filterByChapter('10')" class="chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" data-chap="10" id="btn-chap-10">10. Amélioration</button>
+            </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    
-                    <div class="lg:col-span-5 space-y-5 bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
-                        
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-2" data-lang-ar="نمط وهيكل الشعار:" data-lang-fr="Style du Logo :">نمط وهيكل الشعار:</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button class="builder-shape-btn active bg-cyan-600 text-white p-2.5 rounded-xl text-xs font-bold border border-cyan-400 transition-all text-center" data-shape="shield">
-                                    <i class="fa-solid fa-shield-halved block text-base mb-1"></i>
-                                    <span data-lang-ar="درع الوقاية" data-lang-fr="Bouclier">درع الوقاية</span>
-                                </button>
-                                <button class="builder-shape-btn bg-slate-800 hover:bg-slate-700 text-slate-300 p-2.5 rounded-xl text-xs font-bold border border-slate-700 transition-all text-center" data-shape="circle">
-                                    <i class="fa-solid fa-circle-notch block text-base mb-1"></i>
-                                    <span data-lang-ar="دائرة التكامل" data-lang-fr="Cercle">دائرة التكامل</span>
-                                </button>
-                                <button class="builder-shape-btn bg-slate-800 hover:bg-slate-700 text-slate-300 p-2.5 rounded-xl text-xs font-bold border border-slate-700 transition-all text-center" data-shape="leaf">
-                                    <i class="fa-solid fa-leaf block text-base mb-1"></i>
-                                    <span data-lang-ar="ورقة الاستدامة" data-lang-fr="Feuille">ورقة الاستدامة</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-2" data-lang-ar="لوحة الألوان الأساسية:" data-lang-fr="Palette de Couleurs :">لوحة الألوان الأساسية:</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button class="builder-palette-btn active bg-slate-800 p-2 rounded-xl border border-cyan-400 flex items-center space-x-2 space-x-reverse" data-palette="standard">
-                                    <div class="flex -space-x-1 space-x-reverse">
-                                        <span class="w-3 h-3 rounded-full bg-blue-500"></span>
-                                        <span class="w-3 h-3 rounded-full bg-pink-500"></span>
-                                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-                                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-                                    </div>
-                                    <span class="text-[11px] font-semibold text-slate-200" data-lang-ar="القياسي" data-lang-fr="Standard">القياسي</span>
-                                </button>
-
-                                <button class="builder-palette-btn bg-slate-800 p-2 rounded-xl border border-slate-700 hover:border-slate-500 flex items-center space-x-2 space-x-reverse" data-palette="eco">
-                                    <div class="flex -space-x-1 space-x-reverse">
-                                        <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
-                                        <span class="w-3 h-3 rounded-full bg-teal-500"></span>
-                                        <span class="w-3 h-3 rounded-full bg-cyan-600"></span>
-                                        <span class="w-3 h-3 rounded-full bg-green-700"></span>
-                                    </div>
-                                    <span class="text-[11px] font-semibold text-slate-200" data-lang-ar="إيكولوجي" data-lang-fr="Éco-Vert">إيكولوجي</span>
-                                </button>
-
-                                <button class="builder-palette-btn bg-slate-800 p-2 rounded-xl border border-slate-700 hover:border-slate-500 flex items-center space-x-2 space-x-reverse" data-palette="neon">
-                                    <div class="flex -space-x-1 space-x-reverse">
-                                        <span class="w-3 h-3 rounded-full bg-cyan-400"></span>
-                                        <span class="w-3 h-3 rounded-full bg-fuchsia-500"></span>
-                                        <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
-                                        <span class="w-3 h-3 rounded-full bg-purple-500"></span>
-                                    </div>
-                                    <span class="text-[11px] font-semibold text-slate-200" data-lang-ar="نيون عالي" data-lang-fr="Néon Cyber">نيون عالي</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1" data-lang-ar="النص المركزي للشعار:" data-lang-fr="Texte Central du Logo :">النص المركزي للشعار:</label>
-                            <input type="text" id="builder-text-input" value="TS QHSE" class="w-full bg-slate-800 border border-slate-700 focus:border-cyan-500 rounded-xl px-3.5 py-2 text-sm font-bold text-cyan-300 focus:outline-none transition-colors">
-                        </div>
-
-                        <div class="pt-2 flex items-center space-x-3 space-x-reverse">
-                            <button id="btn-export-logo" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white py-2.5 rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center space-x-2 space-x-reverse">
-                                <i class="fa-solid fa-download"></i>
-                                <span data-lang-ar="تحميل الشعار (SVG)" data-lang-fr="Télécharger Logo (SVG)">تحميل الشعار (SVG)</span>
-                            </button>
-                            <button id="btn-random-builder" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3.5 py-2.5 rounded-xl border border-slate-700 text-xs font-bold transition-all">
-                                <i class="fa-solid fa-dice"></i>
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <div class="lg:col-span-7 flex flex-col items-center justify-center p-8 bg-slate-950/80 rounded-2xl border border-slate-800 relative min-h-[350px]">
-                        <div class="absolute top-3 right-3 text-[10px] bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 px-2.5 py-1 rounded-full font-mono">
-                            LIVE PREVIEW
-                        </div>
-
-                        <div id="builder-svg-container" class="w-64 h-64 md:w-80 md:h-80 flex items-center justify-center filter drop-shadow-2xl">
-                        </div>
-                    </div>
-
-                </div>
-
+            <!-- Filter by Status -->
+            <div class="flex items-center space-x-2 rtl:space-x-reverse shrink-0">
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider" id="filter-status-label">Statut:</span>
+                <select id="statusFilter" onchange="applyFilters()" class="text-xs font-medium bg-slate-100 border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500 w-full sm:w-auto">
+                    <option value="all" id="opt-all-status">Tous les statuts</option>
+                    <option value="Oui" id="opt-oui">Oui (Conforme)</option>
+                    <option value="En cours" id="opt-encours">En cours</option>
+                    <option value="Non" id="opt-non">Non (Non-conforme)</option>
+                </select>
             </div>
         </section>
 
-        <section id="challenge" class="py-16 px-4 max-w-7xl mx-auto border-t border-slate-800/60">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="inline-flex items-center space-x-2 space-x-reverse bg-amber-500/10 border border-amber-500/30 text-amber-400 px-3.5 py-1.5 rounded-full text-xs font-semibold">
-                        <i class="fa-solid fa-paintbrush"></i>
-                        <span data-lang-ar="تحدي ورشة التصميم والإبداع" data-lang-fr="Atelier de Création : LOGO DE LA FILIÈRE">تحدي ورشة التصميم والإبداع</span>
-                    </div>
+        <!-- Audit Questions List -->
+        <section class="flex-1 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col no-print">
+            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2">
+                <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider" id="section-questions-title">Questionnaire d'Évaluation (26 Exigences)</h3>
+                <span class="text-xs text-slate-500 font-medium" id="visible-questions-count">Affichage de 26 sur 26 questions</span>
+            </div>
 
-                    <h2 class="text-2xl md:text-4xl font-extrabold text-slate-100" data-lang-ar="« À vos pinceaux : LOGO DE LA FILIÈRE TS QHSE »" data-lang-fr="« À vos pinceaux : LOGO DE LA FILIÈRE TS QHSE »">
-                        « À vos pinceaux : LOGO DE LA FILIÈRE TS QHSE »
-                    </h2>
+            <div id="questions-list" class="divide-y divide-slate-100 flex-1 overflow-y-auto custom-scrollbar p-2">
+                <!-- Questions dynamically rendered here -->
+            </div>
 
-                    <div class="space-y-4 text-slate-300 text-sm leading-relaxed glass-card p-6 rounded-2xl">
-                        <p data-lang-ar="يتم تقسيم المتدربين (Les stagiaires) إلى مجموعات عمل لتصميم وإنشاء شعار خاص ورسمي بتخصص شعبة **TS QHSE**." data-lang-fr="Les stagiaires sont répartis en groupes afin de créer un logo spécifique pour la filière TS QHSE.">
-                            يتم تقسيم المتدربين (Les stagiaires) إلى مجموعات عمل لتصميم وإنشاء شعار خاص ورسمي بتخصص شعبة <strong>TS QHSE</strong>.
-                        </p>
-                        <p data-lang-ar="هذه النشاط ذو طابع فني وإبداعي خالص؛ يمكن استخدام الوسائل التقليدية (أقلام، فرشي رسم، أوراق...) أو برامج ومصممات التصميم الرقمي والذكاء الاصطناعي." data-lang-fr="Cette activité est purement artistique, vous pouvez utiliser des outils physiques (crayons, pinceaux, papier dessin...) ou des outils de design informatique.">
-                            هذه النشاط ذو طابع فني وإبداعي خالص؛ يمكن استخدام الوسائل التقليدية (أقلام، فرشي رسم، أوراق...) أو برامج ومصممات التصميم الرقمي والذكاء الاصطناعي.
-                        </p>
-                        <div class="p-3.5 bg-cyan-950/40 border-r-4 border-r-cyan-400 ltr:border-r-0 ltr:border-l-4 ltr:border-l-cyan-400 rounded-lg text-xs font-bold text-cyan-200">
-                            <i class="fa-solid fa-star text-amber-400 ml-1"></i>
-                            <span data-lang-ar="سيتم اختيار التصميم الأكثر إبداعاً وتعبيرية ووضوحاً ليكون الشعار الرسمي المعتمد للشعبة!" data-lang-fr="La création la plus créative et la plus descriptive de la filière sera considérée comme le logo officiel.">سيتم اختيار التصميم الأكثر إبداعاً وتعبيرية ووضوحاً ليكون الشعار الرسمي المعتمد للشعبة!</span>
-                        </div>
-                    </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-end items-center">
+                <button id="btn-submit-audit" onclick="toggleResults()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-2">
+                    <i data-lucide="eye" class="w-4 h-4"></i>
+                    <span id="btn-submit-text">Afficher les Résultats & la Correction</span>
+                </button>
+            </div>
+        </section>
 
-                    <div class="grid grid-cols-2 gap-3 text-xs">
-                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
-                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
-                            <span data-lang-ar="عمل جماعي وتشاركي" data-lang-fr="Travail en Équipe">عمل جماعي وتشاركي</span>
-                        </div>
-                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
-                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
-                            <span data-lang-ar="أدوات يدوية أو رقمية" data-lang-fr="Outils Physiques ou Digitaux">أدوات يدوية أو رقمية</span>
-                        </div>
-                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
-                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
-                            <span data-lang-ar="تعبير دقيق عن QHSE" data-lang-fr="Représentation des 4 Piliers">تعبير دقيق عن QHSE</span>
-                        </div>
-                        <div class="flex items-center space-x-2 space-x-reverse bg-slate-900/50 p-3 rounded-xl border border-slate-800">
-                            <i class="fa-solid fa-check-circle text-emerald-400 text-base"></i>
-                            <span data-lang-ar="اعتماد الشعار الفائز" data-lang-fr="Sélection du Logo Officiel">اعتماد الشعار الفائز</span>
-                        </div>
+        <!-- Printable Report (Print Only) -->
+        <section class="hidden print-only">
+            <div class="border-b-2 border-slate-800 pb-4 mb-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-900" id="print-header-title">Rapport de Synthèse d'Audit ISO 9001:2015</h1>
+                        <p class="text-sm text-slate-600" id="print-header-subtitle">Système de Management de la Qualité dans la Formation - Chapitres 4 à 10</p>
                     </div>
                 </div>
-
-                <div class="lg:col-span-5 flex flex-col items-center">
-                    <div class="relative w-full glass-panel p-6 rounded-3xl border border-slate-700/60 text-center shadow-xl overflow-hidden group">
-                        <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-cyan-500 via-pink-500 to-amber-500 p-[3px] shadow-lg mb-4">
-                            <div class="w-full h-full bg-slate-900 rounded-[21px] flex items-center justify-center">
-                                <i class="fa-solid fa-palette text-3xl text-cyan-400"></i>
-                            </div>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-slate-100" data-lang-ar="المشاركة في التحدي" data-lang-fr="Soumettre une Proposition">المشاركة في التحدي</h3>
-                        <p class="text-xs text-slate-400 mt-2 mb-6" data-lang-ar="هل أتممت رسم الفكرة؟ اضغط هنا لإرسال التهنئة وإشعارات الابتكار" data-lang-fr="Avez-vous finalisé votre concept ? Célébrez votre création ici !">
-                            هل أتممت رسم الفكرة؟ اضغط هنا لإرسال التهنئة وإشعارات الابتكار
-                        </p>
-
-                        <button id="btn-celebrate" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-cyan-500 hover:opacity-90 text-slate-950 font-black py-3 rounded-2xl shadow-xl transition-all flex items-center justify-center space-x-2 space-x-reverse text-sm">
-                            <i class="fa-solid fa-trophy"></i>
-                            <span data-lang-ar="احتفل باكتشمال الشعار 🎉" data-lang-fr="Célébrer la Création 🎉">احتفل باكتشمال الشعار 🎉</span>
-                        </button>
-                    </div>
+                <div class="mt-4 text-xs grid grid-cols-3 gap-4 bg-slate-50 p-3 rounded border border-slate-200">
+                    <div><strong><span id="print-lbl-date">Date</span>:</strong> <span id="print-date"></span></div>
+                    <div><strong><span id="print-lbl-score">Score Global</span>:</strong> <span id="print-score" class="font-bold text-slate-900">0%</span></div>
+                    <div><strong><span id="print-lbl-total">Total d'exigences</span>:</strong> 26/26</div>
                 </div>
-
+            </div>
+            <div id="print-questions-summary" class="space-y-3">
+                <!-- Printed rows populated dynamically -->
             </div>
         </section>
 
     </main>
 
-    <footer class="border-t border-slate-800/80 bg-slate-950 py-8 px-4 text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center space-x-2 space-x-reverse">
-                <span class="font-bold text-slate-300">TS QHSE</span>
-                <span>-</span>
-                <span data-lang-ar="منصة الشعار والتفاعل الرسمي" data-lang-fr="Plateforme Interactive du Logo">منصة الشعار والتفاعل الرسمي</span>
+    <!-- Justification / Explanation Modal -->
+    <div id="rationale-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full p-6 space-y-4 relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeRationaleModal()" class="absolute top-4 right-4 rtl:left-4 rtl:right-auto text-slate-400 hover:text-slate-600 p-1">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                <div class="p-2 bg-blue-50 text-blue-600 rounded-lg shrink-0">
+                    <i data-lucide="help-circle" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span id="modal-chapter-badge" class="text-xs font-semibold uppercase text-brand-600 tracking-wider">Norme ISO 9001:2015</span>
+                    <h3 class="font-bold text-slate-900 text-base" id="modal-question-title">Explication Normative</h3>
+                </div>
             </div>
-            <div>
-                <span>Qualité • Hygiène • Sécurité • Environnement</span>
+            <div class="border-t border-slate-100 pt-3">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1" id="modal-lbl-why">Pourquoi / Exigence de la norme :</h4>
+                <p id="modal-rationale-text" class="text-sm text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-200 text-right-rtl"></p>
+            </div>
+            <div class="flex justify-end pt-2">
+                <button onclick="closeRationaleModal()" class="px-4 py-2 bg-slate-800 text-white text-xs font-semibold rounded-lg hover:bg-slate-900 transition" id="btn-modal-close">Fermer</button>
             </div>
         </div>
-    </footer>
+    </div>
 
+    <!-- Application Script -->
     <script>
-        class AudioEngine {
-            constructor() {
-                this.ctx = null;
-                this.muted = false;
-            }
-
-            init() {
-                if (!this.ctx) {
-                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                    this.ctx = new AudioCtx();
+        // Audio Web API
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClickSound() {
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
                 }
-                if (this.ctx.state === 'suspended') {
-                    this.ctx.resume();
-                }
-            }
-
-            playClick() {
-                if (this.muted) return;
-                this.init();
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, this.ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(200, this.ctx.currentTime + 0.08);
-                
-                gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
-
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
                 osc.connect(gain);
-                gain.connect(this.ctx.destination);
+                gain.connect(audioCtx.destination);
                 osc.start();
-                osc.stop(this.ctx.currentTime + 0.08);
-            }
-
-            playHover() {
-                if (this.muted) return;
-                this.init();
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(320, this.ctx.currentTime);
-                osc.frequency.linearRampToValueAtTime(450, this.ctx.currentTime + 0.05);
-                
-                gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
-
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start();
-                osc.stop(this.ctx.currentTime + 0.05);
-            }
-
-            playPillarSound(pillar) {
-                if (this.muted) return;
-                this.init();
-
-                const freqs = {
-                    q: [523.25, 659.25, 783.99],
-                    h: [587.33, 698.46, 880.00],
-                    s: [659.25, 830.61, 987.77],
-                    e: [440.00, 554.37, 659.25]
-                };
-
-                const notes = freqs[pillar] || [440, 550, 660];
-                notes.forEach((freq, idx) => {
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.06);
-                    
-                    gain.gain.setValueAtTime(0, this.ctx.currentTime + idx * 0.06);
-                    gain.gain.linearRampToValueAtTime(0.2, this.ctx.currentTime + idx * 0.06 + 0.02);
-                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.06 + 0.3);
-
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start(this.ctx.currentTime + idx * 0.06);
-                    osc.stop(this.ctx.currentTime + idx * 0.06 + 0.3);
-                });
-            }
-
-            playJingle() {
-                if (this.muted) return;
-                this.init();
-
-                const notes = [440, 554.37, 659.25, 880, 1108.73];
-                notes.forEach((freq, i) => {
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.1);
-                    
-                    gain.gain.setValueAtTime(0.15, this.ctx.currentTime + i * 0.1);
-                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + i * 0.1 + 0.4);
-
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start(this.ctx.currentTime + i * 0.1);
-                    osc.stop(this.ctx.currentTime + i * 0.1 + 0.4);
-                });
+                osc.stop(audioCtx.currentTime + 0.05);
+            } catch (e) {
+                // AudioContext safely ignored if restricted
             }
         }
 
-        const audio = new AudioEngine();
-
-        // Particles Background Engine
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.color = ['#3B82F6', '#EC4899', '#F59E0B', '#10B981', '#06B6D4'][Math.floor(Math.random() * 5)];
-                this.alpha = Math.random() * 0.5 + 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
+        // Sanitization against XSS
+        function sanitizeHTML(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g, function (match) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[match];
+            });
         }
 
-        for (let i = 0; i < 45; i++) {
-            particles.push(new Particle());
-        }
+        // Complete ISO 9001 Data Array (26 Items Preserved)
+        const isoQuestionsData = [
+            { id: 1, chapter: "4.1", question_fr: "Est-ce que la formation prend en compte son contexte interne et externe ?", question_ar: "هل تأخذ المؤسسة التدريبية بعين الاعتبار سياقها الداخلي والخارجي؟", status: "En cours", why_fr: "La norme demande de déterminer et surveiller les enjeux internes et externes.", why_ar: "تتطلب المواصفة تحديد ومراقبة القضايا الداخلية والخارجية المؤثرة.", notes: "" },
+            { id: 2, chapter: "4.2", question_fr: "Est-ce que les besoins et attentes des stagiaires sont pris en compte ?", question_ar: "هل يتم مراعاة احتياجات وتوقعات المتدربين؟", status: "En cours", why_fr: "La norme demande de déterminer les parties intéressées pertinentes et leurs exigences.", why_ar: "تتطلب المواصفة تحديد الأطراف المعنية ذات الصلة ومتطلباتها.", notes: "" },
+            { id: 3, chapter: "4.4", question_fr: "Est-ce que les processus de la formation sont définis et suivis ?", question_ar: "هل عمليات التدريب محددة ومتابعة بشكل منتظم؟", status: "En cours", why_fr: "La norme demande d’établir, mettre en œuvre et améliorer les processus et leurs interactions.", why_ar: "تتطلب المواصفة إنشاء وتطبيق وتحسين العمليات وتفاعلاتها.", notes: "" },
+            { id: 4, chapter: "5.1", question_fr: "Est-ce que la direction montre son engagement envers la qualité de la formation ?", question_ar: "هل تظهر الإدارة التزامها تجاه جودة التدريب؟", status: "En cours", why_fr: "La direction doit démontrer son leadership et son engagement envers le système qualité.", why_ar: "يجب على القيادة إثبات التزامها وقيادتها لنظام إدارة الجودة.", notes: "" },
+            { id: 5, chapter: "5.1.2", question_fr: "Est-ce que les besoins et attentes des stagiaires sont pris en compte pour améliorer leur satisfaction ?", question_ar: "هل تؤخذ احتياجات وتوقعات المتدربين في الاعتبار لتعزيز رضاهم؟", status: "En cours", why_fr: "L’orientation client vise notamment à satisfaire les exigences et accroître la satisfaction.", why_ar: "يهدف التركيز على العميل إلى تلبية المتطلبات وزيادة مستوى الرضا.", notes: "" },
+            { id: 6, chapter: "5.2", question_fr: "Est-qu’une politique qualité est établie et communiquée ?", question_ar: "هل تم وضع سياسة للجودة وتوصيلها للجميع؟", status: "En cours", why_fr: "La direction doit établir, mettre en œuvre et tenir à jour une politique qualité.", why_ar: "يجب على الإدارة وضع سياسة الجودة وتطبيقها والمحافظة عليها.", notes: "" },
+            { id: 7, chapter: "5.3", question_fr: "Est-ce que les responsabilités de chacun sont définies et communiquées ?", question_ar: "هل تم تحديد مسؤوليات وصلاحيات الجميع وإبلاغها؟", status: "En cours", why_fr: "Les responsabilités et autorités doivent être attribuées, communiquées et comprises.", why_ar: "يجب تحديد المسؤوليات والسلطات وتوصيلها وفهمها داخل المؤسسة.", notes: "" },
+            { id: 8, chapter: "6.1", question_fr: "Est-ce que les risques et les opportunités liés à la formation sont identifiés ?", question_ar: "هل تم تحديد المخاطر والفرص المتعلقة بالتدريب؟", status: "En cours", why_fr: "L’organisme doit déterminer et planifier des actions face aux risques et opportunités.", why_ar: "يجب على المؤسسة تحديد والتخطيط للإجراءات الموجهة للمخاطر والفرص.", notes: "" },
+            { id: 9, chapter: "6.2", question_fr: "Est-ce que des objectifs qualité sont définis, mesurables et suivis ?", question_ar: "هل أهداف الجودة محددة وقابلة للقياس ومتابعة؟", status: "En cours", why_fr: "Les objectifs qualité doivent notamment être cohérents, mesurables et surveillés.", why_ar: "يجب أن تكون أهداف الجودة متناسقة وقابلة للقياس ومراقبة.", notes: "" },
+            { id: 10, chapter: "6.3", question_fr: "Est-ce que les changements dans le système de management sont planifiés ?", question_ar: "هل يتم التخطيط للتغييرات في نظام إدارة الجودة؟", status: "En cours", why_fr: "Les modifications du système qualité doivent être réalisées de façon planifiée.", why_ar: "يجب تنفيذ التغييرات على نظام الجودة بطريقة مخططة.", notes: "" },
+            { id: 11, chapter: "7.1", question_fr: "Est-ce que les ressources nécessaires à la formation sont disponibles ?", question_ar: "هل الموارد اللازمة للتدريب متوفرة؟", status: "Oui", why_fr: "Les ressources nécessaires au système qualité doivent être identifiées et fournies.", why_ar: "يجب تحديد وتوفير الموارد اللازمة لنظام إدارة الجودة.", notes: "" },
+            { id: 12, chapter: "7.1.4", question_fr: "Est-ce que les conditions de travail et l’environnement de formation sont appropriés ?", question_ar: "هل ظروف العمل وبيئة التدريب مناسبة؟", status: "En cours", why_fr: "L’environnement nécessaire à la mise en œuvre des processus doit être maintenu.", why_ar: "يجب الحفاظ على البيئة اللازمة لتشغيل العمليات.", notes: "" },
+            { id: 13, chapter: "7.2", question_fr: "Est-ce que les compétences nécessaires des formateurs et du personnel sont assurées ?", question_ar: "هل يتم ضمان الكفاءات اللازمة للمدربين والموظفين؟", status: "En cours", why_fr: "Les compétences nécessaires doivent être déterminées et assurées.", why_ar: "يجب تحديد الكفاءات اللازمة وضمان توافرها.", notes: "" },
+            { id: 14, chapter: "7.3", question_fr: "Est-ce que les stagiaires et le personnel sont sensibilisés aux objectifs qualité ?", question_ar: "هل المتدربون والموظفون على وعي بأهداف الجودة؟", status: "En cours", why_fr: "Les personnes doivent être sensibilisées à la politique et aux objectifs qualité pertinents.", why_ar: "يجب توعية الأفراد بسياسة وأهداف الجودة ذات الصلة.", notes: "" },
+            { id: 15, chapter: "7.4", question_fr: "Est-ce que la communication interne et externe est organisée ?", question_ar: "هل التواصل الداخلي والخارجي منسق ومنظم؟", status: "En cours", why_fr: "Les besoins de communication interne et externe doivent être déterminés.", why_ar: "يجب تحديد متطلبات التواصل الداخلي والخارجي.", notes: "" },
+            { id: 16, chapter: "7.5", question_fr: "Est-ce que les informations et documents nécessaires sont maîtrisés ?", question_ar: "هل يتم التحكم في المعلومات والوثائق الضرورية؟", status: "En cours", why_fr: "Les informations documentées nécessaires doivent être maîtrisées.", why_ar: "يجب ضبط والتحكم في المعلومات الموثقة المطلوبة.", notes: "" },
+            { id: 17, chapter: "8.1", question_fr: "Est-ce que les activités de formation sont planifiées et maîtrisées ?", question_ar: "هل يتم التخطيط لأنشطة التدريب والتحكم فيها؟", status: "Oui", why_fr: "Les processus nécessaires doivent être planifiés, mis en œuvre et maîtrisés.", why_ar: "يجب تخطيط وتنفيذ وضبط العمليات اللازمة.", notes: "" },
+            { id: 18, chapter: "8.2", question_fr: "Est-ce que les exigences et besoins des stagiaires sont identifiés ?", question_ar: "هل تم تحديد متطلبات واحتياجات المتدربين بدقة؟", status: "En cours", why_fr: "Les exigences relatives aux produits et services doivent être déterminées et revues.", why_ar: "يجب تحديد ومراجعة المتطلبات المتعلقة بالخدمات والمنتجات.", notes: "" },
+            { id: 19, chapter: "8.4", question_fr: "Est-ce que les prestations externes utilisées par l’organisme sont maîtrisées ?", question_ar: "هل يتم التحكم في الخدمات والمنتجات المقدمة من جهات خارجية؟", status: "En cours", why_fr: "Les processus, produits et services fournis par des prestataires externes doivent être maîtrisés.", why_ar: "يجب مراقبة والتحكم في الخدمات المقدمة من مزودين خارجيين.", notes: "" },
+            { id: 20, chapter: "8.5", question_fr: "Est-ce que la réalisation des activités de formation se fait dans des conditions maîtrisées ?", question_ar: "هل يتم تقديم أنشطة التدريب تحت ظروف خاضعة للتحكم؟", status: "Oui", why_fr: "La production et la prestation de service doivent être réalisées dans des conditions maîtrisées.", why_ar: "يجب تقديم الخدمات وتحقيقها تحت ظروف محددة ومضبوطة.", notes: "" },
+            { id: 21, chapter: "9.1", question_fr: "Est-ce que les activités et les résultats sont surveillés, mesurés et évalués ?", question_ar: "هل يتم مراقبة وقياس وتقييم الأنشطة والنتائج؟", status: "En cours", why_fr: "La norme prévoit la surveillance, la mesure, l’analyse et l’évaluation.", why_ar: "تتطلب المواصفة المراقبة والقياس والتحليل والتقييم الدوري.", notes: "" },
+            { id: 22, chapter: "9.1.2", question_fr: "Est-ce que la satisfaction des stagiaires est évaluée ?", question_ar: "هل يتم تقييم مستوى رضا المتدربين بشكل منتظم؟", status: "En cours", why_fr: "La satisfaction du client fait partie de l’évaluation des performances.", why_ar: "يعتبر قياس رضا العملاء جزءاً أساسياً من تقييم الأداء.", notes: "" },
+            { id: 23, chapter: "9.2", question_fr: "Est-ce que des audits internes sont réalisés pour vérifier le système qualité ?", question_ar: "هل تجرى تدقيقات داخلية للتحقق من سلامة نظام الجودة؟", status: "En cours", why_fr: "La norme prévoit la réalisation d’audits internes.", why_ar: "تتطلب المواصفة إجراء تدقيقات داخلية على فترات مخطط لها.", notes: "" },
+            { id: 24, chapter: "9.3", question_fr: "Est-qu’une revue de direction permet d’évaluer le système qualité ?", question_ar: "هل توجد مراجعة إدارية دورية لتقييم كفاءة نظام الجودة؟", status: "En cours", why_fr: "La direction doit réaliser des revues du système de management de la qualité.", why_ar: "يجب على الإدارة العليا مراجعة نظام إدارة الجودة بانتظام.", notes: "" },
+            { id: 25, chapter: "10.2", question_fr: "Est-ce que les non-conformités sont corrigées et que des actions correctives sont mises en place ?", question_ar: "هل تصحح حالات عدم المطابقة وتطبق إجراءات تصحيحية؟", status: "En cours", why_fr: "Une non-conformité doit être maîtrisée et, si nécessaire, faire l’objet d’une action corrective.", why_ar: "يجب التعامل مع حالات عدم المطابقة واتخاذ إجراءات تصحيحية.", notes: "" },
+            { id: 26, chapter: "10.3", question_fr: "Est-qu’une amélioration continue du système qualité est recherchée ?", question_ar: "هل تسعى المؤسسة باستمرار للتحسين المستمر لنظام الجودة؟", status: "Oui", why_fr: "L’organisme doit améliorer en continu la pertinence, l’adéquation et l’efficacité du système qualité.", why_ar: "يجب على المؤسسة التحسين المستمر لمدى ملاءمة وفاعلية النظام.", notes: "" }
+        ];
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // Sound Toggle Handler
-            const soundBtn = document.getElementById('sound-toggle');
-            const soundIcon = document.getElementById('sound-icon');
-            const soundText = document.getElementById('sound-text');
-            const soundWave = document.getElementById('sound-wave');
-
-            soundBtn.addEventListener('click', () => {
-                audio.muted = !audio.muted;
-                if (audio.muted) {
-                    soundIcon.className = 'fa-solid fa-volume-xmark text-slate-500';
-                    soundText.textContent = audio.muted ? (currentLang === 'ar' ? 'الصوت مكتوم' : 'Sons Mute') : '';
-                    soundWave.style.display = 'none';
-                } else {
-                    soundIcon.className = 'fa-solid fa-volume-high text-cyan-400';
-                    soundText.textContent = currentLang === 'ar' ? 'الصوت مفعل' : 'Sons Activés';
-                    soundWave.style.display = 'flex';
-                    audio.playClick();
-                }
-            });
-
-            // Bilingual Language Toggle
-            let currentLang = 'ar';
-            const langBtn = document.getElementById('lang-toggle');
-            const langText = document.getElementById('lang-text');
-
-            langBtn.addEventListener('click', () => {
-                audio.playClick();
-                currentLang = currentLang === 'ar' ? 'fr' : 'ar';
-                document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-                document.documentElement.lang = currentLang;
-                langText.textContent = currentLang === 'ar' ? 'Français' : 'العربية';
-
-                document.querySelectorAll('[data-lang-ar]').forEach(el => {
-                    el.textContent = el.getAttribute(`data-lang-${currentLang}`);
-                });
-            });
-
-            // Interactive Logo Sector Actions
-            const sectors = document.querySelectorAll('.logo-sector');
-            sectors.forEach(sector => {
-                sector.addEventListener('click', () => {
-                    const pillar = sector.getAttribute('data-pillar');
-                    audio.playPillarSound(pillar);
-                    
-                    const targetCard = document.getElementById(`card-${pillar}`);
-                    if (targetCard) {
-                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        targetCard.classList.add('ring-2', 'ring-cyan-400', 'scale-105');
-                        setTimeout(() => {
-                            targetCard.classList.remove('ring-2', 'ring-cyan-400', 'scale-105');
-                        }, 1500);
-                    }
-                });
-
-                sector.addEventListener('mouseenter', () => {
-                    audio.playHover();
-                });
-            });
-
-            // Pillar Quick Tab Click
-            document.querySelectorAll('.pillar-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const pillar = tab.getAttribute('data-pillar');
-                    audio.playPillarSound(pillar);
-                    const targetCard = document.getElementById(`card-${pillar}`);
-                    if (targetCard) {
-                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                });
-            });
-
-            // Re-animate Logo Reveal Button
-            const revealBtn = document.getElementById('btn-trigger-reveal');
-            const mainLogo = document.getElementById('qhse-main-logo');
-            revealBtn.addEventListener('click', () => {
-                audio.playJingle();
-                mainLogo.classList.add('scale-90', 'rotate-180', 'opacity-20');
-                setTimeout(() => {
-                    mainLogo.classList.remove('scale-90', 'rotate-180', 'opacity-20');
-                }, 400);
-            });
-
-            // Glow Mode Button
-            const glowBtn = document.getElementById('btn-mode-glow');
-            let isGlow = false;
-            glowBtn.addEventListener('click', () => {
-                audio.playClick();
-                isGlow = !isGlow;
-                if (isGlow) {
-                    mainLogo.style.filter = 'drop-shadow(0 0 25px rgba(6, 182, 212, 0.9))';
-                    glowBtn.classList.add('bg-cyan-600', 'text-white');
-                } else {
-                    mainLogo.style.filter = 'drop-shadow(0 0 10px rgba(0,0,0,0.5))';
-                    glowBtn.classList.remove('bg-cyan-600', 'text-white');
-                }
-            });
-
-            // Sound Test Button
-            document.getElementById('btn-sound-test').addEventListener('click', () => {
-                audio.playJingle();
-            });
-
-            // Logo Builder Studio Implementation
-            const builderContainer = document.getElementById('builder-svg-container');
-            const builderTextInput = document.getElementById('builder-text-input');
-            let currentShape = 'shield';
-            let currentPalette = 'standard';
-
-            const palettes = {
-                standard: ['#3B82F6', '#EC4899', '#F59E0B', '#10B981'],
-                eco: ['#34D399', '#10B981', '#059669', '#047857'],
-                neon: ['#22D3EE', '#E0E7FF', '#FACC15', '#A855F7']
-            };
-
-            function renderBuilderLogo() {
-                const colors = palettes[currentPalette];
-                const text = builderTextInput.value || 'TS QHSE';
-
-                let pathContent = '';
-                if (currentShape === 'shield') {
-                    pathContent = `
-                        <path d="M 150 20 L 260 60 V 160 C 260 230 150 280 150 280 C 150 280 40 230 40 160 V 60 Z" fill="none" stroke="${colors[0]}" stroke-width="8" />
-                        <path d="M 150 40 L 240 75 V 155 C 240 215 150 260 150 260 C 150 260 60 215 60 155 V 75 Z" fill="#0F172A" opacity="0.9" />
-                        <circle cx="100" cy="110" r="22" fill="${colors[0]}" opacity="0.8" />
-                        <circle cx="200" cy="110" r="22" fill="${colors[1]}" opacity="0.8" />
-                        <circle cx="100" cy="190" r="22" fill="${colors[2]}" opacity="0.8" />
-                        <circle cx="200" cy="190" r="22" fill="${colors[3]}" opacity="0.8" />
-                    `;
-                } else if (currentShape === 'circle') {
-                    pathContent = `
-                        <circle cx="150" cy="150" r="120" fill="none" stroke="${colors[0]}" stroke-width="6" stroke-dasharray="10 5" />
-                        <circle cx="150" cy="150" r="100" fill="#0F172A" stroke="${colors[1]}" stroke-width="4" />
-                        <path d="M 150 50 A 100 100 0 0 1 250 150 L 150 150 Z" fill="${colors[0]}" opacity="0.7"/>
-                        <path d="M 250 150 A 100 100 0 0 1 150 250 L 150 150 Z" fill="${colors[1]}" opacity="0.7"/>
-                        <path d="M 150 250 A 100 100 0 0 1 50 150 L 150 150 Z" fill="${colors[2]}" opacity="0.7"/>
-                        <path d="M 50 150 A 100 100 0 0 1 150 50 L 150 150 Z" fill="${colors[3]}" opacity="0.7"/>
-                    `;
-                } else if (currentShape === 'leaf') {
-                    pathContent = `
-                        <path d="M 150 30 C 230 30 270 110 270 190 C 270 240 220 270 150 270 C 80 270 30 240 30 190 C 30 110 70 30 150 30 Z" fill="#0F172A" stroke="${colors[3]}" stroke-width="6" />
-                        <path d="M 150 30 V 270" stroke="${colors[0]}" stroke-width="4" stroke-dasharray="6 4" />
-                        <circle cx="110" cy="130" r="25" fill="${colors[0]}" opacity="0.8" />
-                        <circle cx="190" cy="130" r="25" fill="${colors[1]}" opacity="0.8" />
-                        <circle cx="110" cy="200" r="25" fill="${colors[2]}" opacity="0.8" />
-                        <circle cx="190" cy="200" r="25" fill="${colors[3]}" opacity="0.8" />
-                    `;
-                }
-
-                builderContainer.innerHTML = `
-                    <svg viewBox="0 0 300 300" class="w-full h-full">
-                        ${pathContent}
-                        <circle cx="150" cy="150" r="42" fill="#020617" stroke="${colors[0]}" stroke-width="3" />
-                        <text x="150" y="156" text-anchor="middle" fill="#FFFFFF" font-weight="900" font-size="16" font-family="'Poppins', sans-serif">${text}</text>
-                    </svg>
-                `;
+        // Dictionary for Translations
+        const translations = {
+            fr: {
+                appTitle: "ISO 9001:2015 Audit Tool",
+                appSubtitle: "Chapitres 4 à 10 — Organismes de Formation",
+                btnPrint: "Exporter / Imprimer",
+                kpiCompliance: "Taux de Conformité",
+                kpiScoreDesc: "Basé sur les réponses \"Oui\"",
+                kpiBreakdown: "Répartition des Statuts",
+                kpiChaptersTitle: "Couverture des Chapitres",
+                lblOui: "Oui",
+                lblEnCours: "En cours",
+                lblNon: "Non",
+                lblEvaluated: "26 / 26 Évaluations effectuées",
+                chLabels: {
+                    '4': "Ch. 4 Contexte",
+                    '5': "Ch. 5 Leadership",
+                    '6': "Ch. 6 Planification",
+                    '7': "Ch. 7 Support",
+                    '8': "Ch. 8 Réalisation",
+                    '9': "Ch. 9 Évaluation",
+                    '10': "Ch. 10 Amélioration"
+                },
+                filterChapter: "Chapitres:",
+                filterStatus: "Statut:",
+                optAllStatus: "Tous les statuts",
+                optOui: "Oui (Conforme)",
+                optEnCours: "En cours",
+                optNon: "Non (Non-conforme)",
+                btnChapAll: "Tous",
+                sectionTitle: "Questionnaire d'Évaluation (26 Exigences)",
+                whyTitle: "Pourquoi / Exigence de la norme :",
+                addNotes: "Ajouter une note ou remarque...",
+                btnWhy: "Pourquoi / Justification",
+                modalWhyHeader: "Pourquoi / Exigence de la norme :",
+                modalClose: "Fermer",
+                btnShowResults: "Afficher les Résultats & la Correction",
+                btnHideResults: "Masquer la Correction",
+                printTitle: "Rapport de Synthèse d'Audit ISO 9001:2015",
+                printSubtitle: "Système de Management de la Qualité dans la Formation - Chapitres 4 à 10",
+                printDateLabel: "Date",
+                printScoreLabel: "Score Global",
+                printTotalLabel: "Total d'exigences",
+                printClause: "Clause",
+                printJustification: "Justification",
+                printNote: "Note",
+                visibleCountText: (vis, tot) => `Affichage de ${vis} sur ${tot} questions`
+            },
+            ar: {
+                appTitle: "أداة تدقيق ISO 9001:2015",
+                appSubtitle: "الفصول من 4 إلى 10 — المؤسسات التدريبية",
+                btnPrint: "تصدير / طباعة",
+                kpiCompliance: "نسبة المطابقة الجملية",
+                kpiScoreDesc: "بناءً على الإجابات بـ \"نعم\"",
+                kpiBreakdown: "توزيع الحالات",
+                kpiChaptersTitle: "تغطية الفصول",
+                lblOui: "نعم",
+                lblEnCours: "قيد الإنجاز",
+                lblNon: "لا",
+                lblEvaluated: "26 / 26 تقييم منجز",
+                chLabels: {
+                    '4': "فصل 4 السياق",
+                    '5': "فصل 5 القيادة",
+                    '6': "فصل 6 التخطيط",
+                    '7': "فصل 7 الدعم",
+                    '8': "فصل 8 التشغيل",
+                    '9': "فصل 9 التقييم",
+                    '10': "فصل 10 التحسين"
+                },
+                filterChapter: "الفصول:",
+                filterStatus: "الحالة:",
+                optAllStatus: "جميع الحالات",
+                optOui: "نعم (مطابق)",
+                optEnCours: "قيد الإنجاز",
+                optNon: "لا (غير مطابق)",
+                btnChapAll: "الكل",
+                sectionTitle: "استبيان التقييم (26 متطلباً)",
+                whyTitle: "السبب / متطلب المواصفة المعيارية:",
+                addNotes: "إضافة ملاحظة أو توصية...",
+                btnWhy: "لماذا؟ / التبرير",
+                modalWhyHeader: "السبب / متطلب المواصفة المعيارية:",
+                modalClose: "إغلاق",
+                btnShowResults: "إظهار النتيجة والتصحيح",
+                btnHideResults: "إخفاء التصحيح",
+                printTitle: "تقرير تقييم ومطابقة ISO 9001:2015",
+                printSubtitle: "نظام إدارة الجودة في التدريب — الفصول من 4 إلى 10",
+                printDateLabel: "التاريخ",
+                printScoreLabel: "النتيجة الإجمالية",
+                printTotalLabel: "إجمالي المتطلبات",
+                printClause: "البند",
+                printJustification: "التبرير المعياري",
+                printNote: "ملاحظة",
+                visibleCountText: (vis, tot) => `عرض ${vis} من أصل ${tot} متطلب`
             }
+        };
 
-            renderBuilderLogo();
+        // Application State
+        let currentLang = 'fr';
+        let selectedChapterFilter = 'all';
+        let chartInstance = null;
+        let isAuditFinished = false;
 
-            document.querySelectorAll('.builder-shape-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    audio.playClick();
-                    document.querySelectorAll('.builder-shape-btn').forEach(b => {
-                        b.classList.remove('active', 'bg-cyan-600', 'text-white', 'border-cyan-400');
-                        b.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
-                    });
-                    btn.classList.add('active', 'bg-cyan-600', 'text-white', 'border-cyan-400');
-                    btn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
-                    currentShape = btn.getAttribute('data-shape');
-                    renderBuilderLogo();
-                });
+        // On Page Load Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            initChart();
+            updateDashboard();
+            renderQuestions();
+            setLanguage('fr');
+            
+            const today = new Date();
+            document.getElementById('print-date').innerText = today.toLocaleDateString('fr-FR', {
+                year: 'numeric', month: 'long', day: 'numeric'
             });
-
-            document.querySelectorAll('.builder-palette-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    audio.playClick();
-                    document.querySelectorAll('.builder-palette-btn').forEach(b => {
-                        b.classList.remove('active', 'border-cyan-400');
-                        b.classList.add('border-slate-700');
-                    });
-                    btn.classList.add('active', 'border-cyan-400');
-                    btn.classList.remove('border-slate-700');
-                    currentPalette = btn.getAttribute('data-palette');
-                    renderBuilderLogo();
-                });
-            });
-
-            builderTextInput.addEventListener('input', () => {
-                renderBuilderLogo();
-            });
-
-            document.getElementById('btn-random-builder').addEventListener('click', () => {
-                audio.playClick();
-                const shapes = ['shield', 'circle', 'leaf'];
-                const pkeys = ['standard', 'eco', 'neon'];
-                currentShape = shapes[Math.floor(Math.random() * shapes.length)];
-                currentPalette = pkeys[Math.floor(Math.random() * pkeys.length)];
-                renderBuilderLogo();
-            });
-
-            document.getElementById('btn-export-logo').addEventListener('click', () => {
-                audio.playJingle();
-                const svgData = builderContainer.innerHTML;
-                const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `QHSE_Logo_${Date.now()}.svg`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-
-            document.getElementById('btn-celebrate').addEventListener('click', () => {
-                audio.playJingle();
-                if (typeof confetti === 'function') {
-                    confetti({
-                        particleCount: 100,
-                        spread: 70,
-                        origin: { y: 0.6 }
-                    });
-                }
-            });
-
-            document.querySelectorAll('button, .glass-card').forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    audio.playHover();
-                });
-            });
-
         });
+
+        // Trigger Print Action safely
+        function triggerPrint() {
+            playClickSound();
+            window.print();
+        }
+
+        // Toggle Language
+        function setLanguage(lang) {
+            playClickSound();
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Toggle Language Buttons
+            const btnFr = document.getElementById('lang-fr');
+            const btnAr = document.getElementById('lang-ar');
+            
+            if (lang === 'fr') {
+                btnFr.className = 'px-2.5 sm:px-3 py-1.5 rounded-md transition-all bg-white text-slate-900 shadow-sm';
+                btnAr.className = 'px-2.5 sm:px-3 py-1.5 rounded-md transition-all text-slate-600 hover:text-slate-900';
+            } else {
+                btnAr.className = 'px-2.5 sm:px-3 py-1.5 rounded-md transition-all bg-white text-slate-900 shadow-sm';
+                btnFr.className = 'px-2.5 sm:px-3 py-1.5 rounded-md transition-all text-slate-600 hover:text-slate-900';
+            }
+
+            // Translate Interface Strings
+            const t = translations[lang];
+            document.getElementById('app-title').innerText = t.appTitle;
+            document.getElementById('app-subtitle').innerText = t.appSubtitle;
+            document.getElementById('btn-print-text').innerText = t.btnPrint;
+            document.getElementById('kpi-compliance-rate').innerText = t.kpiCompliance;
+            document.getElementById('kpi-score-desc').innerText = t.kpiScoreDesc;
+            document.getElementById('kpi-status-breakdown').innerText = t.kpiBreakdown;
+            document.getElementById('kpi-chapters-title').innerText = t.kpiChaptersTitle;
+            document.getElementById('lbl-oui').innerText = t.lblOui;
+            document.getElementById('lbl-encours').innerText = t.lblEnCours;
+            document.getElementById('lbl-non').innerText = t.lblNon;
+            document.getElementById('stat-evaluated').innerText = t.lblEvaluated;
+
+            // Chapter Labels
+            for (let ch = 4; ch <= 10; ch++) {
+                const el = document.getElementById(`lbl-ch${ch}`);
+                if (el) el.innerText = t.chLabels[ch];
+                const btnEl = document.getElementById(`btn-chap-${ch}`);
+                if (btnEl) btnEl.innerText = t.chLabels[ch];
+            }
+
+            document.getElementById('filter-chapter-label').innerText = t.filterChapter;
+            document.getElementById('filter-status-label').innerText = t.filterStatus;
+            document.getElementById('btn-chap-all').innerText = t.btnChapAll;
+
+            document.getElementById('opt-all-status').innerText = t.optAllStatus;
+            document.getElementById('opt-oui').innerText = t.optOui;
+            document.getElementById('opt-encours').innerText = t.optEnCours;
+            document.getElementById('opt-non').innerText = t.optNon;
+
+            document.getElementById('section-questions-title').innerText = t.sectionTitle;
+            document.getElementById('modal-lbl-why').innerText = t.modalWhyHeader;
+            document.getElementById('btn-modal-close').innerText = t.modalClose;
+
+            // Print Translations
+            document.getElementById('print-header-title').innerText = t.printTitle;
+            document.getElementById('print-header-subtitle').innerText = t.printSubtitle;
+            document.getElementById('print-lbl-date').innerText = t.printDateLabel;
+            document.getElementById('print-lbl-score').innerText = t.printScoreLabel;
+            document.getElementById('print-lbl-total').innerText = t.printTotalLabel;
+
+            const today = new Date();
+            document.getElementById('print-date').innerText = today.toLocaleDateString(currentLang === 'ar' ? 'ar-MA' : 'fr-FR', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            updateSubmitButtonText();
+            renderQuestions();
+        }
+
+        // Toggle Corrective Explanations Visibility
+        function toggleResults() {
+            playClickSound();
+            isAuditFinished = !isAuditFinished;
+            updateSubmitButtonText();
+            renderQuestions();
+        }
+
+        function updateSubmitButtonText() {
+            const btnText = document.getElementById('btn-submit-text');
+            const t = translations[currentLang];
+            if (isAuditFinished) {
+                btnText.innerText = t.btnHideResults;
+            } else {
+                btnText.innerText = t.btnShowResults;
+            }
+        }
+
+        // Main Questions Renderer
+        function renderQuestions() {
+            const container = document.getElementById('questions-list');
+            const printContainer = document.getElementById('print-questions-summary');
+            const statusFilter = document.getElementById('statusFilter').value;
+            const t = translations[currentLang];
+
+            container.innerHTML = '';
+            printContainer.innerHTML = '';
+
+            let visibleCount = 0;
+
+            isoQuestionsData.forEach((item) => {
+                // Filter by Chapter
+                if (selectedChapterFilter !== 'all' && !item.chapter.startsWith(selectedChapterFilter)) {
+                    return;
+                }
+                // Filter by Status
+                if (statusFilter !== 'all' && item.status !== statusFilter) {
+                    return;
+                }
+
+                visibleCount++;
+
+                const questionText = currentLang === 'ar' ? item.question_ar : item.question_fr;
+                const whyText = currentLang === 'ar' ? item.why_ar : item.why_fr;
+                const safeNotes = sanitizeHTML(item.notes);
+
+                // Main Interactive Question Card
+                const cardHtml = `
+                    <div class="p-4 rounded-xl transition-all duration-200 hover:bg-slate-50 border border-slate-100 mb-2">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <!-- Question Meta & Text -->
+                            <div class="flex items-start space-x-3 rtl:space-x-reverse flex-1">
+                                <span class="px-2.5 py-1 bg-slate-100 text-slate-700 font-bold text-xs rounded-lg border border-slate-200 whitespace-nowrap shrink-0">
+                                    ${item.chapter}
+                                </span>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-slate-800 leading-snug">${visibleCount}. ${sanitizeHTML(questionText)}</h4>
+                                    <div class="mt-2 flex items-center space-x-2 rtl:space-x-reverse">
+                                        <button onclick="openRationaleModal(${item.id})" class="text-xs text-brand-600 hover:text-brand-800 font-medium flex items-center space-x-1 rtl:space-x-reverse">
+                                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                                            <span>${t.btnWhy}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Radio Controls -->
+                            <div class="flex items-center space-x-1 rtl:space-x-reverse bg-slate-100/80 p-1 rounded-lg border border-slate-200 self-start md:self-center shrink-0">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="status-${item.id}" value="Oui" ${item.status === 'Oui' ? 'checked' : ''} onchange="updateStatus(${item.id}, 'Oui')" class="sr-only peer">
+                                    <span class="px-3 py-1.5 rounded-md text-xs font-semibold block transition-all peer-checked:bg-emerald-600 peer-checked:text-white text-slate-600 hover:text-slate-900">
+                                        ${t.lblOui}
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="status-${item.id}" value="En cours" ${item.status === 'En cours' ? 'checked' : ''} onchange="updateStatus(${item.id}, 'En cours')" class="sr-only peer">
+                                    <span class="px-3 py-1.5 rounded-md text-xs font-semibold block transition-all peer-checked:bg-amber-500 peer-checked:text-white text-slate-600 hover:text-slate-900">
+                                        ${t.lblEnCours}
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="status-${item.id}" value="Non" ${item.status === 'Non' ? 'checked' : ''} onchange="updateStatus(${item.id}, 'Non')" class="sr-only peer">
+                                    <span class="px-3 py-1.5 rounded-md text-xs font-semibold block transition-all peer-checked:bg-rose-600 peer-checked:text-white text-slate-600 hover:text-slate-900">
+                                        ${t.lblNon}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        ${isAuditFinished ? `
+                        <div class="mt-3 p-3 bg-blue-50/60 rounded-lg border border-blue-100 text-xs text-slate-700 animate-in fade-in duration-150">
+                            <span class="font-bold text-brand-700 block mb-1">${t.whyTitle}</span>
+                            <p class="leading-relaxed">${sanitizeHTML(whyText)}</p>
+                        </div>
+                        ` : ''}
+
+                        <!-- Notes Text Input -->
+                        <div class="mt-3 pt-2 border-t border-slate-100">
+                            <input type="text" value="${safeNotes}" oninput="updateNotes(${item.id}, this.value)" placeholder="${t.addNotes}" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-slate-700 focus:bg-white focus:outline-none focus:ring-1 focus:ring-brand-500">
+                        </div>
+                    </div>
+                `;
+
+                container.insertAdjacentHTML('beforeend', cardHtml);
+
+                // Print Mode Summary Layout
+                const printStatusClass = item.status === 'Oui' 
+                    ? 'bg-emerald-100 text-emerald-800' 
+                    : item.status === 'En cours' 
+                    ? 'bg-amber-100 text-amber-800' 
+                    : 'bg-rose-100 text-rose-800';
+
+                const printRow = `
+                    <div class="border-b border-slate-200 pb-2 text-xs page-break">
+                        <div class="flex justify-between items-start font-bold gap-2">
+                            <span>${t.printClause} ${item.chapter} — ${visibleCount}. ${sanitizeHTML(questionText)}</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] whitespace-nowrap ${printStatusClass}">${item.status}</span>
+                        </div>
+                        <p class="text-slate-600 mt-1"><strong>${t.printJustification}:</strong> ${sanitizeHTML(whyText)}</p>
+                        ${safeNotes ? `<p class="text-slate-500 italic mt-0.5"><strong>${t.printNote}:</strong>${safeNotes}</p>` : ''}
+                    </div>
+                `;
+                printContainer.insertAdjacentHTML('beforeend', printRow);
+            });
+
+            document.getElementById('visible-questions-count').innerText = t.visibleCountText(visibleCount, isoQuestionsData.length);
+            
+            // Re-render Lucide SVG Icons safely
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        // Live Status Update Listener
+        function updateStatus(id, newStatus) {
+            playClickSound();
+            const question = isoQuestionsData.find(q => q.id === id);
+            if (question) {
+                question.status = newStatus;
+                updateDashboard();
+                renderQuestions();
+            }
+        }
+
+        // Live Notes Update Listener
+        function updateNotes(id, text) {
+            const question = isoQuestionsData.find(q => q.id === id);
+            if (question) {
+                question.notes = text;
+            }
+        }
+
+        // Chapter Filter Button Handler
+        function filterByChapter(chap) {
+            playClickSound();
+            selectedChapterFilter = chap;
+            document.querySelectorAll('.chap-btn').forEach(btn => {
+                if (btn.dataset.chap === chap) {
+                    btn.className = 'chap-btn active px-3 py-1 rounded-lg text-xs font-medium bg-brand-600 text-white transition whitespace-nowrap';
+                } else {
+                    btn.className = 'chap-btn px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap';
+                }
+            });
+            renderQuestions();
+        }
+
+        // Status Dropdown Filter Listener
+        function applyFilters() {
+            playClickSound();
+            renderQuestions();
+        }
+
+        // Live Dynamic Calculations for Score and Dashboard Charts
+        function updateDashboard() {
+            const total = isoQuestionsData.length;
+            const countOui = isoQuestionsData.filter(q => q.status === 'Oui').length;
+            const countEnCours = isoQuestionsData.filter(q => q.status === 'En cours').length;
+            const countNon = isoQuestionsData.filter(q => q.status === 'Non').length;
+
+            const scorePercent = Math.round((countOui / total) * 100);
+
+            // Update Primary Score Texts
+            document.getElementById('stat-score').innerText = `${scorePercent}%`;
+            document.getElementById('print-score').innerText = `${scorePercent}% (${countOui} / ${total})`;
+            document.getElementById('progress-bar-score').style.width = `${scorePercent}%`;
+
+            // Update KPI Counter Badges
+            document.getElementById('count-oui').innerText = countOui;
+            document.getElementById('count-encours').innerText = countEnCours;
+            document.getElementById('count-non').innerText = countNon;
+
+            // Chapter Progress Breakdown Calculation
+            const chapters = ['4', '5', '6', '7', '8', '9', '10'];
+            chapters.forEach(ch => {
+                const chQuestions = isoQuestionsData.filter(q => q.chapter.startsWith(ch));
+                const chOui = chQuestions.filter(q => q.status === 'Oui').length;
+                const chPercent = chQuestions.length > 0 ? Math.round((chOui / chQuestions.length) * 100) : 0;
+                const el = document.getElementById(`prog-ch${ch}`);
+                if (el) el.innerText = `${chPercent}%`;
+            });
+
+            // Live Chart.js Dataset Update
+            if (chartInstance) {
+                chartInstance.data.datasets[0].data = [countOui, countEnCours, countNon];
+                chartInstance.update();
+            }
+        }
+
+        // Initialize Chart.js Donut Chart
+        function initChart() {
+            const canvas = document.getElementById('complianceChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Oui', 'En cours', 'Non'],
+                    datasets: [{
+                        data: [0, 26, 0],
+                        backgroundColor: ['#059669', '#f59e0b', '#e11d48'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 300
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: ${value}`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // Rationale Modal Handler
+        function openRationaleModal(id) {
+            playClickSound();
+            const item = isoQuestionsData.find(q => q.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-chapter-badge').innerText = `ISO 9001:2015 — Chapitre ${item.chapter}`;
+            document.getElementById('modal-question-title').innerText = currentLang === 'ar' ? item.question_ar : item.question_fr;
+            document.getElementById('modal-rationale-text').innerText = currentLang === 'ar' ? item.why_ar : item.why_fr;
+
+            document.getElementById('rationale-modal').classList.remove('hidden');
+        }
+
+        function closeRationaleModal() {
+            playClickSound();
+            document.getElementById('rationale-modal').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
